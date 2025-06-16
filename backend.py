@@ -45,7 +45,7 @@ def nl_sql(nl_query):
     # Normalize input
     user_input = nl_query.lower().strip()
 
-    # Handle casual/greeting phrases
+    
     casual_phrases = {
         "hi": "Hello! How can I assist you with an SQL query today?",
         "hello": "Hi there! Ask me anything related to databases or SQL.",
