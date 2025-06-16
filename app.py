@@ -3,6 +3,7 @@ from backend import nl_sql
 
 # ------------------ Page Setup ------------------ 
 st.set_page_config(page_title="SQL Chatbot", page_icon="📊")
+#st.write("WELCOME")
 st.title("🧠 SQL Query Generator Assistant")
 st.markdown("💬 Enter your natural language query, and I’ll convert it into a valid SQL statement.")
 
@@ -24,14 +25,15 @@ for msg in st.session_state.messages:
 casual_responses = {
     "hi": "👋 Hello! How can I help you with SQL today?",
     "hello": "Hi there! 👨‍💻 I'm here to generate SQL queries for you.",
-    "how are you": "I'm just a bot, but I'm always ready to help! 😊",
+    "how are you ?": "I'm just a bot, but I'm always ready to help! 😊",
     "what's up": "Not much, just waiting to turn your questions into SQL!",
     "who are you": "I'm your friendly SQL Assistant 🤖. Ask me anything SQL-related!",
     "thank you": "You're welcome! 🙌 Let me know if you have another query.",
     "thanks": "Glad to help! 👍",
     "bye": "Goodbye! 👋 Feel free to come back anytime.",
     "good morning": "Good morning! ☀️ Ready to generate some SQL?",
-    "good night": "Good night! 🌙 Sleep tight and dream of databases!"
+    "good night": "Good night! 🌙 Sleep tight and dream of databases!",
+    "my name is " : "Nice to meet you! 😊 How can I assist you today?"
 }
 
 # ------------------ User Input ------------------ 
