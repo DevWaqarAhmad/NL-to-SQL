@@ -112,7 +112,7 @@ Only return the SQL query. No explanation.
 #             print("\nThanks for using the assistant. Goodbye! ")
 #             break
 
-#         sql_query = nl_sql(user_input)
-#         print("\nGenerated SQL Query:")
-#         print(sql_query)
-#         print("-" * 30)
+#     sql_result = nl_sql(user_input)
+#     print("Generated SQL Query:")
+#     print(sql_result)
+#     print("-" * 50)
