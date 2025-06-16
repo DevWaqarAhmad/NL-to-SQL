@@ -60,4 +60,4 @@ Only return the SQL query. No explanation.
 #     sql_result = nl_sql(user_input)
 #     print("Generated SQL Query:")
 #     print(sql_result)
-#     print("-" * 50)
+
