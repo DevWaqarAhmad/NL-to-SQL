@@ -51,13 +51,13 @@ Only return the SQL query. No explanation.
         return f" Error: {e}"
 
 #--------------------------------------------------------------------------------
-while True:
-    user_input = input("Ask your question ")
-    if user_input.lower() in ['exit ']:
-        print("HAve a Nice Day!")
-        break
+# while True:
+#     user_input = input("Ask your question ")
+#     if user_input.lower() in ['exit ']:
+#         print("HAve a Nice Day!")
+#         break
 
-    sql_result = nl_sql(user_input)
-    print("Generated SQL Query:")
-    print(sql_result)
-    print("-" * 50)
+#     sql_result = nl_sql(user_input)
+#     print("Generated SQL Query:")
+#     print(sql_result)
+#     print("-" * 50)
