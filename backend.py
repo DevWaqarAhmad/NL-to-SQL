@@ -1,35 +1,40 @@
-import google.generativeai as genai
 import os
+import string
 from dotenv import load_dotenv
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain.memory import ConversationBufferMemory
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+#__________---------------___________
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
-
 if not api_key:
-    raise ValueError("API key not found")
-#print(api_key)
+    raise ValueError("Google Gemini API key not found in environment.")
 
+#print(api_key) 
 
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    generation_config={
-        "temperature": 0.7,
-        "top_p": 0.9,
-        "top_k": 40,
-        "max_output_tokens": 2048
-    }
+model = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    google_api_key=api_key,
+    temperature=0.7
 )
 
-# # Enhanced schema with sample data for better understanding
+#___________---------------___________
+
+memory = ConversationBufferMemory(return_messages=True)
+user_memory = {"name": None}
+
+#__________---------------___________
+
 all_schemas = """
 Available Tables and Example Data:
 
 1. students(id INT, name TEXT, grade TEXT, percentage FLOAT)
    e.g., (1, 'Ali', 'A', 89.5)
 
-2. staff(id INT, name TEXT, salary INT, department TEXT)
-   e.g., (10, 'Asad', 100000, 'IT')
+2. staff(id INT, name TEXT, salary INT, department TEXT, experience INT)
+   e.g., (10, 'Asad', 100000, 'IT', 5)
 
 3. orders(order_id INT, customer_name TEXT, product_id INT, order_date DATE)
    e.g., (2001, 'Ahmed', 101, '2024-02-15')
@@ -41,39 +46,74 @@ Available Tables and Example Data:
    e.g., (1, 'Sara', 'Karachi', '03001234567')
 """
 
-def nl_sql(nl_query):
-    # Normalize input
-    user_input = nl_query.lower().strip()
+#___________---------------___________
 
-    
-    casual_phrases = {
-        "hi": "Hello! How can I assist you with an SQL query today?",
-        "hello": "Hi there! Ask me anything related to databases or SQL.",
-        "hey": "Hey! How can I help you?",
-        "how are you?": "I'm just code, but I'm always ready to help you!",
-        "how are you": "I'm just code, but I'm always ready to help you!",
-        "what's up": "All good here! Ready to write some SQL for you.",
-        "thank you": "You're welcome! Happy to help.",
-        "thanks": "Glad to assist you!",
-        "who are you": "I'm your SQL assistant. Ask me any database-related question.",
-        "who are you?": "I'm your SQL assistant. Ask me any database-related question.",
-        "what can you do": "I convert your natural language questions into SQL queries.",
-        "bye": "Goodbye! Come back anytime if you need more help.",
-        "see you": "See you soon! 😊",
-        "good morning": "Good morning! Ready to dive into SQL?",
-        "good afternoon": "Good afternoon! What can I generate for you?",
-        "good evening": "Good evening! Need help with a query?",
-        "how does this work": "Just type your question about the database, and I’ll generate the SQL for you!",
-        "help": "Sure! Just ask a question like 'show all students' or 'get average salary'.",
-        "are you a bot": "Yes, but a smart one! I generate SQL queries from your questions.",
-        "hello there": "Hello! Ask me anything about your database.",
-        "how’s it going": "All set to help you with SQL queries!",
-        "greetings": "Greetings! Ready to work with some SQL?",
-        "yo": "Yo! Need help with a database question?"
-    }
+casual_phrases = {
+    "hi": "Hello! How can I assist you with an SQL query today?",
+    "hello": "Hi there! Ask me anything related to databases or SQL.",
+    "my name is": "Nice to meet you!",
+    "how are you": "I'm just code, but I'm always ready to help you!",
+    "thanks": "You're welcome! Happy to help.",
+    "thank you": "Glad to assist you!",
+    "bye": "Goodbye! Come back anytime.",
+    "see you": "See you soon! 😊",
+    "what can you do": "I can convert your questions into SQL queries. Just ask!",
+    "who are you": "I'm your SQL assistant bot. Ask me anything related to your database!",
+    "what is your name": "You can call me your SQL helper!",
+    "how does this work": "Just type your question about the database, and I’ll generate the SQL for you!",
+    "are you a bot": "Yes, but a smart one! 😉",
+    "what is sql": "SQL stands for Structured Query Language. It's used to manage and query data in databases.",
+    "help": "Sure! Ask something like 'Show all students with grade A' or 'Get total sales'.",
+    "tell me a joke": "Why do SQL developers never get lost? Because they always know the *JOIN* path!",
+    "good morning": "Good morning! Ready to dive into SQL?",
+    "good evening": "Good evening! Need help with a query?",
+    "yo": "Yo! Need help with a database question?",
+    "greetings": "Greetings! Ready to generate some SQL?"
+}
+#__________---------------___________
 
-    if user_input in casual_phrases:
-        return casual_phrases[user_input]
+def nl_sql(nl_query, user_memory):
+    cleaned_query = nl_query.lower().strip()
+    cleaned_query = cleaned_query.translate(str.maketrans('', '', string.punctuation))
+
+    memory.chat_memory.add_user_message(nl_query)
+
+    if cleaned_query in casual_phrases:
+        response = casual_phrases[cleaned_query]
+        memory.chat_memory.add_ai_message(response)
+        return response
+
+    if cleaned_query.startswith("my name is"):
+        name = cleaned_query.replace("my name is", "").strip().title()
+        user_memory["name"] = name
+        response = f"Nice to meet you, {name}!"
+        memory.chat_memory.add_ai_message(response)
+        return response
+
+    if any(q in cleaned_query for q in ["what is my name", "who am i"]):
+        if user_memory["name"]:
+            response = f"Your name is {user_memory['name']}."
+        else:
+            response = "I don't know your name yet. Please say 'My name is ...'"
+        memory.chat_memory.add_ai_message(response)
+        return response
+
+    if any(k in cleaned_query for k in [
+    "summarize", "summary", "what did we talk about", "show chat history",
+    "show conversation", "chat summary", "show what we talked", "previous conversation",
+    "review our chat", "give me a recap", "recap", "conversation summary",
+    "what have we discussed", "tell me what we talked", "what we discussed",
+    "what was the conversation", "show my chat", "summarize our chat",
+    "can you summarize this", "brief me our chat", "summerize my chat"
+    ]):
+        messages = memory.chat_memory.messages
+        if messages:
+            summary = "\n".join([
+                f"🧑: {msg.content}" if isinstance(msg, HumanMessage) else f"🤖: {msg.content}"
+                for msg in messages
+            ])
+            return "🧾 Here's what we talked about:\n\n" + summary
+        return "We haven’t had much of a chat yet!"
 
     prompt = f"""
 You are an AI assistant that converts user questions into valid SQL queries.
@@ -85,34 +125,19 @@ Your task:
 - Understand the user's intent.
 - Generate a syntactically correct SQL query.
 - Use JOINs, GROUP BY, WHERE, and aggregation functions if needed.
-- Respond with **only** the SQL query (no explanation, no formatting).
+- Respond with only the SQL query (no explanation).
 
 Generate an SQL query for this question:
 \"{nl_query}\"
-
 Only return the SQL query. No explanation.
     """
+
     try:
-        response = model.generate_content(prompt)
-        return response.text.strip()
+        response = model.invoke(prompt)
+        sql_query = response.content.strip()
+        memory.chat_memory.add_ai_message(sql_query)
+        return sql_query
     except Exception as e:
-        return f"Error: {e}"
-
-
-
-# if __name__ == "__main__":
-#     print("-" * 45)
-#     print("Type your Question in natural language ")
-#     print("-" * 45)
-
-#     while True:
-#         user_input = input("Ask your question: ")
-
-#         if user_input.lower() in ["exit", "quit"]:
-#             print("\nThanks for using the assistant. Goodbye! ")
-#             break
-
-#     sql_result = nl_sql(user_input)
-#     print("Generated SQL Query:")
-#     print(sql_result)
-#     print("-" * 50)
+        error_msg = f"Error: {e}"
+        memory.chat_memory.add_ai_message(error_msg)
+        return error_msg
