@@ -1,18 +1,15 @@
+# backend.py
+
 import os
 import string
 from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, AIMessage
-from langchain.memory import ConversationBufferMemory
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-
-#__________---------------___________
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     raise ValueError("Google Gemini API key not found in environment.")
-
-#print(api_key) 
 
 model = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
@@ -20,12 +17,7 @@ model = ChatGoogleGenerativeAI(
     temperature=0.7
 )
 
-#___________---------------___________
-
-memory = ConversationBufferMemory(return_messages=True)
 user_memory = {"name": None}
-
-#__________---------------___________
 
 all_schemas = """
 Available Tables and Example Data:
@@ -45,8 +37,6 @@ Available Tables and Example Data:
 5. customers(id INT, name TEXT, city TEXT, phone TEXT)
    e.g., (1, 'Sara', 'Karachi', '03001234567')
 """
-
-#___________---------------___________
 
 casual_phrases = {
     "hi": "Hello! How can I assist you with an SQL query today?",
@@ -70,27 +60,31 @@ casual_phrases = {
     "yo": "Yo! Need help with a database question?",
     "greetings": "Greetings! Ready to generate some SQL?"
 }
-#__________---------------___________
 
-def nl_sql(nl_query, user_memory):
+
+def nl_sql(nl_query, user_memory, memory):
     cleaned_query = nl_query.lower().strip()
     cleaned_query = cleaned_query.translate(str.maketrans('', '', string.punctuation))
 
-    memory.chat_memory.add_user_message(nl_query)
-
+    # Casual Phrases
     if cleaned_query in casual_phrases:
         response = casual_phrases[cleaned_query]
+        memory.chat_memory.add_user_message(nl_query)
         memory.chat_memory.add_ai_message(response)
         return response
 
+    # Handle "My name is..."
     if cleaned_query.startswith("my name is"):
         name = cleaned_query.replace("my name is", "").strip().title()
         user_memory["name"] = name
         response = f"Nice to meet you, {name}!"
+        memory.chat_memory.add_user_message(nl_query)
         memory.chat_memory.add_ai_message(response)
         return response
 
+    # Handle "What is my name?"
     if any(q in cleaned_query for q in ["what is my name", "who am i"]):
+        memory.chat_memory.add_user_message(nl_query)
         if user_memory["name"]:
             response = f"Your name is {user_memory['name']}."
         else:
@@ -98,42 +92,52 @@ def nl_sql(nl_query, user_memory):
         memory.chat_memory.add_ai_message(response)
         return response
 
+    # Handle chat summary
     if any(k in cleaned_query for k in [
-    "summarize", "summary", "what did we talk about", "show chat history",
-    "show conversation", "chat summary", "show what we talked", "previous conversation",
-    "review our chat", "give me a recap", "recap", "conversation summary",
-    "what have we discussed", "tell me what we talked", "what we discussed",
-    "what was the conversation", "show my chat", "summarize our chat",
-    "can you summarize this", "brief me our chat", "summerize my chat"
+        "summarize", "summary", "what did we talk about", "show chat history",
+        "show conversation", "chat summary", "show what we talked", "previous conversation",
+        "review our chat", "give me a recap", "recap", "conversation summary",
+        "what have we discussed", "tell me what we talked", "what we discussed",
+        "what was the conversation", "show my chat", "summarize our chat",
+        "can you summarize this", "brief me our chat", "summerize my chat"
     ]):
         messages = memory.chat_memory.messages
-        if messages:
-            summary = "\n".join([
-                f"🧑: {msg.content}" if isinstance(msg, HumanMessage) else f"🤖: {msg.content}"
-                for msg in messages
-            ])
-            return "🧾 Here's what we talked about:\n\n" + summary
-        return "We haven’t had much of a chat yet!"
+        if not messages:
+            return "We haven’t had much of a chat yet!"
 
-    prompt = f"""
-You are an AI assistant that converts user questions into valid SQL queries.
+        condensed_history = "\n".join([
+            f"User: {msg.content}" if isinstance(msg, HumanMessage) else f"Bot: {msg.content}"
+            for msg in messages[-10:]
+        ])
 
-Here are the database schemas you can use:
+        summary_prompt = [
+            SystemMessage(content="You're an assistant that summarizes conversations concisely."),
+            HumanMessage(content=f"Summarize this conversation in 3-4 short bullet points:\n\n{condensed_history}")
+        ]
+
+        try:
+            response = model.invoke(summary_prompt)
+            summary = response.content.strip()
+            memory.chat_memory.add_ai_message(summary)
+            return f"🧾 Summary of our chat:\n\n{summary}"
+        except Exception as e:
+            return f"Sorry, couldn't generate summary. Error: {e}"
+
+    # Add user message
+    memory.chat_memory.add_user_message(nl_query)
+
+    # System Prompt for SQL Generation
+    system_instruction = SystemMessage(
+        content=f"""You are an AI assistant that converts user questions into valid SQL queries.
+Use the following database schema:
 {all_schemas}
+Only return valid SQL queries. No explanations."""
+    )
 
-Your task:
-- Understand the user's intent.
-- Generate a syntactically correct SQL query.
-- Use JOINs, GROUP BY, WHERE, and aggregation functions if needed.
-- Respond with only the SQL query (no explanation).
-
-Generate an SQL query for this question:
-\"{nl_query}\"
-Only return the SQL query. No explanation.
-    """
+    messages = [system_instruction] + memory.chat_memory.messages
 
     try:
-        response = model.invoke(prompt)
+        response = model.invoke(messages)
         sql_query = response.content.strip()
         memory.chat_memory.add_ai_message(sql_query)
         return sql_query
