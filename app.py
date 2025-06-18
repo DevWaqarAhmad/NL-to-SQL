@@ -3,10 +3,10 @@ from backend import nl_sql
 
 from langchain.memory import ConversationBufferMemory
 
-# --- Page Configuration ---
+
 st.set_page_config(page_title="SQL Chatbot", page_icon="📊", layout="wide")
 
-# --- Sidebar ---
+
 with st.sidebar:
     st.header("⚙️ Settings")
     st.markdown("**Select Language**")
@@ -26,13 +26,13 @@ with st.sidebar:
         <p><b>Email:</b> <a href="mailto:sqlquery.ae">sqlquery.ae</a></p>
     """, unsafe_allow_html=True)
 
-# --- Header ---
+
 st.markdown("""
     <h1 style='text-align: left; color: white;'>SQL Query Generator Assistant</h1>
     <p style='text-align: left;'>Hello! How can I help you today?</p>
 """, unsafe_allow_html=True)
 
-# --- Session Initialization ---
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -43,12 +43,12 @@ if "memory" not in st.session_state:
     from langchain.memory import ConversationBufferMemory
     st.session_state.memory = ConversationBufferMemory(return_messages=True)
 
-# --- Display Chat History ---
+
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# --- Chat Input ---
+
 user_input = st.chat_input("Ask your question...")
 
 if user_input:
@@ -59,7 +59,7 @@ if user_input:
         with st.spinner("Generating SQL query..."):
             sql_query = nl_sql(user_input, st.session_state.user_memory, st.session_state.memory)
 
-            # Format depending on type of reply
+            
             if sql_query.lower().startswith("select") or " from " in sql_query.lower():
                 reply = f"```sql\n{sql_query}\n```"
             else:

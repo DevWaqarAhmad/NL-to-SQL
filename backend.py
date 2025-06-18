@@ -1,5 +1,3 @@
-# backend.py
-
 import os
 import string
 from dotenv import load_dotenv
@@ -11,13 +9,17 @@ api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     raise ValueError("Google Gemini API key not found in environment.")
 
+#print(api_key)
 model = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     google_api_key=api_key,
     temperature=0.7
 )
+#____________---------------------
 
 user_memory = {"name": None}
+
+#__---------------------
 
 all_schemas = """
 Available Tables and Example Data:
@@ -37,6 +39,8 @@ Available Tables and Example Data:
 5. customers(id INT, name TEXT, city TEXT, phone TEXT)
    e.g., (1, 'Sara', 'Karachi', '03001234567')
 """
+
+#_---------------------
 
 casual_phrases = {
     "hi": "Hello! How can I assist you with an SQL query today?",
@@ -61,19 +65,20 @@ casual_phrases = {
     "greetings": "Greetings! Ready to generate some SQL?"
 }
 
+#_---------------------
 
 def nl_sql(nl_query, user_memory, memory):
     cleaned_query = nl_query.lower().strip()
     cleaned_query = cleaned_query.translate(str.maketrans('', '', string.punctuation))
 
-    # Casual Phrases
+    
     if cleaned_query in casual_phrases:
         response = casual_phrases[cleaned_query]
         memory.chat_memory.add_user_message(nl_query)
         memory.chat_memory.add_ai_message(response)
         return response
 
-    # Handle "My name is..."
+    
     if cleaned_query.startswith("my name is"):
         name = cleaned_query.replace("my name is", "").strip().title()
         user_memory["name"] = name
@@ -82,7 +87,7 @@ def nl_sql(nl_query, user_memory, memory):
         memory.chat_memory.add_ai_message(response)
         return response
 
-    # Handle "What is my name?"
+    
     if any(q in cleaned_query for q in ["what is my name", "who am i"]):
         memory.chat_memory.add_user_message(nl_query)
         if user_memory["name"]:
@@ -92,7 +97,7 @@ def nl_sql(nl_query, user_memory, memory):
         memory.chat_memory.add_ai_message(response)
         return response
 
-    # Handle chat summary
+    
     if any(k in cleaned_query for k in [
         "summarize", "summary", "what did we talk about", "show chat history",
         "show conversation", "chat summary", "show what we talked", "previous conversation",
@@ -123,10 +128,10 @@ def nl_sql(nl_query, user_memory, memory):
         except Exception as e:
             return f"Sorry, couldn't generate summary. Error: {e}"
 
-    # Add user message
+    
     memory.chat_memory.add_user_message(nl_query)
 
-    # System Prompt for SQL Generation
+    
     system_instruction = SystemMessage(
         content=f"""You are an AI assistant that converts user questions into valid SQL queries.
 Use the following database schema:
