@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-red)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Last Updated](https://img.shields.io/badge/Last%20Updated-July%202025-green)
+
 
 An AI-powered chatbot built using **Streamlit**, **Gemini API**, and **LangChain** that helps users convert natural language questions into valid **SQL queries**. Just upload your CSV or Excel file, describe your query in plain English, and get instant SQL output!
 
