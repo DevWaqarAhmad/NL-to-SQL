@@ -6,6 +6,7 @@ from io import BytesIO
 TABLE_NAME = "uploaded_data"
 
 
+
 class DataEngine:
 
 
@@ -15,10 +16,22 @@ class DataEngine:
             database=":memory:"
         )
 
+        self.current_df = None
 
-    def load_file(self, uploaded_file):
+
+
+    # --------------------------------
+    # LOAD FILE
+    # --------------------------------
+
+    def load_file(
+        self,
+        uploaded_file
+    ):
+
 
         if uploaded_file is None:
+
             raise ValueError(
                 "No file uploaded."
             )
@@ -26,12 +39,15 @@ class DataEngine:
 
         file_name = uploaded_file.name.lower()
 
+
         file_buffer = BytesIO(
             uploaded_file.getvalue()
         )
 
 
+
         if file_name.endswith(".csv"):
+
 
             df = pd.read_csv(
                 file_buffer
@@ -39,6 +55,7 @@ class DataEngine:
 
 
         elif file_name.endswith(".xlsx"):
+
 
             df = pd.read_excel(
                 file_buffer,
@@ -53,6 +70,7 @@ class DataEngine:
             )
 
 
+
         if df.empty:
 
             raise ValueError(
@@ -60,20 +78,65 @@ class DataEngine:
             )
 
 
-        # Clean column names
+
+        # Clean columns
 
         df.columns = [
+
             str(col)
             .strip()
-            .replace(" ", "_")
+            .replace(
+                " ",
+                "_"
+            )
+
             for col in df.columns
+
         ]
+
+
+
+        self.current_df = df.copy()
+
+
+
+        self.reload_database(
+            df
+        )
+
+
+
+        return df
+
+
+
+    # --------------------------------
+    # RELOAD DATABASE AFTER EDIT
+    # --------------------------------
+
+    def reload_database(
+        self,
+        df
+    ):
+
+
+        if df.empty:
+
+            raise ValueError(
+                "Updated data is empty."
+            )
+
+
+
+        self.current_df = df.copy()
+
 
 
         self.connection.register(
             "temp_df",
             df
         )
+
 
 
         self.connection.execute(
@@ -86,48 +149,94 @@ class DataEngine:
         )
 
 
-        return df
+
+        return True
 
 
 
-    def get_schema(self):
+    # --------------------------------
+    # GET SCHEMA
+    # --------------------------------
+
+    def get_schema(
+        self
+    ):
+
 
         schema_df = self.connection.execute(
             f"DESCRIBE {TABLE_NAME}"
         ).fetchdf()
 
 
+
         columns = []
+
 
 
         for _, row in schema_df.iterrows():
 
+
             columns.append(
+
                 f"{row['column_name']} {row['column_type']}"
+
             )
+
 
 
         return ", ".join(columns)
 
 
 
-    def execute_query(self, sql):
+    # --------------------------------
+    # EXECUTE SQL
+    # --------------------------------
+
+    def execute_query(
+        self,
+        sql
+    ):
+
 
         result = self.connection.execute(
             sql
         ).fetchdf()
 
 
+
         return result
 
 
 
-    def preview(self, limit=10):
+    # --------------------------------
+    # PREVIEW DATA
+    # --------------------------------
+
+    def preview(
+        self,
+        limit=10
+    ):
+
 
         return self.connection.execute(
+
             f"""
             SELECT *
             FROM {TABLE_NAME}
             LIMIT {limit}
             """
+
         ).fetchdf()
+
+
+
+    # --------------------------------
+    # GET CURRENT DATAFRAME
+    # --------------------------------
+
+    def get_dataframe(
+        self
+    ):
+
+
+        return self.current_df

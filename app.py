@@ -5,6 +5,8 @@ from ai_engine import AIEngine
 from visualizer import Visualizer
 from sql_validator import execute_safe_query
 from excel_editor import ExcelEditor
+from intent_router import IntentRouter
+from file_agent import FileAgent
 
 
 
@@ -13,16 +15,16 @@ from excel_editor import ExcelEditor
 # --------------------------------
 
 st.set_page_config(
-    page_title="NL-to-SQL AI Analyst",
+    page_title="AI Data Assistant",
     page_icon="🤖",
     layout="wide"
 )
 
 
-st.title("🤖 NL-to-SQL AI Analyst")
+st.title("🤖 AI Data Assistant")
 
 st.caption(
-    "Ask questions about your uploaded data in any language."
+    "Analyze and edit your uploaded Excel/CSV files using natural language."
 )
 
 
@@ -45,6 +47,14 @@ if "visualizer" not in st.session_state:
 
 if "editor" not in st.session_state:
     st.session_state.editor = ExcelEditor()
+
+
+if "intent_router" not in st.session_state:
+    st.session_state.intent_router = IntentRouter()
+
+
+if "file_agent" not in st.session_state:
+    st.session_state.file_agent = FileAgent()
 
 
 if "uploaded_df" not in st.session_state:
@@ -70,7 +80,7 @@ if "current_file" not in st.session_state:
 
 with st.sidebar:
 
-    st.header("⚙️ Data Upload")
+    st.header("⚙️ Upload Data")
 
 
     uploaded_file = st.file_uploader(
@@ -104,9 +114,7 @@ with st.sidebar:
                 )
 
 
-                # Save dataframe
-                st.session_state.uploaded_df = df
-
+                st.session_state.uploaded_df = df.copy()
 
 
                 st.session_state.schema = (
@@ -116,16 +124,14 @@ with st.sidebar:
                 )
 
 
-                st.session_state.current_file = (
-                    uploaded_file.name
-                )
+                st.session_state.current_file = uploaded_file.name
 
 
                 st.session_state.messages = []
 
 
                 st.success(
-                    "Database ready!"
+                    "File loaded successfully!"
                 )
 
 
@@ -140,7 +146,7 @@ with st.sidebar:
     if st.session_state.schema:
 
         with st.expander(
-            "🗄 Database Schema"
+            "🗄 Schema"
         ):
 
             st.code(
@@ -153,64 +159,43 @@ with st.sidebar:
 # DATA PREVIEW
 # --------------------------------
 
-if st.session_state.schema:
+if st.session_state.uploaded_df is not None:
 
 
     with st.expander(
-        "📊 Data Preview",
+        "📊 Current Data Preview",
         expanded=False
     ):
 
 
-        try:
-
-            preview = (
-                st.session_state
-                .data_engine
-                .preview(10)
-            )
-
-
-            st.dataframe(
-                preview,
-                use_container_width=True
-            )
+        st.dataframe(
+            st.session_state.uploaded_df.head(10),
+            use_container_width=True
+        )
 
 
 
-            # Download Excel
-
-            if st.session_state.uploaded_df is not None:
-
-
-                excel_file = (
-                    st.session_state
-                    .editor
-                    .export_excel(
-                        st.session_state.uploaded_df
-                    )
-                )
+    excel_file = (
+        st.session_state
+        .editor
+        .export_excel(
+            st.session_state.uploaded_df
+        )
+    )
 
 
-                st.download_button(
-                    label="⬇ Download Updated Excel",
-                    data=excel_file,
-                    file_name="updated_data.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
-
-
-        except Exception as error:
-
-            st.error(
-                "Preview error: " + str(error)
-            )
+    st.download_button(
+        "⬇ Download Updated Excel",
+        data=excel_file,
+        file_name="updated_data.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 
 else:
 
     st.info(
-        "Please upload CSV or Excel file."
+        "Upload CSV or Excel file."
     )
 
 
@@ -236,7 +221,7 @@ for message in st.session_state.messages:
 # --------------------------------
 
 question = st.chat_input(
-    "Ask your question..."
+    "Ask or edit your data..."
 )
 
 
@@ -246,8 +231,8 @@ if question:
 
     st.session_state.messages.append(
         {
-            "role": "user",
-            "content": question
+            "role":"user",
+            "content":question
         }
     )
 
@@ -262,24 +247,113 @@ if question:
 
 
         with st.spinner(
-            "Analyzing data..."
+            "Updating file..."
         ):
 
 
             try:
 
 
-                if not st.session_state.schema:
+                if st.session_state.uploaded_df is None:
 
                     raise Exception(
-                        "Upload data first."
+                        "Upload file first."
                     )
 
 
 
-                # -------------------------
-                # Generate SQL
-                # -------------------------
+                # --------------------------------
+                # INTENT DETECTION
+                # --------------------------------
+
+                intent = (
+                    st.session_state
+                    .intent_router
+                    .classify(
+                        question
+                    )
+                )
+
+
+
+                # =================================
+                # EDIT MODE
+                # =================================
+
+                if intent["type"] == "edit":
+
+
+                    st.subheader(
+                        "✏️ Editing File"
+                    )
+
+
+                    action = (
+                        st.session_state
+                        .file_agent
+                        .generate_action(
+                            question,
+                            list(
+                                st.session_state
+                                .uploaded_df
+                                .columns
+                            )
+                        )
+                    )
+
+
+                    st.code(
+                        action,
+                        language="json"
+                    )
+
+
+                    updated_df = (
+                        st.session_state
+                        .editor
+                        .execute_action(
+                            st.session_state.uploaded_df,
+                            action
+                        )
+                    )
+
+
+                    st.session_state.uploaded_df = updated_df
+
+
+                    st.success(
+                        "File updated successfully!"
+                    )
+
+
+                    st.subheader(
+                        "📊 Updated Preview"
+                    )
+
+
+                    st.dataframe(
+                        updated_df,
+                        use_container_width=True
+                    )
+
+
+                    st.session_state.messages.append(
+                        {
+                            "role":"assistant",
+                            "content":
+                            "✏️ File updated successfully."
+                        }
+                    )
+
+
+                    st.stop()
+
+
+
+                # =================================
+                # QUERY MODE
+                # =================================
+
 
                 sql = (
                     st.session_state
@@ -289,7 +363,6 @@ if question:
                         st.session_state.schema
                     )
                 )
-
 
 
                 st.subheader(
@@ -304,10 +377,6 @@ if question:
 
 
 
-                # -------------------------
-                # Execute Safe SQL
-                # -------------------------
-
                 result = execute_safe_query(
                     st.session_state
                     .data_engine
@@ -316,14 +385,8 @@ if question:
                 )
 
 
-
                 st.subheader(
                     "📊 Query Result"
-                )
-
-
-                st.caption(
-                    f"{len(result)} rows returned"
                 )
 
 
@@ -332,11 +395,6 @@ if question:
                     use_container_width=True
                 )
 
-
-
-                # -------------------------
-                # AI Explanation
-                # -------------------------
 
                 answer = (
                     st.session_state
@@ -348,31 +406,25 @@ if question:
                 )
 
 
+                with st.expander(
+                    "💬 AI Explanation"
+                ):
 
-                # -------------------------
-                # Visualization
-                # -------------------------
+                    st.write(answer)
+
+
 
                 chart = (
                     st.session_state
                     .visualizer
-                    .create_chart(result)
+                    .create_chart(
+                        result
+                    )
                 )
 
 
-
                 with st.expander(
-                    "💬 View AI Explanation"
-                ):
-
-                    st.write(
-                        answer
-                    )
-
-
-
-                with st.expander(
-                    "📈 View Visualization"
+                    "📈 Visualization"
                 ):
 
                     if chart:
@@ -382,53 +434,28 @@ if question:
                             use_container_width=True
                         )
 
-                    else:
-
-                        st.info(
-                            "No visualization available."
-                        )
-
-
-
-                # -------------------------
-                # Save History
-                # -------------------------
-
-                history_text = (
-                    "### 🧠 SQL Query\n\n"
-                    + sql
-                    + "\n\n"
-                    + "### 💬 AI Explanation\n\n"
-                    + answer
-                )
-
 
                 st.session_state.messages.append(
                     {
-                        "role": "assistant",
-                        "content": history_text
+                        "role":"assistant",
+                        "content":
+                        f"""
+### 🧠 SQL Query
+
+{sql}
+
+
+### 💬 AI Explanation
+
+{answer}
+"""
                     }
                 )
-
 
 
             except Exception as error:
 
 
-                error_text = (
-                    "❌ Error: "
-                    + str(error)
-                )
-
-
                 st.error(
-                    error_text
-                )
-
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-                        "content": error_text
-                    }
+                    str(error)
                 )
