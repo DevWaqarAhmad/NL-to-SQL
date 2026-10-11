@@ -1,230 +1,180 @@
-import hashlib
 import streamlit as st
-import pandas as pd
 
-from database import (
-    load_file,
-    create_database,
-    get_schema
-)
-
-from backend import generate_sql
-from sql_validator import execute_safe_query
+from data_engine import DataEngine
+from ai_engine import AIEngine
 
 
-# ----------------------------------
-# PAGE CONFIGURATION
-# ----------------------------------
+# --------------------------------
+# PAGE CONFIG
+# --------------------------------
 
 st.set_page_config(
-    page_title="NL-to-SQL AI Chatbot",
+    page_title="NL-to-SQL AI Analyst",
     page_icon="🤖",
     layout="wide"
 )
 
 
-st.title("🤖 NL-to-SQL AI Chatbot")
+st.title("🤖 NL-to-SQL AI Analyst")
 
 st.caption(
-    "Upload Excel/CSV and ask questions about your data."
+    "Ask questions about your uploaded data in any language."
 )
 
 
-# ----------------------------------
+# --------------------------------
 # SESSION STATE
-# ----------------------------------
+# --------------------------------
 
-defaults = {
-    "messages": [],
-    "database": None,
-    "schema": None,
-    "file_id": None,
-}
+if "data_engine" not in st.session_state:
+    st.session_state.data_engine = DataEngine()
 
 
-for key, value in defaults.items():
-    if key not in st.session_state:
-        st.session_state[key] = value
+if "ai_engine" not in st.session_state:
+    st.session_state.ai_engine = AIEngine()
+
+
+if "schema" not in st.session_state:
+    st.session_state.schema = None
+
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+if "current_file" not in st.session_state:
+    st.session_state.current_file = None
 
 
 
-# ----------------------------------
+# --------------------------------
 # SIDEBAR
-# ----------------------------------
+# --------------------------------
 
 with st.sidebar:
 
-    st.header("⚙️ Settings")
+    st.header("⚙️ Data Upload")
+
 
     uploaded_file = st.file_uploader(
-        "Upload CSV or Excel File",
+        "Upload CSV / Excel",
         type=["csv", "xlsx"]
     )
 
 
-    if st.button("🗑️ Clear Chat"):
+    if st.button("🗑 Clear Chat"):
 
         st.session_state.messages = []
 
         st.rerun()
 
 
-    st.divider()
 
-    st.caption(
-        "Powered by Gemini AI + SQLite"
-    )
+    if uploaded_file:
 
 
+        if (
+            st.session_state.current_file
+            != uploaded_file.name
+        ):
 
-# ----------------------------------
-# FILE CHECK
-# ----------------------------------
-
-if uploaded_file is None:
-
-    if st.session_state.database:
-
-        st.session_state.database.close()
-
-
-    st.session_state.database = None
-    st.session_state.schema = None
-    st.session_state.file_id = None
-
-
-    st.info(
-        "📂 Upload a CSV or Excel file to start."
-    )
-
-    st.stop()
-
-
-
-# ----------------------------------
-# FILE HASH
-# ----------------------------------
-
-file_bytes = uploaded_file.getvalue()
-
-file_id = hashlib.sha256(
-    file_bytes
-).hexdigest()
-
-
-
-# ----------------------------------
-# DATABASE CREATION
-# ----------------------------------
-
-if st.session_state.file_id != file_id:
-
-    try:
-
-        df = load_file(uploaded_file)
-
-
-        connection = create_database(df)
-
-
-        # Close previous connection
-        if st.session_state.database:
 
             try:
-                st.session_state.database.close()
 
-            except Exception:
-                pass
-
-
-        st.session_state.database = connection
-
-
-        st.session_state.schema = get_schema(
-            connection
-        )
+                df = (
+                    st.session_state
+                    .data_engine
+                    .load_file(uploaded_file)
+                )
 
 
-        st.session_state.file_id = file_id
+                st.session_state.schema = (
+                    st.session_state
+                    .data_engine
+                    .get_schema()
+                )
 
 
-        st.session_state.messages = []
+                st.session_state.current_file = (
+                    uploaded_file.name
+                )
 
 
-        st.success(
-            "Database created successfully!"
-        )
+                st.session_state.messages = []
 
 
-    except Exception as error:
-
-        st.error(
-            f"File processing failed: {error}"
-        )
-
-        st.stop()
+                st.success(
+                    "Database ready!"
+                )
 
 
+            except Exception as error:
 
-# ----------------------------------
-# SIDEBAR DATABASE INFO
-# ----------------------------------
+                st.error(
+                    str(error)
+                )
 
-with st.sidebar:
 
-    st.success(
-        "Database ready!"
-    )
+
+    if st.session_state.schema:
+
+
+        with st.expander(
+            "🗄 Database Schema"
+        ):
+
+            st.code(
+                st.session_state.schema
+            )
+
+
+
+# --------------------------------
+# DATA PREVIEW
+# --------------------------------
+
+if st.session_state.schema:
 
 
     with st.expander(
-        "🗄️ Database Schema"
+        "📊 Data Preview",
+        expanded=True
     ):
 
-        st.code(
-            st.session_state.schema
-        )
+
+        try:
+
+            preview = (
+                st.session_state
+                .data_engine
+                .preview(10)
+            )
+
+
+            st.dataframe(
+                preview,
+                use_container_width=True
+            )
+
+
+        except Exception as error:
+
+            st.error(
+                "Preview error: " + str(error)
+            )
+
+
+else:
+
+    st.info(
+        "Please upload CSV or Excel file."
+    )
 
 
 
-# ----------------------------------
-# DATA PREVIEW
-# ----------------------------------
-
-with st.expander(
-    "📊 Uploaded Data Preview",
-    expanded=True
-):
-
-    try:
-
-        preview = pd.read_sql_query(
-            """
-            SELECT *
-            FROM uploaded_data
-            LIMIT 5
-            """,
-            st.session_state.database
-        )
-
-
-        st.dataframe(
-            preview,
-            use_container_width=True
-        )
-
-
-    except Exception as error:
-
-        st.error(
-            f"Preview error: {error}"
-        )
-
-
-
-# ----------------------------------
+# --------------------------------
 # CHAT HISTORY
-# ----------------------------------
+# --------------------------------
 
 for message in st.session_state.messages:
 
@@ -233,64 +183,18 @@ for message in st.session_state.messages:
         message["role"]
     ):
 
-
-        if message["role"] == "user":
-
-            st.markdown(
-                message["content"]
-            )
-
-
-        else:
-
-
-            if message.get("sql"):
-
-                st.markdown(
-                    "**Generated SQL Query**"
-                )
-
-                st.code(
-                    message["sql"],
-                    language="sql"
-                )
+        st.markdown(
+            message["content"]
+        )
 
 
 
-            if message.get("result") is not None:
-
-
-                st.markdown(
-                    "**Query Results**"
-                )
-
-
-                st.dataframe(
-                    message["result"],
-                    use_container_width=True
-                )
-
-
-                st.caption(
-                    f"{len(message['result'])} rows returned"
-                )
-
-
-
-            if message.get("error"):
-
-                st.error(
-                    message["error"]
-                )
-
-
-
-# ----------------------------------
-# CHAT INPUT
-# ----------------------------------
+# --------------------------------
+# USER QUESTION
+# --------------------------------
 
 question = st.chat_input(
-    "Ask a question about your uploaded data..."
+    "Ask your question..."
 )
 
 
@@ -306,48 +210,50 @@ if question:
     )
 
 
-    with st.chat_message("user"):
+    with st.chat_message(
+        "user"
+    ):
 
-        st.markdown(question)
+        st.write(question)
 
 
 
-    with st.chat_message("assistant"):
+    with st.chat_message(
+        "assistant"
+    ):
 
 
         with st.spinner(
-            "Generating SQL and fetching data..."
+            "Generating answer..."
         ):
 
 
             try:
 
 
-                history = []
+                if not st.session_state.schema:
+
+                    raise Exception(
+                        "Upload data first."
+                    )
 
 
-                sql = generate_sql(
 
-                    question=question,
+                # Generate SQL
 
-                    schema=st.session_state.schema,
-
-                    history=history
+                sql = (
+                    st.session_state
+                    .ai_engine
+                    .generate_sql(
+                        question,
+                        st.session_state.schema
+                    )
                 )
 
 
 
-                result = execute_safe_query(
-
-                    st.session_state.database,
-
-                    sql
-                )
-
-
-
-                st.markdown(
-                    "**Generated SQL Query**"
+                st.subheader(
+                    "🧠 Generated SQL"
                 )
 
 
@@ -358,8 +264,18 @@ if question:
 
 
 
-                st.markdown(
-                    "**Query Results**"
+                # Execute SQL
+
+                result = (
+                    st.session_state
+                    .data_engine
+                    .execute_query(sql)
+                )
+
+
+
+                st.subheader(
+                    "📊 Result"
                 )
 
 
@@ -370,18 +286,21 @@ if question:
 
 
 
-                st.caption(
-                    f"{len(result)} rows returned"
-                )
+                # Save history
 
+                history_text = (
+                    "Generated SQL:\n\n"
+                    + sql
+                    + "\n\n"
+                    + "Rows returned: "
+                    + str(len(result))
+                )
 
 
                 st.session_state.messages.append(
                     {
                         "role": "assistant",
-                        "sql": sql,
-                        "result": result,
-                        "error": None
+                        "content": history_text
                     }
                 )
 
@@ -390,16 +309,20 @@ if question:
             except Exception as error:
 
 
+                error_text = (
+                    "❌ Error: "
+                    + str(error)
+                )
+
+
                 st.error(
-                    str(error)
+                    error_text
                 )
 
 
                 st.session_state.messages.append(
                     {
                         "role": "assistant",
-                        "sql": None,
-                        "result": None,
-                        "error": str(error)
+                        "content": error_text
                     }
                 )
