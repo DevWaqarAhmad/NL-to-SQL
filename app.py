@@ -4,6 +4,7 @@ from data_engine import DataEngine
 from ai_engine import AIEngine
 from visualizer import Visualizer
 from sql_validator import execute_safe_query
+from excel_editor import ExcelEditor
 
 
 
@@ -40,6 +41,14 @@ if "ai_engine" not in st.session_state:
 
 if "visualizer" not in st.session_state:
     st.session_state.visualizer = Visualizer()
+
+
+if "editor" not in st.session_state:
+    st.session_state.editor = ExcelEditor()
+
+
+if "uploaded_df" not in st.session_state:
+    st.session_state.uploaded_df = None
 
 
 if "schema" not in st.session_state:
@@ -86,9 +95,18 @@ with st.sidebar:
 
             try:
 
-                st.session_state.data_engine.load_file(
-                    uploaded_file
+                df = (
+                    st.session_state
+                    .data_engine
+                    .load_file(
+                        uploaded_file
+                    )
                 )
+
+
+                # Save dataframe
+                st.session_state.uploaded_df = df
+
 
 
                 st.session_state.schema = (
@@ -157,6 +175,29 @@ if st.session_state.schema:
                 preview,
                 use_container_width=True
             )
+
+
+
+            # Download Excel
+
+            if st.session_state.uploaded_df is not None:
+
+
+                excel_file = (
+                    st.session_state
+                    .editor
+                    .export_excel(
+                        st.session_state.uploaded_df
+                    )
+                )
+
+
+                st.download_button(
+                    label="⬇ Download Updated Excel",
+                    data=excel_file,
+                    file_name="updated_data.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
 
 
         except Exception as error:
@@ -264,7 +305,7 @@ if question:
 
 
                 # -------------------------
-                # Safe SQL Execution
+                # Execute Safe SQL
                 # -------------------------
 
                 result = execute_safe_query(
@@ -319,10 +360,6 @@ if question:
                 )
 
 
-
-                # -------------------------
-                # Optional Sections
-                # -------------------------
 
                 with st.expander(
                     "💬 View AI Explanation"
