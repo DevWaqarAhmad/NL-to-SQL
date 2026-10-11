@@ -3,6 +3,8 @@ import streamlit as st
 from data_engine import DataEngine
 from ai_engine import AIEngine
 from visualizer import Visualizer
+from sql_validator import execute_safe_query
+
 
 
 # --------------------------------
@@ -118,7 +120,6 @@ with st.sidebar:
 
 
     if st.session_state.schema:
-
 
         with st.expander(
             "🗄 Database Schema"
@@ -263,13 +264,14 @@ if question:
 
 
                 # -------------------------
-                # Execute SQL
+                # Safe SQL Execution
                 # -------------------------
 
-                result = (
+                result = execute_safe_query(
                     st.session_state
                     .data_engine
-                    .execute_query(sql)
+                    .connection,
+                    sql
                 )
 
 
@@ -346,7 +348,7 @@ if question:
                     else:
 
                         st.info(
-                            "No visualization available for this result."
+                            "No visualization available."
                         )
 
 

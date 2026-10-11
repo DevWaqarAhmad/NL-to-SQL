@@ -1,7 +1,4 @@
-
-import sqlite3
 import time
-import threading
 import pandas as pd
 
 
@@ -9,12 +6,9 @@ import pandas as pd
 # CONFIGURATION
 # ----------------------------------------
 
-MAX_EXECUTION_TIME = 10  # Seconds
+MAX_EXECUTION_TIME = 10
 MAX_RESULT_ROWS = 1000
 
-# Protect concurrent operations on the same
-# SQLite connection in our local Streamlit app.
-_DB_LOCK = threading.RLock()
 
 
 # ----------------------------------------
@@ -23,165 +17,168 @@ _DB_LOCK = threading.RLock()
 
 def validate_sql(sql):
     """
-    Validate AI-generated SQL before execution.
-    Only read-only SELECT / WITH queries are allowed.
+    Validate AI generated SQL.
+
+    Allowed:
+    - SELECT
+    - WITH (CTE)
+
+    Block:
+    - INSERT
+    - UPDATE
+    - DELETE
+    - DROP
+    - ALTER
     """
 
     if not isinstance(sql, str):
-        raise ValueError("SQL query must be a string.")
+
+        raise ValueError(
+            "SQL must be text."
+        )
+
 
     sql = sql.strip()
 
-    if not sql:
-        raise ValueError("SQL query is empty.")
 
-    if sql.upper() == "CANNOT_ANSWER":
+    if not sql:
+
         raise ValueError(
-            "This question cannot be answered using "
-            "the uploaded data."
+            "SQL query is empty."
         )
+
 
     normalized = sql.lower()
 
+
+
+    # Only SELECT / WITH
+
     if not (
-        normalized.startswith("select ")
-        or normalized.startswith("select\n")
-        or normalized.startswith("select\t")
-        or normalized.startswith("with ")
-        or normalized.startswith("with\n")
-        or normalized.startswith("with\t")
+        normalized.startswith("select")
+        or normalized.startswith("with")
     ):
+
         raise ValueError(
             "Only SELECT queries are allowed."
         )
 
-    # Reject multiple statements. SQLite's
-    # execute() will also enforce this.
-    if ";" in sql.rstrip("; \n\r\t"):
+
+
+    # Block multiple queries
+
+    if ";" in sql.rstrip("; \n\t"):
+
         raise ValueError(
             "Multiple SQL statements are not allowed."
         )
 
+
+
+    # Dangerous commands
+
+    blocked_keywords = [
+
+        "insert",
+        "update",
+        "delete",
+        "drop",
+        "alter",
+        "truncate",
+        "create",
+        "replace",
+        "attach",
+        "detach"
+
+    ]
+
+
+    for keyword in blocked_keywords:
+
+        if keyword in normalized:
+
+            raise ValueError(
+                f"Blocked SQL keyword: {keyword}"
+            )
+
+
+
+    # Only uploaded_data table
+
+    if "uploaded_data" not in normalized:
+
+        raise ValueError(
+            "Only uploaded_data table can be queried."
+        )
+
+
     return sql
 
 
+
+
 # ----------------------------------------
-# SAFE SQL EXECUTION
+# SAFE QUERY EXECUTION
 # ----------------------------------------
 
 def execute_safe_query(connection, sql):
+
     """
-    Execute AI-generated SQL with:
-      - SQLite read-only mode
-      - SQLite authorizer
-      - Execution timeout
-      - Result row limit
+    Execute validated SQL safely.
+    Returns pandas DataFrame.
     """
+
 
     sql = validate_sql(sql)
 
-    allowed_actions = {
-        sqlite3.SQLITE_SELECT,
-        sqlite3.SQLITE_READ,
-        sqlite3.SQLITE_FUNCTION,
-    }
 
-    if hasattr(sqlite3, "SQLITE_RECURSIVE"):
-        allowed_actions.add(
-            sqlite3.SQLITE_RECURSIVE
+
+    start_time = time.time()
+
+
+
+    try:
+
+
+        result = connection.execute(
+            sql
+        ).fetchdf()
+
+
+
+        execution_time = (
+            time.time() - start_time
         )
 
-    def authorizer(action, arg1, arg2, db_name, source):
-        """
-        Allow reading uploaded_data only.
-        Block modifying database operations.
-        """
 
-        if action == sqlite3.SQLITE_READ:
-            if (
-                db_name != "main"
-                or arg1 != "uploaded_data"
-            ):
-                return sqlite3.SQLITE_DENY
 
-            return sqlite3.SQLITE_OK
+        if execution_time > MAX_EXECUTION_TIME:
 
-        if action in allowed_actions:
-            return sqlite3.SQLITE_OK
+            raise TimeoutError(
+                "Query execution timeout."
+            )
 
-        return sqlite3.SQLITE_DENY
 
-    start_time = time.monotonic()
 
-    def progress_handler():
-        elapsed = time.monotonic() - start_time
+        # Limit output rows
 
-        if elapsed > MAX_EXECUTION_TIME:
-            return 1
+        if len(result) > MAX_RESULT_ROWS:
 
-        return 0
+            result = result.head(
+                MAX_RESULT_ROWS
+            )
 
-    with _DB_LOCK:
+            result.attrs["truncated"] = True
 
-        # Enable read-only mode BEFORE installing
-        # the authorizer.
-        connection.execute(
-            "PRAGMA query_only = ON"
+
+
+        return result
+
+
+
+    except Exception as error:
+
+
+        raise Exception(
+            f"SQL execution failed: {error}"
         )
-
-        connection.set_authorizer(authorizer)
-
-        connection.set_progress_handler(
-            progress_handler,
-            1000
-        )
-
-        try:
-            # Execute one SQL statement only.
-            cursor = connection.execute(sql)
-
-            if cursor.description is None:
-                raise ValueError(
-                    "Query did not return any results."
-                )
-
-            columns = [
-                item[0] for item in cursor.description
-            ]
-
-            # Fetch at most 1001 rows to detect
-            # whether the display limit is reached.
-            rows = cursor.fetchmany(
-                MAX_RESULT_ROWS + 1
-            )
-
-            truncated = len(rows) > MAX_RESULT_ROWS
-
-            if truncated:
-                rows = rows[:MAX_RESULT_ROWS]
-
-            result = pd.DataFrame(
-                rows,
-                columns=columns
-            )
-
-            if truncated:
-                result.attrs["truncated"] = True
-
-            return result
-
-        except sqlite3.OperationalError as error:
-            if "interrupted" in str(error).lower():
-                raise TimeoutError(
-                    "SQL query exceeded the "
-                    f"{MAX_EXECUTION_TIME}-second limit."
-                ) from error
-
-            raise
-
-        finally:
-            connection.set_progress_handler(
-                None, 0
-            )
-
-            connection.set_authorizer(None)
