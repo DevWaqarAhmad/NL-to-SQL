@@ -8,20 +8,16 @@ from google import genai
 load_dotenv()
 
 
-
 class FileAgent:
 
 
     def __init__(self):
 
-
         api_key = os.getenv(
             "GEMINI_API_KEY"
         )
 
-
         if not api_key:
-
             raise ValueError(
                 "Gemini API key missing"
             )
@@ -41,83 +37,48 @@ class FileAgent:
 
 
         prompt = f"""
-
 You are an AI Excel editing assistant.
 
-Your job is to understand user commands
-and convert them into JSON actions.
-
+Convert user command into JSON only.
 
 Available columns:
 
 {columns}
 
 
-
-Allowed actions:
-
-
-1. delete
-
-Example:
-
-User:
-Delete all records where Country is Pakistan
+Allowed JSON actions:
 
 
-Return:
+DELETE:
 
 {{
 "action":"delete",
-"column":"Country",
-"value":"Pakistan"
+"column":"Column_Name",
+"value":"Value"
 }}
 
 
-
-2. update
-
-Example:
-
-User:
-Change all Ford brands to Toyota
-
-
-Return:
+UPDATE:
 
 {{
 "action":"update",
-"column":"Car_Brand",
-"old_value":"Ford",
-"new_value":"Toyota"
+"column":"Column_Name",
+"old_value":"old",
+"new_value":"new"
 }}
 
 
-
-3. add
-
-Example:
-
-User:
-Add a new car Toyota Corolla Pakistan
-
-
-Return:
+ADD:
 
 {{
 "action":"add",
 "data":{{
-"Car_Brand":"Toyota",
-"Car_Model":"Corolla",
-"Country":"Pakistan"
+"Column":"Value"
 }}
 }}
 
 
-
-4. remove_duplicates
-
-Return:
+REMOVE DUPLICATES:
 
 {{
 "action":"remove_duplicates"
@@ -127,11 +88,10 @@ Return:
 
 Rules:
 
-- Return ONLY JSON
-- Never invent columns
-- Use exact column names
-- Do not explain
-
+- Return ONLY JSON.
+- No explanation.
+- Use exact column names.
+- Never create fake columns.
 
 
 User command:
@@ -141,28 +101,61 @@ User command:
 """
 
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
+        try:
+
+            response = self.client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
 
 
-        text = response.text.strip()
+            if not response.text:
+
+                raise Exception(
+                    "Gemini returned empty response"
+                )
+
+
+            text = response.text.strip()
 
 
 
-        text = text.replace(
-            "```json",
-            ""
-        )
+            # Remove markdown blocks
+
+            text = text.replace(
+                "```json",
+                ""
+            )
+
+            text = text.replace(
+                "```",
+                ""
+            )
 
 
-        text = text.replace(
-            "```",
-            ""
-        )
+            text = text.strip()
 
 
-        return json.loads(
-            text.strip()
-        )
+
+            action = json.loads(
+                text
+            )
+
+
+            return action
+
+
+
+        except json.JSONDecodeError:
+
+            raise Exception(
+                "Gemini returned invalid JSON:\n"
+                + text
+            )
+
+
+        except Exception as error:
+
+            raise Exception(
+                f"File Agent Error: {error}"
+            )

@@ -124,7 +124,9 @@ with st.sidebar:
                 )
 
 
-                st.session_state.current_file = uploaded_file.name
+                st.session_state.current_file = (
+                    uploaded_file.name
+                )
 
 
                 st.session_state.messages = []
@@ -146,7 +148,7 @@ with st.sidebar:
     if st.session_state.schema:
 
         with st.expander(
-            "🗄 Schema"
+            "🗄 Database Schema"
         ):
 
             st.code(
@@ -174,7 +176,6 @@ if st.session_state.uploaded_df is not None:
         )
 
 
-
     excel_file = (
         st.session_state
         .editor
@@ -185,7 +186,7 @@ if st.session_state.uploaded_df is not None:
 
 
     st.download_button(
-        "⬇ Download Updated Excel",
+        label="⬇ Download Updated Excel",
         data=excel_file,
         file_name="updated_data.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -247,7 +248,7 @@ if question:
 
 
         with st.spinner(
-            "Updating file..."
+            "Processing request..."
         ):
 
 
@@ -280,7 +281,7 @@ if question:
                 # EDIT MODE
                 # =================================
 
-                if intent["type"] == "edit":
+                if intent.get("type") == "edit":
 
 
                     st.subheader(
@@ -302,23 +303,45 @@ if question:
                     )
 
 
-                    st.code(
-                        action,
-                        language="json"
+                    st.json(
+                        action
                     )
+
 
 
                     updated_df = (
                         st.session_state
                         .editor
                         .execute_action(
-                            st.session_state.uploaded_df,
+                            st.session_state.uploaded_df.copy(),
                             action
                         )
                     )
 
 
+
+                    # Save dataframe
+
                     st.session_state.uploaded_df = updated_df
+
+
+
+                    # Reload DuckDB
+
+                    st.session_state.data_engine.reload_database(
+                        updated_df
+                    )
+
+
+
+                    # Refresh schema
+
+                    st.session_state.schema = (
+                        st.session_state
+                        .data_engine
+                        .get_schema()
+                    )
+
 
 
                     st.success(
@@ -385,8 +408,14 @@ if question:
                 )
 
 
+
                 st.subheader(
                     "📊 Query Result"
+                )
+
+
+                st.caption(
+                    f"{len(result)} rows returned"
                 )
 
 
@@ -394,6 +423,7 @@ if question:
                     result,
                     use_container_width=True
                 )
+
 
 
                 answer = (
@@ -406,11 +436,14 @@ if question:
                 )
 
 
+
                 with st.expander(
                     "💬 AI Explanation"
                 ):
 
-                    st.write(answer)
+                    st.write(
+                        answer
+                    )
 
 
 
@@ -427,12 +460,20 @@ if question:
                     "📈 Visualization"
                 ):
 
+
                     if chart:
 
                         st.plotly_chart(
                             chart,
                             use_container_width=True
                         )
+
+                    else:
+
+                        st.info(
+                            "No visualization available."
+                        )
+
 
 
                 st.session_state.messages.append(
@@ -453,9 +494,24 @@ if question:
                 )
 
 
+
             except Exception as error:
 
 
+                error_text = (
+                    "❌ Error: "
+                    + str(error)
+                )
+
+
                 st.error(
-                    str(error)
+                    error_text
+                )
+
+
+                st.session_state.messages.append(
+                    {
+                        "role":"assistant",
+                        "content":error_text
+                    }
                 )
