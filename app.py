@@ -2,6 +2,7 @@ import streamlit as st
 
 from data_engine import DataEngine
 from ai_engine import AIEngine
+from visualizer import Visualizer
 
 
 # --------------------------------
@@ -22,6 +23,7 @@ st.caption(
 )
 
 
+
 # --------------------------------
 # SESSION STATE
 # --------------------------------
@@ -32,6 +34,10 @@ if "data_engine" not in st.session_state:
 
 if "ai_engine" not in st.session_state:
     st.session_state.ai_engine = AIEngine()
+
+
+if "visualizer" not in st.session_state:
+    st.session_state.visualizer = Visualizer()
 
 
 if "schema" not in st.session_state:
@@ -133,7 +139,7 @@ if st.session_state.schema:
 
     with st.expander(
         "📊 Data Preview",
-        expanded=True
+        expanded=False
     ):
 
 
@@ -172,7 +178,6 @@ else:
 # --------------------------------
 
 for message in st.session_state.messages:
-
 
     with st.chat_message(
         message["role"]
@@ -270,7 +275,12 @@ if question:
 
 
                 st.subheader(
-                    "📊 Result"
+                    "📊 Query Result"
+                )
+
+
+                st.caption(
+                    f"{len(result)} rows returned"
                 )
 
 
@@ -295,26 +305,61 @@ if question:
                 )
 
 
-                st.subheader(
-                    "💬 AI Answer"
-                )
 
+                # -------------------------
+                # Visualization
+                # -------------------------
 
-                st.write(
-                    answer
+                chart = (
+                    st.session_state
+                    .visualizer
+                    .create_chart(result)
                 )
 
 
 
                 # -------------------------
-                # Save Chat History
+                # Optional Sections
+                # -------------------------
+
+                with st.expander(
+                    "💬 View AI Explanation"
+                ):
+
+                    st.write(
+                        answer
+                    )
+
+
+
+                with st.expander(
+                    "📈 View Visualization"
+                ):
+
+                    if chart:
+
+                        st.plotly_chart(
+                            chart,
+                            use_container_width=True
+                        )
+
+                    else:
+
+                        st.info(
+                            "No visualization available for this result."
+                        )
+
+
+
+                # -------------------------
+                # Save History
                 # -------------------------
 
                 history_text = (
                     "### 🧠 SQL Query\n\n"
                     + sql
                     + "\n\n"
-                    + "### 💬 AI Answer\n\n"
+                    + "### 💬 AI Explanation\n\n"
                     + answer
                 )
 
