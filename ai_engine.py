@@ -72,3 +72,45 @@ User question:
 
 
         return sql.strip()
+
+
+
+    def generate_answer(self, question, result):
+
+        prompt = f"""
+
+You are an AI Data Analyst.
+
+Answer the user question based only on the data result.
+
+User question:
+
+{question}
+
+
+Data result:
+
+{result}
+
+
+Rules:
+
+- Reply ONLY in the same language used by the user.
+- If user asks in English, answer in English.
+- If user asks in Urdu, answer in Urdu.
+- If user asks in Roman Urdu, answer in Roman Urdu.
+- Never change language automatically.
+- Keep answer short and clear.
+- Do not invent information.
+- If result is empty, explain that no matching data was found.
+
+"""
+
+
+        response = self.client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+
+        return response.text.strip()

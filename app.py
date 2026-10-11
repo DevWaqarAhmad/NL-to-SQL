@@ -73,18 +73,13 @@ with st.sidebar:
     if uploaded_file:
 
 
-        if (
-            st.session_state.current_file
-            != uploaded_file.name
-        ):
+        if st.session_state.current_file != uploaded_file.name:
 
 
             try:
 
-                df = (
-                    st.session_state
-                    .data_engine
-                    .load_file(uploaded_file)
+                st.session_state.data_engine.load_file(
+                    uploaded_file
                 )
 
 
@@ -210,21 +205,17 @@ if question:
     )
 
 
-    with st.chat_message(
-        "user"
-    ):
+    with st.chat_message("user"):
 
         st.write(question)
 
 
 
-    with st.chat_message(
-        "assistant"
-    ):
+    with st.chat_message("assistant"):
 
 
         with st.spinner(
-            "Generating answer..."
+            "Analyzing data..."
         ):
 
 
@@ -239,7 +230,9 @@ if question:
 
 
 
+                # -------------------------
                 # Generate SQL
+                # -------------------------
 
                 sql = (
                     st.session_state
@@ -264,7 +257,9 @@ if question:
 
 
 
+                # -------------------------
                 # Execute SQL
+                # -------------------------
 
                 result = (
                     st.session_state
@@ -286,14 +281,41 @@ if question:
 
 
 
-                # Save history
+                # -------------------------
+                # AI Explanation
+                # -------------------------
+
+                answer = (
+                    st.session_state
+                    .ai_engine
+                    .generate_answer(
+                        question,
+                        result.to_string()
+                    )
+                )
+
+
+                st.subheader(
+                    "💬 AI Answer"
+                )
+
+
+                st.write(
+                    answer
+                )
+
+
+
+                # -------------------------
+                # Save Chat History
+                # -------------------------
 
                 history_text = (
-                    "Generated SQL:\n\n"
+                    "### 🧠 SQL Query\n\n"
                     + sql
                     + "\n\n"
-                    + "Rows returned: "
-                    + str(len(result))
+                    + "### 💬 AI Answer\n\n"
+                    + answer
                 )
 
 
