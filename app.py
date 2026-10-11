@@ -34,43 +34,94 @@ st.caption(
 # --------------------------------
 
 if "data_engine" not in st.session_state:
+
     st.session_state.data_engine = DataEngine()
 
 
+
 if "ai_engine" not in st.session_state:
-    st.session_state.ai_engine = AIEngine()
+
+    try:
+
+        st.session_state.ai_engine = AIEngine()
+
+    except Exception as error:
+
+        st.error(
+            f"AI Engine Error: {error}"
+        )
+
+        st.stop()
+
 
 
 if "visualizer" not in st.session_state:
+
     st.session_state.visualizer = Visualizer()
 
 
+
 if "editor" not in st.session_state:
+
     st.session_state.editor = ExcelEditor()
 
 
+
 if "intent_router" not in st.session_state:
-    st.session_state.intent_router = IntentRouter()
+
+    try:
+
+        st.session_state.intent_router = IntentRouter()
+
+    except Exception as error:
+
+        st.error(
+            f"Intent Router Error: {error}"
+        )
+
+        st.stop()
+
 
 
 if "file_agent" not in st.session_state:
-    st.session_state.file_agent = FileAgent()
+
+    try:
+
+        st.session_state.file_agent = FileAgent()
+
+    except Exception as error:
+
+        st.error(
+            f"File Agent Error: {error}"
+        )
+
+        st.stop()
+
 
 
 if "uploaded_df" not in st.session_state:
+
     st.session_state.uploaded_df = None
 
 
+
 if "schema" not in st.session_state:
+
     st.session_state.schema = None
 
 
+
 if "messages" not in st.session_state:
+
     st.session_state.messages = []
 
 
+
 if "current_file" not in st.session_state:
+
     st.session_state.current_file = None
+
+
 
 
 
@@ -80,6 +131,7 @@ if "current_file" not in st.session_state:
 
 with st.sidebar:
 
+
     st.header("⚙️ Upload Data")
 
 
@@ -87,6 +139,7 @@ with st.sidebar:
         "Upload CSV / Excel",
         type=["csv", "xlsx"]
     )
+
 
 
     if st.button("🗑 Clear Chat"):
@@ -100,10 +153,14 @@ with st.sidebar:
     if uploaded_file:
 
 
-        if st.session_state.current_file != uploaded_file.name:
+        if (
+            st.session_state.current_file
+            != uploaded_file.name
+        ):
 
 
             try:
+
 
                 df = (
                     st.session_state
@@ -114,7 +171,9 @@ with st.sidebar:
                 )
 
 
-                st.session_state.uploaded_df = df.copy()
+                st.session_state.uploaded_df = (
+                    df.copy()
+                )
 
 
                 st.session_state.schema = (
@@ -139,6 +198,7 @@ with st.sidebar:
 
             except Exception as error:
 
+
                 st.error(
                     str(error)
                 )
@@ -147,8 +207,9 @@ with st.sidebar:
 
     if st.session_state.schema:
 
+
         with st.expander(
-            "🗄 Database Schema"
+            "🗄 Schema"
         ):
 
             st.code(
@@ -157,8 +218,10 @@ with st.sidebar:
 
 
 
+
+
 # --------------------------------
-# DATA PREVIEW
+# DATA PREVIEW + DOWNLOAD
 # --------------------------------
 
 if st.session_state.uploaded_df is not None:
@@ -176,6 +239,7 @@ if st.session_state.uploaded_df is not None:
         )
 
 
+
     excel_file = (
         st.session_state
         .editor
@@ -185,19 +249,31 @@ if st.session_state.uploaded_df is not None:
     )
 
 
+
     st.download_button(
+
         label="⬇ Download Updated Excel",
+
         data=excel_file,
+
         file_name="updated_data.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+        mime=(
+            "application/vnd."
+            "openxmlformats-officedocument."
+            "spreadsheetml.sheet"
+        )
     )
 
 
 else:
 
+
     st.info(
         "Upload CSV or Excel file."
     )
+
+
 
 
 
@@ -206,6 +282,7 @@ else:
 # --------------------------------
 
 for message in st.session_state.messages:
+
 
     with st.chat_message(
         message["role"]
@@ -217,13 +294,17 @@ for message in st.session_state.messages:
 
 
 
+
+
 # --------------------------------
-# USER QUESTION
+# USER INPUT
 # --------------------------------
 
 question = st.chat_input(
     "Ask or edit your data..."
 )
+
+
 
 
 
@@ -244,11 +325,12 @@ if question:
 
 
 
+
     with st.chat_message("assistant"):
 
 
         with st.spinner(
-            "Processing request..."
+            "Understanding request..."
         ):
 
 
@@ -258,14 +340,14 @@ if question:
                 if st.session_state.uploaded_df is None:
 
                     raise Exception(
-                        "Upload file first."
+                        "Please upload file first."
                     )
 
 
 
-                # --------------------------------
-                # INTENT DETECTION
-                # --------------------------------
+                # -------------------------
+                # Intent Detection
+                # -------------------------
 
                 intent = (
                     st.session_state
@@ -277,9 +359,9 @@ if question:
 
 
 
-                # =================================
+                # =========================
                 # EDIT MODE
-                # =================================
+                # =========================
 
                 if intent.get("type") == "edit":
 
@@ -313,28 +395,27 @@ if question:
                         st.session_state
                         .editor
                         .execute_action(
-                            st.session_state.uploaded_df.copy(),
+                            st.session_state
+                            .uploaded_df,
                             action
                         )
                     )
 
 
 
-                    # Save dataframe
+                    st.session_state.uploaded_df = (
+                        updated_df
+                    )
 
-                    st.session_state.uploaded_df = updated_df
 
 
-
-                    # Reload DuckDB
+                    # Update DuckDB
 
                     st.session_state.data_engine.reload_database(
                         updated_df
                     )
 
 
-
-                    # Refresh schema
 
                     st.session_state.schema = (
                         st.session_state
@@ -349,15 +430,11 @@ if question:
                     )
 
 
-                    st.subheader(
-                        "📊 Updated Preview"
-                    )
-
-
                     st.dataframe(
                         updated_df,
                         use_container_width=True
                     )
+
 
 
                     st.session_state.messages.append(
@@ -369,118 +446,116 @@ if question:
                     )
 
 
-                    st.stop()
 
-
-
-                # =================================
+                # =========================
                 # QUERY MODE
-                # =================================
+                # =========================
+
+                else:
 
 
-                sql = (
-                    st.session_state
-                    .ai_engine
-                    .generate_sql(
-                        question,
-                        st.session_state.schema
-                    )
-                )
-
-
-                st.subheader(
-                    "🧠 Generated SQL"
-                )
-
-
-                st.code(
-                    sql,
-                    language="sql"
-                )
-
-
-
-                result = execute_safe_query(
-                    st.session_state
-                    .data_engine
-                    .connection,
-                    sql
-                )
-
-
-
-                st.subheader(
-                    "📊 Query Result"
-                )
-
-
-                st.caption(
-                    f"{len(result)} rows returned"
-                )
-
-
-                st.dataframe(
-                    result,
-                    use_container_width=True
-                )
-
-
-
-                answer = (
-                    st.session_state
-                    .ai_engine
-                    .generate_answer(
-                        question,
-                        result.to_string()
-                    )
-                )
-
-
-
-                with st.expander(
-                    "💬 AI Explanation"
-                ):
-
-                    st.write(
-                        answer
-                    )
-
-
-
-                chart = (
-                    st.session_state
-                    .visualizer
-                    .create_chart(
-                        result
-                    )
-                )
-
-
-                with st.expander(
-                    "📈 Visualization"
-                ):
-
-
-                    if chart:
-
-                        st.plotly_chart(
-                            chart,
-                            use_container_width=True
+                    sql = (
+                        st.session_state
+                        .ai_engine
+                        .generate_sql(
+                            question,
+                            st.session_state.schema
                         )
+                    )
 
-                    else:
 
-                        st.info(
-                            "No visualization available."
+
+                    st.subheader(
+                        "🧠 Generated SQL"
+                    )
+
+
+                    st.code(
+                        sql,
+                        language="sql"
+                    )
+
+
+
+                    result = execute_safe_query(
+
+                        st.session_state
+                        .data_engine
+                        .connection,
+
+                        sql
+                    )
+
+
+
+                    st.subheader(
+                        "📊 Query Result"
+                    )
+
+
+                    st.dataframe(
+                        result,
+                        use_container_width=True
+                    )
+
+
+
+                    answer = (
+                        st.session_state
+                        .ai_engine
+                        .generate_answer(
+                            question,
+                            result.to_string()
+                        )
+                    )
+
+
+
+                    with st.expander(
+                        "💬 AI Explanation"
+                    ):
+
+                        st.write(
+                            answer
                         )
 
 
 
-                st.session_state.messages.append(
-                    {
-                        "role":"assistant",
-                        "content":
-                        f"""
+                    chart = (
+                        st.session_state
+                        .visualizer
+                        .create_chart(
+                            result
+                        )
+                    )
+
+
+
+                    with st.expander(
+                        "📈 Visualization"
+                    ):
+
+
+                        if chart:
+
+                            st.plotly_chart(
+                                chart,
+                                use_container_width=True
+                            )
+
+                        else:
+
+                            st.info(
+                                "No visualization available."
+                            )
+
+
+
+                    st.session_state.messages.append(
+                        {
+                            "role":"assistant",
+                            "content":
+                            f"""
 ### 🧠 SQL Query
 
 {sql}
@@ -490,8 +565,8 @@ if question:
 
 {answer}
 """
-                    }
-                )
+                        }
+                    )
 
 
 

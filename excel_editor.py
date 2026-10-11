@@ -2,9 +2,7 @@ import pandas as pd
 from io import BytesIO
 
 
-
 class ExcelEditor:
-
 
 
     def execute_action(
@@ -13,14 +11,24 @@ class ExcelEditor:
         action
     ):
 
+        if df is None:
+
+            raise Exception(
+                "No data loaded."
+            )
+
+
+        df = df.copy()
+
+
         action_type = action.get(
             "action"
         )
 
 
-        # -------------------------
-        # DELETE DATA
-        # -------------------------
+        # =========================
+        # DELETE ROWS
+        # =========================
 
         if action_type == "delete":
 
@@ -34,11 +42,10 @@ class ExcelEditor:
             )
 
 
-            if column not in df.columns:
-
-                raise Exception(
-                    f"Column '{column}' not found"
-                )
+            self.validate_column(
+                df,
+                column
+            )
 
 
             df = df[
@@ -55,9 +62,9 @@ class ExcelEditor:
 
 
 
-        # -------------------------
-        # UPDATE DATA
-        # -------------------------
+        # =========================
+        # UPDATE VALUES
+        # =========================
 
         elif action_type == "update":
 
@@ -75,19 +82,21 @@ class ExcelEditor:
             )
 
 
-            if column not in df.columns:
-
-                raise Exception(
-                    f"Column '{column}' not found"
-                )
+            self.validate_column(
+                df,
+                column
+            )
 
 
             df[column] = (
+
                 df[column]
+                .astype(str)
                 .replace(
-                    old_value,
-                    new_value
+                    str(old_value),
+                    str(new_value)
                 )
+
             )
 
 
@@ -95,9 +104,9 @@ class ExcelEditor:
 
 
 
-        # -------------------------
-        # ADD NEW ROW
-        # -------------------------
+        # =========================
+        # ADD ROW
+        # =========================
 
         elif action_type == "add":
 
@@ -110,7 +119,7 @@ class ExcelEditor:
             if not data:
 
                 raise Exception(
-                    "No data provided"
+                    "No row data provided."
                 )
 
 
@@ -119,7 +128,7 @@ class ExcelEditor:
             )
 
 
-            df = pd.concat(
+            return pd.concat(
                 [
                     df,
                     new_row
@@ -128,13 +137,10 @@ class ExcelEditor:
             )
 
 
-            return df
 
-
-
-        # -------------------------
+        # =========================
         # REMOVE DUPLICATES
-        # -------------------------
+        # =========================
 
         elif action_type == "remove_duplicates":
 
@@ -152,14 +158,33 @@ class ExcelEditor:
         else:
 
             raise Exception(
-                f"Unknown action: {action_type}"
+                f"Unsupported action: {action_type}"
             )
 
 
 
-    # -------------------------
-    # OLD FUNCTIONS KEEP
-    # -------------------------
+    # =========================
+    # COLUMN VALIDATION
+    # =========================
+
+    def validate_column(
+        self,
+        df,
+        column
+    ):
+
+
+        if column not in df.columns:
+
+            raise Exception(
+                f"Column '{column}' not found."
+            )
+
+
+
+    # =========================
+    # MANUAL ADD
+    # =========================
 
     def add_row(
         self,
@@ -177,6 +202,10 @@ class ExcelEditor:
 
 
 
+    # =========================
+    # MANUAL UPDATE
+    # =========================
+
     def update_row(
         self,
         df,
@@ -185,20 +214,32 @@ class ExcelEditor:
     ):
 
 
+        df = df.copy()
+
+
         for key,value in data.items():
 
-            df.loc[index,key] = value
+            if key in df.columns:
+
+                df.loc[index,key] = value
 
 
         return df
 
 
 
+    # =========================
+    # MANUAL DELETE
+    # =========================
+
     def delete_row(
         self,
         df,
         index
     ):
+
+
+        df = df.copy()
 
 
         df = df.drop(
@@ -212,9 +253,9 @@ class ExcelEditor:
 
 
 
-    # -------------------------
-    # EXPORT FILE
-    # -------------------------
+    # =========================
+    # EXPORT EXCEL
+    # =========================
 
     def export_excel(
         self,

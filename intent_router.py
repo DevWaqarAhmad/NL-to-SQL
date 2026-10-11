@@ -1,11 +1,7 @@
-import os
 import json
 
-from dotenv import load_dotenv
-from google import genai
+from app.core.gemini import GeminiClient
 
-
-load_dotenv()
 
 
 class IntentRouter:
@@ -13,31 +9,29 @@ class IntentRouter:
 
     def __init__(self):
 
-        api_key = os.getenv(
-            "GEMINI_API_KEY"
-        )
-
-        self.client = genai.Client(
-            api_key=api_key
-        )
+        self.gemini = GeminiClient()
 
 
 
-    def classify(self, question):
+    def classify(
+        self,
+        question
+    ):
 
 
         prompt = f"""
 
 You are an AI data assistant.
 
-Classify the user request.
+Classify user request.
 
-There are only two types:
+Only two categories exist:
 
 
 1. query
 
-User wants to:
+User wants:
+
 - search data
 - analyze data
 - count records
@@ -45,14 +39,17 @@ User wants to:
 - generate reports
 
 
+
 2. edit
 
-User wants to:
+User wants:
+
 - delete records
 - add data
 - update values
 - modify spreadsheet
-- change columns
+- change data
+
 
 
 Return ONLY JSON.
@@ -64,7 +61,7 @@ Examples:
 User:
 show cars from Pakistan
 
-Output:
+JSON:
 
 {{
 "type":"query"
@@ -75,7 +72,7 @@ Output:
 User:
 delete all Pakistan records
 
-Output:
+JSON:
 
 {{
 "type":"edit"
@@ -86,7 +83,7 @@ Output:
 User:
 change Ford brand to Toyota
 
-Output:
+JSON:
 
 {{
 "type":"edit"
@@ -97,7 +94,7 @@ Output:
 User:
 how many cars are from China
 
-Output:
+JSON:
 
 {{
 "type":"query"
@@ -112,26 +109,60 @@ User request:
 """
 
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
+        try:
 
 
-        text = response.text.strip()
+            text = self.gemini.generate(
+                prompt
+            )
 
 
-        text = text.replace(
-            "```json",
-            ""
-        )
-
-        text = text.replace(
-            "```",
-            ""
-        )
+            text = text.strip()
 
 
-        return json.loads(
-            text.strip()
-        )
+
+            text = text.replace(
+                "```json",
+                ""
+            )
+
+
+            text = text.replace(
+                "```",
+                ""
+            )
+
+
+
+            result = json.loads(
+                text.strip()
+            )
+
+
+            if "type" not in result:
+
+                raise Exception(
+                    "Invalid intent response"
+                )
+
+
+            return result
+
+
+
+        except json.JSONDecodeError:
+
+
+            raise Exception(
+                "Intent Router returned invalid JSON:\n"
+                + text
+            )
+
+
+
+        except Exception as error:
+
+
+            raise Exception(
+                f"Intent Router Error: {error}"
+            )

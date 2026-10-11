@@ -1,69 +1,70 @@
-import os
-from dotenv import load_dotenv
-from google import genai
-
-
-load_dotenv()
+from app.core.gemini import GeminiClient
 
 
 class AIEngine:
 
+
     def __init__(self):
 
-        api_key = os.getenv("GEMINI_API_KEY")
-
-        if not api_key:
-            raise ValueError(
-                "Gemini API key missing in .env"
-            )
-
-        self.client = genai.Client(
-            api_key=api_key
-        )
+        self.gemini = GeminiClient()
 
 
-    def generate_sql(self, question, schema):
+
+    def generate_sql(
+        self,
+        question,
+        schema
+    ):
+
 
         prompt = f"""
+
 You are an expert AI Data Analyst.
 
 Understand user questions in any language.
 
 Convert natural language into DuckDB SQL.
 
+
 Database table:
+
 uploaded_data
 
 
 Available columns:
+
 {schema}
 
 
 Rules:
+
 - Return only SQL
 - Only SELECT queries
 - Never modify data
 - Use only uploaded_data table
+- Do not use markdown
 
 
 User question:
+
 {question}
+
 """
 
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
+        sql = self.gemini.generate(
+            prompt
         )
 
 
-        sql = response.text.strip()
+        sql = sql.strip()
 
 
         sql = sql.replace(
             "```sql",
             ""
         )
+
 
         sql = sql.replace(
             "```",
@@ -75,13 +76,19 @@ User question:
 
 
 
-    def generate_answer(self, question, result):
+    def generate_answer(
+        self,
+        question,
+        result
+    ):
+
 
         prompt = f"""
 
 You are an AI Data Analyst.
 
-Answer the user question based only on the data result.
+Answer the user question based only on the given data result.
+
 
 User question:
 
@@ -95,22 +102,21 @@ Data result:
 
 Rules:
 
-- Reply ONLY in the same language used by the user.
-- If user asks in English, answer in English.
-- If user asks in Urdu, answer in Urdu.
-- If user asks in Roman Urdu, answer in Roman Urdu.
-- Never change language automatically.
+- Reply only in the same language used by user.
+- English question = English answer.
+- Urdu question = Urdu answer.
+- Roman Urdu question = Roman Urdu answer.
 - Keep answer short and clear.
 - Do not invent information.
-- If result is empty, explain that no matching data was found.
+- If no data exists, explain clearly.
+
 
 """
 
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
+        answer = self.gemini.generate(
+            prompt
         )
 
 
-        return response.text.strip()
+        return answer.strip()

@@ -1,135 +1,148 @@
 import plotly.express as px
+import pandas as pd
+
 
 
 class Visualizer:
 
 
-    def create_chart(self, df):
+    def create_chart(
+        self,
+        df
+    ):
 
 
         if df is None or df.empty:
-            return None
-
-
-
-        columns = df.columns.tolist()
-
-
-
-        # --------------------------------
-        # Single value result
-        # --------------------------------
-
-        if (
-            len(df) == 1
-            and len(columns) == 1
-        ):
 
             return None
 
 
 
-        # --------------------------------
-        # Category + Numeric
-        # Example:
-        # Brand | Count
-        # Ford  | 120
-        # --------------------------------
+        try:
 
-        if len(columns) >= 2:
+            columns = df.columns.tolist()
 
 
-            first = columns[0]
-            second = columns[1]
 
+            # -------------------------
+            # Single value result
+            # Example:
+            # Total Sales = 5000
+            # -------------------------
 
             if (
-                df[second]
-                .dtype
-                != "object"
+                len(df) == 1
+                and len(columns) == 1
             ):
 
+                return None
 
-                fig = px.bar(
-                    df,
-                    x=first,
-                    y=second,
-                    title="Data Analysis"
+
+
+            # -------------------------
+            # Category + Numeric
+            # -------------------------
+
+            if len(columns) >= 2:
+
+
+                first = columns[0]
+                second = columns[1]
+
+
+                if pd.api.types.is_numeric_dtype(
+                    df[second]
+                ):
+
+
+                    return px.bar(
+                        df,
+                        x=first,
+                        y=second,
+                        title="Data Analysis"
+                    )
+
+
+
+            # -------------------------
+            # Single column
+            # Category distribution
+            # -------------------------
+
+            if len(columns) == 1:
+
+
+                col = columns[0]
+
+
+                counts = (
+
+                    df[col]
+                    .value_counts()
+                    .head(15)
+                    .reset_index()
+
                 )
 
 
-                return fig
+                counts.columns = [
+                    col,
+                    "Count"
+                ]
 
 
-
-        # --------------------------------
-        # Category only
-        # Example:
-        # Ford
-        # Toyota
-        # BMW
-        #
-        # Convert into counts
-        # --------------------------------
-
-
-        if len(columns) == 1:
-
-
-            col = columns[0]
-
-
-            counts = (
-                df[col]
-                .value_counts()
-                .reset_index()
-            )
-
-
-            counts.columns = [
-                col,
-                "Count"
-            ]
-
-
-
-            # Bar chart
-
-            fig = px.bar(
-                counts,
-                x=col,
-                y="Count",
-                title=f"{col} Distribution"
-            )
-
-
-            return fig
-
-
-
-        # --------------------------------
-        # Numeric columns
-        # --------------------------------
-
-        for col in columns:
-
-
-            if (
-                df[col]
-                .dtype
-                != "object"
-            ):
-
-
-                fig = px.histogram(
-                    df,
+                return px.bar(
+                    counts,
                     x=col,
-                    title="Numeric Distribution"
+                    y="Count",
+                    title=f"{col} Distribution"
                 )
 
 
-                return fig
+
+            # -------------------------
+            # Numeric columns
+            # -------------------------
+
+            for col in columns:
+
+
+                if pd.api.types.is_numeric_dtype(
+                    df[col]
+                ):
+
+
+                    return px.histogram(
+                        df,
+                        x=col,
+                        title=f"{col} Distribution"
+                    )
 
 
 
-        return None
+            # -------------------------
+            # Date column
+            # -------------------------
+
+            for col in columns:
+
+
+                if pd.api.types.is_datetime64_any_dtype(
+                    df[col]
+                ):
+
+
+                    return px.line(
+                        df,
+                        x=col,
+                        title=f"{col} Trend"
+                    )
+
+
+            return None
+
+
+
+        except Exception:
+
+            return None

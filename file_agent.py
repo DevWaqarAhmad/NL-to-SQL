@@ -1,11 +1,7 @@
-import os
 import json
 
-from dotenv import load_dotenv
-from google import genai
+from app.core.gemini import GeminiClient
 
-
-load_dotenv()
 
 
 class FileAgent:
@@ -13,19 +9,7 @@ class FileAgent:
 
     def __init__(self):
 
-        api_key = os.getenv(
-            "GEMINI_API_KEY"
-        )
-
-        if not api_key:
-            raise ValueError(
-                "Gemini API key missing"
-            )
-
-
-        self.client = genai.Client(
-            api_key=api_key
-        )
+        self.gemini = GeminiClient()
 
 
 
@@ -37,16 +21,20 @@ class FileAgent:
 
 
         prompt = f"""
+
 You are an AI Excel editing assistant.
 
 Convert user command into JSON only.
+
 
 Available columns:
 
 {columns}
 
 
-Allowed JSON actions:
+
+Allowed actions:
+
 
 
 DELETE:
@@ -56,6 +44,7 @@ DELETE:
 "column":"Column_Name",
 "value":"Value"
 }}
+
 
 
 UPDATE:
@@ -68,6 +57,7 @@ UPDATE:
 }}
 
 
+
 ADD:
 
 {{
@@ -76,6 +66,7 @@ ADD:
 "Column":"Value"
 }}
 }}
+
 
 
 REMOVE DUPLICATES:
@@ -94,6 +85,7 @@ Rules:
 - Never create fake columns.
 
 
+
 User command:
 
 {question}
@@ -103,24 +95,22 @@ User command:
 
         try:
 
-            response = self.client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
+
+            text = self.gemini.generate(
+                prompt
             )
 
 
-            if not response.text:
+            if not text:
 
                 raise Exception(
-                    "Gemini returned empty response"
+                    "Empty Gemini response"
                 )
 
 
-            text = response.text.strip()
+            text = text.strip()
 
 
-
-            # Remove markdown blocks
 
             text = text.replace(
                 "```json",
@@ -133,12 +123,8 @@ User command:
             )
 
 
-            text = text.strip()
-
-
-
             action = json.loads(
-                text
+                text.strip()
             )
 
 
@@ -148,13 +134,16 @@ User command:
 
         except json.JSONDecodeError:
 
+
             raise Exception(
-                "Gemini returned invalid JSON:\n"
+                "Invalid JSON returned by Gemini:\n"
                 + text
             )
 
 
+
         except Exception as error:
+
 
             raise Exception(
                 f"File Agent Error: {error}"

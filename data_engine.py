@@ -1,5 +1,6 @@
 import duckdb
 import pandas as pd
+
 from io import BytesIO
 
 
@@ -20,9 +21,9 @@ class DataEngine:
 
 
 
-    # --------------------------------
-    # LOAD FILE
-    # --------------------------------
+    # -------------------------------
+    # LOAD CSV / EXCEL
+    # -------------------------------
 
     def load_file(
         self,
@@ -40,17 +41,16 @@ class DataEngine:
         file_name = uploaded_file.name.lower()
 
 
-        file_buffer = BytesIO(
+        buffer = BytesIO(
             uploaded_file.getvalue()
         )
-
 
 
         if file_name.endswith(".csv"):
 
 
             df = pd.read_csv(
-                file_buffer
+                buffer
             )
 
 
@@ -58,7 +58,7 @@ class DataEngine:
 
 
             df = pd.read_excel(
-                file_buffer,
+                buffer,
                 engine="openpyxl"
             )
 
@@ -66,7 +66,7 @@ class DataEngine:
         else:
 
             raise ValueError(
-                "Only CSV and XLSX files supported."
+                "Only CSV and XLSX files are supported."
             )
 
 
@@ -74,12 +74,10 @@ class DataEngine:
         if df.empty:
 
             raise ValueError(
-                "File is empty."
+                "Uploaded file is empty."
             )
 
 
-
-        # Clean columns
 
         df.columns = [
 
@@ -95,24 +93,18 @@ class DataEngine:
         ]
 
 
-
-        self.current_df = df.copy()
-
-
-
         self.reload_database(
             df
         )
-
 
 
         return df
 
 
 
-    # --------------------------------
-    # RELOAD DATABASE AFTER EDIT
-    # --------------------------------
+    # -------------------------------
+    # UPDATE DATABASE
+    # -------------------------------
 
     def reload_database(
         self,
@@ -120,12 +112,11 @@ class DataEngine:
     ):
 
 
-        if df.empty:
+        if df is None or df.empty:
 
             raise ValueError(
-                "Updated data is empty."
+                "Data cannot be empty."
             )
-
 
 
         self.current_df = df.copy()
@@ -134,37 +125,44 @@ class DataEngine:
 
         self.connection.register(
             "temp_df",
-            df
+            self.current_df
         )
-
 
 
         self.connection.execute(
-            f"""
-            CREATE OR REPLACE TABLE {TABLE_NAME}
-            AS
-            SELECT *
-            FROM temp_df
-            """
-        )
 
+            f"""
+
+            CREATE OR REPLACE TABLE {TABLE_NAME}
+
+            AS
+
+            SELECT *
+
+            FROM temp_df
+
+            """
+
+        )
 
 
         return True
 
 
 
-    # --------------------------------
-    # GET SCHEMA
-    # --------------------------------
+    # -------------------------------
+    # SCHEMA
+    # -------------------------------
 
     def get_schema(
         self
     ):
 
 
-        schema_df = self.connection.execute(
+        schema = self.connection.execute(
+
             f"DESCRIBE {TABLE_NAME}"
+
         ).fetchdf()
 
 
@@ -172,8 +170,7 @@ class DataEngine:
         columns = []
 
 
-
-        for _, row in schema_df.iterrows():
+        for _, row in schema.iterrows():
 
 
             columns.append(
@@ -183,14 +180,13 @@ class DataEngine:
             )
 
 
-
         return ", ".join(columns)
 
 
 
-    # --------------------------------
-    # EXECUTE SQL
-    # --------------------------------
+    # -------------------------------
+    # QUERY EXECUTION
+    # -------------------------------
 
     def execute_query(
         self,
@@ -198,19 +194,15 @@ class DataEngine:
     ):
 
 
-        result = self.connection.execute(
+        return self.connection.execute(
             sql
         ).fetchdf()
 
 
 
-        return result
-
-
-
-    # --------------------------------
-    # PREVIEW DATA
-    # --------------------------------
+    # -------------------------------
+    # PREVIEW
+    # -------------------------------
 
     def preview(
         self,
@@ -221,22 +213,25 @@ class DataEngine:
         return self.connection.execute(
 
             f"""
+
             SELECT *
+
             FROM {TABLE_NAME}
+
             LIMIT {limit}
+
             """
 
         ).fetchdf()
 
 
 
-    # --------------------------------
-    # GET CURRENT DATAFRAME
-    # --------------------------------
+    # -------------------------------
+    # CURRENT DATA
+    # -------------------------------
 
     def get_dataframe(
         self
     ):
 
-
-        return self.current_df
+        return self.current_df.copy()
