@@ -1,0 +1,108 @@
+/* ========================================
+   DATAPILOT AI — GLOBAL STYLES
+   ======================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --dp-font-body: "Manrope", "Segoe UI", Arial, sans-serif;
+  --dp-font-display: "Sora", "Manrope", "Segoe UI", Arial, sans-serif;
+
+  font-family: var(--dp-font-body);
+  color: #10172d;
+  background-color: #f4f6fc;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f4f6fc;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--dp-font-display);
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(0, 15, 218, 0.35);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #000fda;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef0f8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c8dc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8f9ab7;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
