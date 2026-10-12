@@ -1,3 +1,9 @@
+"""DataPilot AI local development API.
+
+All datasets live in process memory. This is not a multi-user production service:
+authentication, storage, query sandboxing and resource limits are still needed.
+"""
+
 import io
 import json
 import uuid
@@ -16,9 +22,9 @@ from file_agent import FileAgent
 from sql_validator import execute_safe_query
 
 app = FastAPI(
-    title="AI Data Assistant API",
-    description="Universal Data Analysis and Excel Editing API",
-    version="1.3.0",
+    title="DataPilot AI API",
+    description="Universal CSV/Excel data analysis and editing (local development)",
+    version="1.4.0",
 )
 
 app.add_middleware(
@@ -29,11 +35,12 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-MAX_FILE_SIZE = 10 * 1024 * 1024
+MAX_FILE_SIZE = 200 * 1024 * 1024
 MAX_DATASETS = 10
-MAX_ROWS = 100000
+MAX_ROWS = 100_000
 MAX_COLUMNS = 100
 EDIT_PREVIEW_LIMIT = 20
+QUERY_RETURN_LIMIT = 1_000
 
 datasets = {}
 datasets_lock = Lock()
@@ -59,19 +66,15 @@ class EditDecisionRequest(BaseModel):
 
 
 def records(df, limit=10):
-    return json.loads(
-        df.head(limit).to_json(orient="records", date_format="iso")
-    )
+    """JSON-safe records for numpy scalars, dates and missing pandas values."""
+    return json.loads(df.head(limit).to_json(orient="records", date_format="iso"))
 
 
 def find_dataset(dataset_id):
     with datasets_lock:
         dataset = datasets.get(dataset_id)
     if dataset is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Dataset not found. Upload a file first.",
-        )
+        raise HTTPException(404, "Dataset not found. Please upload a file again.")
     return dataset
 
 
@@ -92,30 +95,36 @@ def get_file_agent():
 
 
 def preview_changes(original, updated, action):
-    """Compute actual affected rows from the same selection used by ExcelEditor."""
+    """Describe actual changed records, without changing either dataframe."""
     kind = action["action"]
+
     if kind in {"delete", "update"}:
         mask = excel_editor.get_filter_mask(original, action)
-        selected = original.loc[mask].copy()
+        selected = original.loc[mask]
+
         if kind == "delete":
             return {
                 "affected_rows": int(mask.sum()),
+                "matched_rows": int(mask.sum()),
                 "affected_preview": records(selected, EDIT_PREVIEW_LIMIT),
                 "changed_columns": list(original.columns),
+                "changes_preview": [],
             }
 
         column = action["column"]
-        # Filtered rows can include unchanged values. Count only actual changes.
         old_values = original.loc[mask, column].reset_index(drop=True)
         new_values = updated.loc[mask, column].reset_index(drop=True)
-        same = old_values.eq(new_values).fillna(False) | (
-            old_values.isna() & new_values.isna()
+
+        # Treat two nulls as equal, while counting null <-> non-null as a change.
+        same = (
+            old_values.eq(new_values).fillna(False)
+            | (old_values.isna() & new_values.isna())
         )
         changed_positions = (~same).to_numpy(dtype=bool)
-        before = selected.iloc[changed_positions].copy()
-        after = updated.loc[mask].iloc[changed_positions].copy()
-        # Row number refers to the uploaded dataframe (1-based data row index).
+        before = selected.iloc[changed_positions]
+        after = updated.loc[mask].iloc[changed_positions]
         row_numbers = (original.index.get_indexer(before.index) + 1).tolist()
+
         changes = []
         for i in range(min(len(before), EDIT_PREVIEW_LIMIT)):
             changes.append({
@@ -123,28 +132,33 @@ def preview_changes(original, updated, action):
                 "before": records(before.iloc[[i]], 1)[0],
                 "after": records(after.iloc[[i]], 1)[0],
             })
+
         return {
-            "affected_rows": len(before),
+            "affected_rows": int(len(before)),
             "matched_rows": int(mask.sum()),
-            "changed_columns": [column],
             "affected_preview": records(before, EDIT_PREVIEW_LIMIT),
+            "changed_columns": [column],
             "changes_preview": changes,
+            # Backward-compatible with the currently used React preview.
+            "before_after_preview": changes,
         }
 
     if kind == "add":
         appended = updated.iloc[len(original):]
         return {
-            "affected_rows": len(appended),
-            "changed_columns": list(action["data"].keys()),
+            "affected_rows": int(len(appended)),
             "affected_preview": records(appended, EDIT_PREVIEW_LIMIT),
+            "changed_columns": list(action["data"].keys()),
+            "changes_preview": [],
         }
 
     if kind == "remove_duplicates":
         duplicate_rows = original.loc[original.duplicated(keep="first")]
         return {
-            "affected_rows": len(duplicate_rows),
-            "changed_columns": list(original.columns),
+            "affected_rows": int(len(duplicate_rows)),
             "affected_preview": records(duplicate_rows, EDIT_PREVIEW_LIMIT),
+            "changed_columns": list(original.columns),
+            "changes_preview": [],
         }
 
     raise ValueError(f"Unsupported action: {kind}")
@@ -152,11 +166,7 @@ def preview_changes(original, updated, action):
 
 @app.get("/")
 def home():
-    return {
-        "application": "AI Data Assistant",
-        "status": "running",
-        "version": "1.3.0",
-    }
+    return {"application": "DataPilot AI", "status": "running", "version": "1.4.0"}
 
 
 @app.get("/health")
@@ -167,31 +177,33 @@ def health():
 @app.post("/upload")
 def upload_dataset(file: UploadFile = File(...)):
     filename = Path(file.filename or "").name
-    if Path(filename).suffix.lower() not in (".csv", ".xlsx"):
+    if Path(filename).suffix.lower() not in {".csv", ".xlsx"}:
         raise HTTPException(400, "Only CSV and XLSX files are supported.")
 
     content = file.file.read(MAX_FILE_SIZE + 1)
     if not content:
         raise HTTPException(400, "Uploaded file is empty.")
     if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(413, "File exceeds 10 MB.")
+        raise HTTPException(413, "File exceeds the 10 MB limit.")
 
+    with datasets_lock:
+        if len(datasets) >= MAX_DATASETS:
+            raise HTTPException(429, "Local dataset limit reached.")
+
+    engine = None
     try:
-        with datasets_lock:
-            if len(datasets) >= MAX_DATASETS:
-                raise HTTPException(429, "Local dataset limit reached.")
-
         stream = io.BytesIO(content)
         stream.name = filename
         engine = DataEngine()
         df = engine.load_file(stream)
+
         if df is None or df.empty:
-            raise ValueError("Dataset contains no rows.")
+            raise ValueError("Dataset contains no data rows.")
         if len(df) > MAX_ROWS or len(df.columns) > MAX_COLUMNS:
             raise ValueError("Dataset exceeds row or column limit.")
 
-        dataset_id = uuid.uuid4().hex
         schema = engine.get_schema()
+        dataset_id = uuid.uuid4().hex
         with datasets_lock:
             if len(datasets) >= MAX_DATASETS:
                 raise HTTPException(429, "Local dataset limit reached.")
@@ -211,16 +223,18 @@ def upload_dataset(file: UploadFile = File(...)):
             "filename": filename,
             "total_rows": len(df),
             "total_columns": len(df.columns),
-            "columns": [
-                {"name": str(col), "type": str(df[col].dtype)}
-                for col in df.columns
-            ],
+            "columns": [{"name": str(c), "type": str(df[c].dtype)} for c in df.columns],
             "schema": schema,
+            "revision": 0,
             "preview": records(df),
         }
     except HTTPException:
+        if engine is not None and all(d["engine"] is not engine for d in datasets.values()):
+            engine.close()
         raise
     except Exception as error:
+        if engine is not None:
+            engine.close()
         raise HTTPException(400, f"Upload failed: {error}") from error
 
 
@@ -234,6 +248,7 @@ def get_dataset(dataset_id: str):
             "filename": dataset["filename"],
             "total_rows": len(df),
             "total_columns": len(df.columns),
+            "columns": [{"name": str(c), "type": str(df[c].dtype)} for c in df.columns],
             "schema": dataset["schema"],
             "revision": dataset["revision"],
             "preview": records(df),
@@ -247,22 +262,32 @@ def query_dataset(request: QueryRequest):
         ai = get_ai()
         with dataset["lock"]:
             schema = dataset["schema"]
+
         sql = ai.generate_sql(request.question, schema)
-        # Existing SQL validation is NOT adequate for untrusted/public requests.
+
+        # Existing sql_validator is NOT a sufficient sandbox for public use.
         with dataset["lock"]:
             result = execute_safe_query(dataset["engine"].connection, sql)
-        answer = ai.generate_answer(
-            request.question, result.head(30).to_string(index=False)
-        )
+            revision = dataset["revision"]
+
+        if result.empty:
+            answer = "No matching records found in the current dataset."
+        else:
+            answer = ai.generate_answer(
+                request.question, result.head(30).to_string(index=False)
+            )
+
         return {
             "success": True,
             "dataset_id": request.dataset_id,
+            "dataset_revision": revision,
             "question": request.question,
             "generated_sql": sql,
             "answer": answer,
             "returned_rows": len(result),
             "columns": list(result.columns),
-            "data": records(result, 1000),
+            "data": records(result, QUERY_RETURN_LIMIT),
+            "result_truncated": len(result) > QUERY_RETURN_LIMIT,
         }
     except HTTPException:
         raise
@@ -274,6 +299,8 @@ def query_dataset(request: QueryRequest):
 def preview_edit(request: EditPreviewRequest):
     dataset = find_dataset(request.dataset_id)
     with dataset["lock"]:
+        if dataset["pending_edit"] is not None:
+            raise HTTPException(409, "An edit is awaiting confirmation. Confirm or cancel it first.")
         current_df = dataset["dataframe"].copy()
         current_revision = dataset["revision"]
 
@@ -301,7 +328,9 @@ def preview_edit(request: EditPreviewRequest):
         edit_id = uuid.uuid4().hex
         with dataset["lock"]:
             if dataset["revision"] != current_revision:
-                raise HTTPException(409, "Dataset changed. Request a new preview.")
+                raise HTTPException(409, "Dataset changed. Please request a new preview.")
+            if dataset["pending_edit"] is not None:
+                raise HTTPException(409, "Another edit is awaiting confirmation.")
             dataset["pending_edit"] = {
                 "edit_id": edit_id,
                 "action": action,
@@ -313,6 +342,7 @@ def preview_edit(request: EditPreviewRequest):
             "success": True,
             "message": "Preview generated. No changes applied yet.",
             "dataset_id": request.dataset_id,
+            "dataset_revision": current_revision,
             "edit_id": edit_id,
             "action": action,
             "before_rows": len(current_df),
@@ -340,6 +370,7 @@ def confirm_edit(request: EditDecisionRequest):
 
         updated_df = pending["dataframe"].copy()
         try:
+            # DataEngine.reload_database updates DuckDB before the frontend state.
             dataset["engine"].reload_database(updated_df)
             schema = dataset["engine"].get_schema()
         except Exception as error:
@@ -355,6 +386,7 @@ def confirm_edit(request: EditDecisionRequest):
             "dataset_id": request.dataset_id,
             "revision": dataset["revision"],
             "total_rows": len(updated_df),
+            "total_columns": len(updated_df.columns),
             "preview": records(updated_df),
         }
 
@@ -375,13 +407,14 @@ def download_dataset(dataset_id: str):
     dataset = find_dataset(dataset_id)
     with dataset["lock"]:
         df = dataset["dataframe"].copy()
-    excel_data = excel_editor.export_excel(df)
-    content = excel_data.getvalue() if hasattr(excel_data, "getvalue") else bytes(excel_data)
+    try:
+        excel_data = excel_editor.export_excel(df)
+        content = excel_data.getvalue() if hasattr(excel_data, "getvalue") else bytes(excel_data)
+    except Exception as error:
+        raise HTTPException(500, f"Excel export failed: {error}") from error
+
     return StreamingResponse(
         io.BytesIO(content),
-        media_type=(
-            "application/vnd.openxmlformats-officedocument."
-            "spreadsheetml.sheet"
-        ),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": 'attachment; filename="updated_data.xlsx"'},
     )

@@ -6,31 +6,101 @@ from app.core.gemini import GeminiClient
 
 class FileAgent:
 
+    ALLOWED_ACTIONS = {
+        "add",
+        "update",
+        "delete",
+        "remove_duplicates"
+    }
+
+    ALLOWED_OPERATORS = {
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "contains",
+        "is_null",
+        "not_null"
+    }
+
     def __init__(self):
         self.gemini = GeminiClient()
 
     def generate_action(self, question, columns):
-        if not question or not question.strip():
+
+        if not isinstance(question, str) or not question.strip():
             raise ValueError("Editing instruction is required.")
+
+        columns = list(columns)
 
         if not columns:
             raise ValueError("Dataset has no columns.")
 
         prompt = f"""
-You are a universal Excel and CSV editing assistant.
+You are DataPilot AI, a universal Excel/CSV editing agent.
 
-Convert the user's natural-language editing request
-into ONE valid JSON action.
+Your job is to convert one user instruction into
+exactly one structured JSON editing action.
 
-The dataset may contain financial, economic, educational,
-research, sales, or any other tabular information.
+The uploaded dataset may be about cars, economics,
+finance, accounting, sales, education, or research.
 
-AVAILABLE COLUMNS:
-{json.dumps(list(columns), ensure_ascii=False)}
+ACTUAL DATASET COLUMNS:
+{json.dumps(columns, ensure_ascii=False)}
 
-SUPPORTED ACTIONS:
+Understand English, Urdu, and Roman Urdu.
 
-1. DELETE
+IMPORTANT:
+The actual column names are authoritative.
+Never invent column names.
+Never invent information the user did not provide.
+
+ACTION FORMATS:
+
+1. ADD ONE ROW
+
+{{
+  "action": "add",
+  "data": {{
+    "Country": "Pakistan",
+    "Car_Brand": "Honda",
+    "Car_Model": "City",
+    "Car_Color": "White",
+    "Year_of_Manufacture": 2020
+  }}
+}}
+
+Only include columns explicitly specified or
+unambiguously implied by the user.
+
+Unspecified columns must be omitted from data.
+The editing engine will handle missing values.
+
+Example user instruction:
+"Pakistan ki Honda City add kro white color 2020,
+baqi details null rakh do"
+
+If the available columns include the relevant car
+fields, map the instruction to those exact fields.
+
+Interpret:
+- Honda as car brand
+- City as car model
+- White as car color
+- 2020 as year of manufacture
+- Pakistan as country
+
+Do not put the complete phrase "Honda City" into
+the brand field.
+
+For other domains, interpret values based on
+the actual available column names.
+
+2. DELETE MATCHING ROWS
+
 {{
   "action": "delete",
   "conditions": [
@@ -42,11 +112,17 @@ SUPPORTED ACTIONS:
   ]
 }}
 
-2. UPDATE
+Example:
+"Delete all Pakistan cars"
+
+Delete only records matching the specified condition.
+
+3. UPDATE MATCHING VALUES
+
 {{
   "action": "update",
-  "column": "GDP",
-  "new_value": 450,
+  "column": "Car_Color",
+  "new_value": "White",
   "conditions": [
     {{
       "column": "Country",
@@ -54,75 +130,84 @@ SUPPORTED ACTIONS:
       "value": "Pakistan"
     }},
     {{
-      "column": "Year",
+      "column": "Car_Brand",
       "operator": "eq",
-      "value": 2023
+      "value": "Honda"
     }}
   ]
 }}
 
-3. ADD
-{{
-  "action": "add",
-  "data": {{
-    "Country": "Pakistan",
-    "Year": 2024,
-    "GDP": 450
-  }}
-}}
+Example:
+"Change Honda cars in Pakistan to white"
 
 4. REMOVE DUPLICATES
+
 {{
   "action": "remove_duplicates"
 }}
 
-ALLOWED OPERATORS:
-eq, ne, gt, gte, lt, lte, in, contains,
-is_null, not_null
+SUPPORTED CONDITION OPERATORS:
 
-EXAMPLE:
-Delete rows where Salary is above 100000
+eq       equality
+ne       inequality
+gt       greater than
+gte      greater than or equal
+lt       less than
+lte      less than or equal
+in       membership in supplied list
+contains case-insensitive substring
+is_null  missing value
+not_null non-missing value
 
-{{
-  "action": "delete",
-  "conditions": [
-    {{
-      "column": "Salary",
-      "operator": "gt",
-      "value": 100000
-    }}
-  ]
-}}
+FILTER RULES:
 
-IMPORTANT RULES:
-- Return exactly one JSON object.
-- Return JSON only. No markdown or explanation.
-- Use ONLY actual available column names.
-- Never invent missing columns or data values.
-- Preserve numeric values as JSON numbers.
-- Use JSON strings for text and dates.
 - Conditions are combined using AND.
-- Never invent extra filtering conditions.
-- For update/delete, conditions must be explicit.
-- If user asks to edit all rows without a filter,
-  do not guess a condition.
-- Do not return executable SQL or Python code.
-- If instruction is ambiguous or cannot be represented,
-  return {{"action":"unsupported"}}.
-- Understand English, Urdu and Roman Urdu.
-- Only one action is supported per request.
+- Use exact dataset column names.
+- Do not invent conditions.
+- Numeric values should be JSON numbers.
+- Text values should be JSON strings.
+- Null must be JSON null.
+- For update and delete, use explicit conditions.
+- Do not interpret unspecified filters as all rows.
+- Do not turn analysis requests into edits.
+- Do not invent entire rows.
+- For add, only create a single row per action.
+
+IMPORTANT LIMITATIONS:
+
+- Only one editing action per request.
+- No calculated column creation.
+- No column renaming.
+- No spreadsheet formula editing.
+- No sorting or formatting operations.
+- No arbitrary SQL or Python.
+- Do not invent columns that do not exist.
+
+If the request cannot be expressed safely using
+the supported actions, return:
+
+{{"action": "unsupported"}}
+
+OUTPUT RULES:
+
+- Return JSON only.
+- No markdown.
+- No code fences.
+- No explanations.
+- Use double-quoted JSON keys.
+- Never include extra commentary.
 
 USER INSTRUCTION:
 {question}
 """
 
         try:
-            text = self.gemini.generate(prompt)
+            response = self.gemini.generate(prompt)
 
-            if not text:
-                raise ValueError("Empty Gemini response.")
+            if not response:
+                raise ValueError("Empty response from Gemini.")
 
-            text = text.strip()
+            text = response.strip()
 
             if text.startswith("```"):
                 lines = text.splitlines()
@@ -137,96 +222,190 @@ USER INSTRUCTION:
 
             action = json.loads(text)
 
-            if not isinstance(action, dict):
-                raise ValueError(
-                    "Gemini must return a JSON object."
-                )
-
-            allowed = {
-                "delete",
-                "update",
-                "add",
-                "remove_duplicates"
-            }
-
-            action_type = action.get("action")
-
-            if action_type not in allowed:
-                raise ValueError(
-                    "Unsupported or ambiguous editing request."
-                )
-
-            if action_type in {"update", "delete"}:
-                conditions = action.get("conditions")
-
-                # Retain support for the previous
-                # single-column action format.
-                legacy = (
-                    "column" in action
-                    and (
-                        "value" in action
-                        or "old_value" in action
-                    )
-                )
-
-                if not conditions and not legacy:
-                    raise ValueError(
-                        "Update/delete requires explicit conditions."
-                    )
-
-                if conditions is not None:
-                    if (
-                        not isinstance(conditions, list)
-                        or not conditions
-                    ):
-                        raise ValueError(
-                            "Invalid filtering conditions."
-                        )
-
-                    for condition in conditions:
-                        if not isinstance(condition, dict):
-                            raise ValueError(
-                                "Invalid condition format."
-                            )
-
-                        if condition.get("column") not in columns:
-                            raise ValueError(
-                                "AI referenced an unknown column."
-                            )
-
-            if action_type == "update":
-                if action.get("column") not in columns:
-                    raise ValueError(
-                        "Update target column not found."
-                    )
-
-                if (
-                    "new_value" not in action
-                    and not (
-                        "conditions" in action
-                        and "value" in action
-                    )
-                ):
-                    raise ValueError(
-                        "Update requires a new value."
-                    )
-
-            if action_type == "add":
-                data = action.get("data")
-
-                if not isinstance(data, dict) or not data:
-                    raise ValueError(
-                        "Add requires row data."
-                    )
-
-                if any(col not in columns for col in data):
-                    raise ValueError(
-                        "AI referenced an unknown column."
-                    )
+            self.validate_action(action, columns)
 
             return action
 
         except json.JSONDecodeError as error:
             raise ValueError(
-                f"Invalid JSON returned by Gemini: {error}"
+                "Gemini returned invalid JSON."
             ) from error
+
+    def validate_action(self, action, columns):
+
+        if not isinstance(action, dict):
+            raise ValueError(
+                "AI action must be a JSON object."
+            )
+
+        action_type = action.get("action")
+
+        if action_type not in self.ALLOWED_ACTIONS:
+            raise ValueError(
+                "Unsupported or ambiguous editing request. "
+                "Please provide a more specific instruction."
+            )
+
+        if action_type == "add":
+            self.validate_add(action, columns)
+
+        elif action_type == "update":
+            self.validate_update(action, columns)
+
+        elif action_type == "delete":
+            self.validate_delete(action, columns)
+
+        elif action_type == "remove_duplicates":
+            if set(action) != {"action"}:
+                raise ValueError(
+                    "Unexpected fields in remove_duplicates action."
+                )
+
+    def validate_add(self, action, columns):
+
+        if set(action) != {"action", "data"}:
+            raise ValueError(
+                "Add action requires only action and data."
+            )
+
+        data = action.get("data")
+
+        if not isinstance(data, dict) or not data:
+            raise ValueError(
+                "Add action requires valid row data."
+            )
+
+        for column, value in data.items():
+
+            if column not in columns:
+                raise ValueError(
+                    f"Unknown column: {column}"
+                )
+
+            if isinstance(value, (dict, list)):
+                raise ValueError(
+                    f"Invalid value for column: {column}"
+                )
+
+    def validate_update(self, action, columns):
+
+        if set(action) != {
+            "action",
+            "column",
+            "new_value",
+            "conditions"
+        }:
+            raise ValueError(
+                "Update requires column, new_value "
+                "and conditions."
+            )
+
+        column = action.get("column")
+
+        if column not in columns:
+            raise ValueError(
+                f"Unknown update column: {column}"
+            )
+
+        if isinstance(action["new_value"], (dict, list)):
+            raise ValueError(
+                "Update value must be a scalar."
+            )
+
+        self.validate_conditions(
+            action.get("conditions"),
+            columns
+        )
+
+    def validate_delete(self, action, columns):
+
+        if set(action) != {"action", "conditions"}:
+            raise ValueError(
+                "Delete requires filtering conditions."
+            )
+
+        self.validate_conditions(
+            action.get("conditions"),
+            columns
+        )
+
+    def validate_conditions(self, conditions, columns):
+
+        if not isinstance(conditions, list) or not conditions:
+            raise ValueError(
+                "At least one filtering condition is required."
+            )
+
+        if len(conditions) > 10:
+            raise ValueError(
+                "Maximum 10 conditions are supported."
+            )
+
+        for condition in conditions:
+
+            if not isinstance(condition, dict):
+                raise ValueError(
+                    "Invalid filtering condition."
+                )
+
+            column = condition.get("column")
+            operator = condition.get("operator")
+
+            if column not in columns:
+                raise ValueError(
+                    f"Unknown filter column: {column}"
+                )
+
+            if operator not in self.ALLOWED_OPERATORS:
+                raise ValueError(
+                    f"Unsupported filter operator: {operator}"
+                )
+
+            if operator in {"is_null", "not_null"}:
+                if set(condition) != {"column", "operator"}:
+                    raise ValueError(
+                        "Null filter must not contain a value."
+                    )
+                continue
+
+            if set(condition) != {
+                "column",
+                "operator",
+                "value"
+            }:
+                raise ValueError(
+                    "Filter requires column, operator and value."
+                )
+
+            value = condition["value"]
+
+            if operator == "in":
+                if (
+                    not isinstance(value, list)
+                    or not value
+                    or any(
+                        isinstance(item, (dict, list))
+                        for item in value
+                    )
+                ):
+                    raise ValueError(
+                        "IN filter requires a list of scalar values."
+                    )
+
+            elif isinstance(value, (dict, list)):
+                raise ValueError(
+                    "Filter value must be a scalar."
+                )
+
+            if operator == "contains" and value is None:
+                raise ValueError(
+                    "Contains filter requires a text value."
+                )
+
+            if (
+                operator in {"gt", "gte", "lt", "lte"}
+                and value is None
+            ):
+                raise ValueError(
+                    "Comparison filter requires a value."
+                )
