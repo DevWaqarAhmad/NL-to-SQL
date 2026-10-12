@@ -184,7 +184,7 @@ def upload_dataset(file: UploadFile = File(...)):
     if not content:
         raise HTTPException(400, "Uploaded file is empty.")
     if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(413, "File exceeds the 10 MB limit.")
+        raise HTTPException(413, "File exceeds the 200 MB limit.")
 
     with datasets_lock:
         if len(datasets) >= MAX_DATASETS:
