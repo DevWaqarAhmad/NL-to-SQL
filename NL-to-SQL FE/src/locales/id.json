@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Ruang Kerja Data Cerdas",
+    "workspace": "DATAPILOT AI / RUANG KERJA",
+    "skipToContent": "Langsung ke konten utama"
+  },
+  "nav": {
+    "dashboard": "Dasbor",
+    "dataset": "Kumpulan Data",
+    "explorer": "Penjelajah Data",
+    "assistant": "Asisten AI",
+    "upload": "Unggah",
+    "download": "Unduh",
+    "connected": "Terhubung",
+    "offline": "Luring",
+    "removeFile": "Hapus file saat ini"
+  },
+  "language": {
+    "select": "Pilih Bahasa",
+    "search": "Cari bahasa...",
+    "current": "Bahasa saat ini",
+    "noResults": "Tidak ada bahasa yang ditemukan",
+    "cancel": "Batal",
+    "apply": "Terapkan Bahasa"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Dasbor",
+      "description": "Ruang kerja data cerdas Anda."
+    },
+    "dataset": {
+      "title": "Kumpulan Data",
+      "description": "Jelajahi data Anda dan periksa strukturnya."
+    },
+    "explorer": {
+      "title": "Penjelajah Data",
+      "description": "Jelajahi kumpulan data menggunakan bahasa alami."
+    },
+    "assistant": {
+      "title": "Asisten AI",
+      "description": "Lakukan perubahan terkontrol pada data Excel dan CSV."
+    }
+  },
+  "hero": {
+    "title": "Ajukan pertanyaan tentang spreadsheet Anda. Dapatkan jawaban dalam hitungan detik.",
+    "description": "Unggah file CSV atau Excel, ajukan pertanyaan dalam bahasa pilihan Anda, dan tinjau setiap perubahan sebelum diterapkan.",
+    "drop": "Letakkan file Anda di sini",
+    "dropActive": "Lepaskan file untuk mengunggah",
+    "chooseFile": "Pilih file",
+    "fileSupport": "CSV atau XLSX, maksimal {{size}} MB",
+    "howItWorks": "Cara kerjanya",
+    "step1Title": "Unggah file Anda",
+    "step1Description": "Tambahkan file CSV atau Excel. Kolom dan tipe data akan terdeteksi secara otomatis.",
+    "step2Title": "Ajukan pertanyaan atau jelaskan perubahan",
+    "step2Description": "Ketik pertanyaan untuk menganalisis data atau instruksi untuk mengeditnya.",
+    "step3Title": "Tinjau dan unduh",
+    "step3Description": "Periksa baris yang terpengaruh, konfirmasi perubahan, lalu unduh file Excel yang telah diperbarui.",
+    "explorerFeature": "Dapatkan jawaban dari data Anda melalui kueri SQL yang dihasilkan dan tabel hasil.",
+    "assistantFeature": "Tambahkan, perbarui, atau hapus catatan. Setiap perubahan memerlukan persetujuan Anda.",
+    "explorerExample": "Tampilkan 10 pelanggan dengan pendapatan tertinggi",
+    "assistantExample": "Hapus baris dengan status dibatalkan",
+    "exampleExplorer": "Contoh: Penjelajah Data",
+    "exampleQuestion": "Wilayah mana yang memiliki penjualan tertinggi pada kuartal ketiga?"
+  },
+  "metrics": {
+    "totalRecords": "Total Catatan",
+    "dataColumns": "Kolom Data",
+    "revision": "Versi Kumpulan Data",
+    "rows": "Baris",
+    "columns": "Kolom",
+    "rowsDescription": "Baris dalam kumpulan data yang diunggah",
+    "columnsDescription": "Terdeteksi secara otomatis",
+    "confirmedEdits": "Perubahan yang dikonfirmasi"
+  },
+  "dataset": {
+    "overview": "Ikhtisar Kumpulan Data",
+    "preview": "Pratinjau Data",
+    "schema": "Skema",
+    "downloadExcel": "Unduh Excel",
+    "noData": "Tidak ada data yang tersedia.",
+    "showing": "Menampilkan {{count}} baris pertama dari total {{total}} baris",
+    "openDataset": "Buka Kumpulan Data",
+    "openExplorer": "Buka Penjelajah Data",
+    "openAssistant": "Buka Asisten AI",
+    "datasetFeature": "Jelajahi baris data, periksa skema, dan unduh file Excel terbaru.",
+    "explorerFeature": "Analisis kumpulan data yang diunggah menggunakan bahasa alami, kueri SQL, dan hasil terstruktur.",
+    "assistantFeature": "Tambahkan, perbarui, atau hapus catatan melalui proses peninjauan dan konfirmasi."
+  },
+  "chat": {
+    "explorerTitle": "Penjelajah Data",
+    "assistantTitle": "Asisten AI",
+    "explorerDescription": "Analisis Bahasa Alami menjadi SQL",
+    "assistantDescription": "Pengeditan Excel dan CSV Berbasis AI",
+    "explorerPlaceholder": "Ajukan pertanyaan tentang kumpulan data Anda...",
+    "assistantPlaceholder": "Jelaskan perubahan yang ingin Anda lakukan...",
+    "send": "Kirim",
+    "tryAsking": "COBA TANYAKAN",
+    "activeDataset": "KUMPULAN DATA AKTIF",
+    "resultTable": "Lihat Tabel Hasil ({{count}} baris)",
+    "generatedSql": "Lihat SQL yang Dihasilkan",
+    "aiResponse": "Lihat Jawaban AI",
+    "copySql": "Salin SQL",
+    "copied": "Disalin",
+    "askAboutData": "Ajukan pertanyaan apa pun tentang data Anda",
+    "changeData": "Apa yang ingin Anda ubah?",
+    "explorerEmptyDescription": "Buat kueri SQL, jelajahi catatan, dan dapatkan jawaban berbasis AI. Coba salah satu saran dari panel sebelah kanan.",
+    "assistantEmptyDescription": "Jelaskan perubahan yang diperlukan. Anda dapat meninjaunya sebelum diterapkan.",
+    "historicalResult": "Hasil sebelumnya · versi kumpulan data {{revision}}. Jalankan kembali pertanyaan untuk mendapatkan data terbaru.",
+    "explorerWarning": "Kueri SQL dan jawaban yang dihasilkan AI harus diverifikasi sebelum digunakan untuk keputusan penting.",
+    "assistantWarning": "Perubahan pada spreadsheet memerlukan konfirmasi Anda.",
+    "pendingWarning": "Tinjau, konfirmasi, atau batalkan perubahan yang tertunda.",
+    "askInExplorer": "Ajukan pertanyaan ini di Penjelajah Data",
+    "you": "ANDA",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Berapa banyak baris dalam kumpulan data ini?",
+      "firstRecords": "Tampilkan 10 catatan pertama",
+      "missingValues": "Kolom mana yang memiliki nilai kosong?",
+      "removeDuplicates": "Hapus baris duplikat",
+      "addRecord": "Tambahkan catatan baru menggunakan nama kolom yang sudah ada",
+      "updateValue": "Perbarui nilai ketika suatu kolom memenuhi kondisi tertentu"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Tinjau Perubahan yang Diusulkan",
+    "notApplied": "Belum ada perubahan yang diterapkan.",
+    "confirmationRequired": "Konfirmasi Diperlukan",
+    "affectedRows": "Baris yang Terpengaruh",
+    "currentRows": "Baris Saat Ini",
+    "afterChanges": "Setelah Perubahan",
+    "proposedAction": "Lihat Tindakan yang Diusulkan AI",
+    "affectedPreview": "Pratinjau Catatan yang Terpengaruh",
+    "beforeAfter": "Perbandingan Sebelum dan Sesudah",
+    "cancel": "Batalkan Perubahan",
+    "confirm": "Konfirmasi Perubahan",
+    "previewTruncated": "Pratinjau ini terbatas. Baris lain yang memenuhi kondisi juga akan terpengaruh."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} berhasil diunggah.",
+    "datasetUpdated": "Kumpulan data berhasil diperbarui.",
+    "fileRemoved": "File telah dihapus. Unggah file baru untuk melanjutkan.",
+    "editCancelled": "Pengeditan dibatalkan. Kumpulan data Anda tetap tidak berubah.",
+    "editApplied": "Perubahan berhasil diterapkan. Kumpulan data Anda sekarang berisi {{count}} baris.",
+    "serverOffline": "Server tidak dapat dijangkau saat ini. Kami akan terus mencoba menghubungkan kembali secara otomatis.",
+    "loadingUpload": "Sedang mengunggah dan memproses kumpulan data. File besar mungkin memerlukan beberapa menit...",
+    "loadingQuery": "Sedang menghasilkan SQL dan menganalisis data...",
+    "loadingEdit": "Sedang meninjau perubahan spreadsheet yang diminta...",
+    "loadingDownload": "Sedang menyiapkan file Excel...",
+    "loadingConfirm": "Sedang menerapkan perubahan yang disetujui...",
+    "loadingCancel": "Sedang membatalkan perubahan yang diusulkan...",
+    "editPreviewReady": "Pratinjau perubahan telah disiapkan. Tinjau catatan yang terpengaruh sebelum menerapkan perubahan.",
+    "noMatchingRecords": "Tidak ditemukan catatan yang cocok dalam kumpulan data saat ini.",
+    "analysisCompleted": "Analisis selesai.",
+    "downloadStarted": "Pengunduhan file Excel Anda telah dimulai.",
+    "editRevision": "Kumpulan data diperbarui (versi {{revision}}). Ajukan pertanyaan baru untuk menganalisis {{count}} baris saat ini. Hasil sebelumnya berasal dari data lama.",
+    "editOnlyInstruction": "Asisten AI hanya digunakan untuk mengubah data. Untuk melihat atau memfilter catatan, gunakan Penjelajah Data.",
+    "editRefreshFailed": "Perubahan telah disimpan, tetapi pratinjau kumpulan data gagal diperbarui: {{error}}",
+    "editConfirmError": "{{error}} Jika konfirmasi sebelumnya sudah berhasil, perbarui kumpulan data sebelum mencoba lagi."
+  },
+  "validation": {
+    "selectFile": "Silakan pilih file CSV atau XLSX.",
+    "emptyFile": "File ini kosong.",
+    "fileTooLarge": "Ukuran file maksimum adalah {{size}} MB.",
+    "unsupportedFile": "Hanya file CSV dan XLSX yang didukung.",
+    "requiredQuestion": "Silakan masukkan pertanyaan tentang kumpulan data.",
+    "requiredInstruction": "Silakan masukkan instruksi pengeditan.",
+    "backendUnavailable": "Tidak dapat terhubung ke server DataPilot.",
+    "requestTimeout": "Permintaan memerlukan waktu terlalu lama. Silakan coba lagi.",
+    "genericError": "Terjadi kesalahan. Silakan coba lagi."
+  },
+  "common": {
+    "cancel": "Batal",
+    "confirm": "Konfirmasi",
+    "close": "Tutup",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "loading": "Memuat...",
+    "success": "Berhasil",
+    "error": "Kesalahan",
+    "warning": "Peringatan",
+    "refresh": "Segarkan",
+    "search": "Cari",
+    "noResults": "Tidak ada hasil yang ditemukan",
+    "yes": "Ya",
+    "no": "Tidak"
+  }
+}

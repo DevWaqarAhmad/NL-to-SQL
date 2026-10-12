@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Intelligent dataarbetsyta",
+    "workspace": "DATAPILOT AI / ARBETSYTA",
+    "skipToContent": "Hoppa till huvudinnehållet"
+  },
+  "nav": {
+    "dashboard": "Instrumentpanel",
+    "dataset": "Datauppsättning",
+    "explorer": "Datautforskare",
+    "assistant": "AI-assistent",
+    "upload": "Ladda upp",
+    "download": "Ladda ner",
+    "connected": "Ansluten",
+    "offline": "Offline",
+    "removeFile": "Ta bort aktuell fil"
+  },
+  "language": {
+    "select": "Välj språk",
+    "search": "Sök efter språk...",
+    "current": "Aktuellt språk",
+    "noResults": "Inga språk hittades",
+    "cancel": "Avbryt",
+    "apply": "Använd språk"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Instrumentpanel",
+      "description": "Din intelligenta dataarbetsyta."
+    },
+    "dataset": {
+      "title": "Datauppsättning",
+      "description": "Bläddra bland dina data och kontrollera deras struktur."
+    },
+    "explorer": {
+      "title": "Datautforskare",
+      "description": "Utforska datauppsättningar med naturligt språk."
+    },
+    "assistant": {
+      "title": "AI-assistent",
+      "description": "Gör kontrollerade ändringar i Excel- och CSV-data."
+    }
+  },
+  "hero": {
+    "title": "Ställ frågor om dina kalkylblad. Få svar på några sekunder.",
+    "description": "Ladda upp en CSV- eller Excel-fil, ställ frågor på det språk du föredrar och granska varje ändring innan den tillämpas.",
+    "drop": "Släpp din fil här",
+    "dropActive": "Släpp filen för att ladda upp",
+    "chooseFile": "Välj fil",
+    "fileSupport": "CSV eller XLSX, upp till {{size}} MB",
+    "howItWorks": "Så fungerar det",
+    "step1Title": "Ladda upp din fil",
+    "step1Description": "Lägg till en CSV- eller Excel-fil. Kolumner och datatyper identifieras automatiskt.",
+    "step2Title": "Ställ en fråga eller beskriv en ändring",
+    "step2Description": "Skriv en fråga för att analysera data eller en instruktion för att redigera dem.",
+    "step3Title": "Granska och ladda ner",
+    "step3Description": "Kontrollera berörda rader, bekräfta ändringarna och ladda ner den uppdaterade Excel-filen.",
+    "explorerFeature": "Få svar från dina data med genererade SQL-frågor och resultattabeller.",
+    "assistantFeature": "Lägg till, uppdatera eller ta bort poster. Du godkänner varje ändring.",
+    "explorerExample": "Visa de 10 kunderna med högst omsättning",
+    "assistantExample": "Ta bort rader där statusen är annullerad",
+    "exampleExplorer": "Exempel: Datautforskare",
+    "exampleQuestion": "Vilken region hade högst försäljning under tredje kvartalet?"
+  },
+  "metrics": {
+    "totalRecords": "Totalt antal poster",
+    "dataColumns": "Datakolumner",
+    "revision": "Datauppsättningens version",
+    "rows": "Rader",
+    "columns": "Kolumner",
+    "rowsDescription": "Rader i den uppladdade datauppsättningen",
+    "columnsDescription": "Identifierade automatiskt",
+    "confirmedEdits": "Bekräftade ändringar"
+  },
+  "dataset": {
+    "overview": "Översikt över datauppsättningen",
+    "preview": "Förhandsgranskning av data",
+    "schema": "Schema",
+    "downloadExcel": "Ladda ner Excel",
+    "noData": "Inga data tillgängliga.",
+    "showing": "Visar de första {{count}} av {{total}} raderna",
+    "openDataset": "Öppna datauppsättningen",
+    "openExplorer": "Öppna Datautforskaren",
+    "openAssistant": "Öppna AI-assistenten",
+    "datasetFeature": "Bläddra bland raderna, kontrollera schemat och ladda ner den senaste Excel-filen.",
+    "explorerFeature": "Analysera uppladdade datauppsättningar med naturligt språk, SQL-frågor och strukturerade resultat.",
+    "assistantFeature": "Lägg till, uppdatera eller ta bort poster genom en process med granskning och bekräftelse."
+  },
+  "chat": {
+    "explorerTitle": "Datautforskare",
+    "assistantTitle": "AI-assistent",
+    "explorerDescription": "Analys från naturligt språk till SQL",
+    "assistantDescription": "AI-driven redigering av Excel och CSV",
+    "explorerPlaceholder": "Ställ en fråga om din datauppsättning...",
+    "assistantPlaceholder": "Beskriv vilka ändringar du vill göra...",
+    "send": "Skicka",
+    "tryAsking": "PROVA ATT FRÅGA",
+    "activeDataset": "AKTIV DATAUPPSÄTTNING",
+    "resultTable": "Visa resultattabell ({{count}} rader)",
+    "generatedSql": "Visa genererad SQL",
+    "aiResponse": "Visa AI-svar",
+    "copySql": "Kopiera SQL",
+    "copied": "Kopierat",
+    "askAboutData": "Ställ frågor om dina data",
+    "changeData": "Vad vill du ändra?",
+    "explorerEmptyDescription": "Generera SQL-frågor, utforska poster och få AI-drivna svar. Prova ett förslag från panelen till höger.",
+    "assistantEmptyDescription": "Beskriv ändringarna du behöver. Du kan granska dem innan de tillämpas.",
+    "historicalResult": "Tidigare resultat · datauppsättningens version {{revision}}. Kör frågan igen för aktuella data.",
+    "explorerWarning": "AI-genererade SQL-frågor och svar bör verifieras innan viktiga beslut fattas.",
+    "assistantWarning": "Ändringar i kalkylblad kräver din bekräftelse.",
+    "pendingWarning": "Granska, bekräfta eller avbryt den väntande ändringen.",
+    "askInExplorer": "Ställ den här frågan i Datautforskaren",
+    "you": "DU",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Hur många rader finns i den här datauppsättningen?",
+      "firstRecords": "Visa de första 10 posterna",
+      "missingValues": "Vilka kolumner innehåller saknade värden?",
+      "removeDuplicates": "Ta bort duplicerade rader",
+      "addRecord": "Lägg till en ny post med de befintliga kolumnnamnen",
+      "updateValue": "Uppdatera ett värde när en kolumn uppfyller ett villkor"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Granska föreslagna ändringar",
+    "notApplied": "Inga ändringar har tillämpats ännu.",
+    "confirmationRequired": "Bekräftelse krävs",
+    "affectedRows": "Berörda rader",
+    "currentRows": "Nuvarande rader",
+    "afterChanges": "Efter ändringar",
+    "proposedAction": "Visa AI-föreslagen åtgärd",
+    "affectedPreview": "Förhandsgranskning av berörda poster",
+    "beforeAfter": "Jämförelse före och efter",
+    "cancel": "Avbryt ändringar",
+    "confirm": "Bekräfta ändringar",
+    "previewTruncated": "Den här förhandsgranskningen är begränsad. Andra rader som uppfyller villkoren påverkas också."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} har laddats upp.",
+    "datasetUpdated": "Datauppsättningen har uppdaterats.",
+    "fileRemoved": "Filen har tagits bort. Ladda upp en ny fil för att fortsätta.",
+    "editCancelled": "Redigeringen avbröts. Din datauppsättning är oförändrad.",
+    "editApplied": "Ändringarna har tillämpats. Din datauppsättning innehåller nu {{count}} rader.",
+    "serverOffline": "Servern kan inte nås just nu. Vi fortsätter automatiskt att försöka ansluta igen.",
+    "loadingUpload": "Datauppsättningen laddas upp och bearbetas. Stora filer kan ta några minuter...",
+    "loadingQuery": "SQL genereras och data analyseras...",
+    "loadingEdit": "De begärda ändringarna i kalkylbladet granskas...",
+    "loadingDownload": "Excel-filen förbereds...",
+    "loadingConfirm": "Godkända ändringar tillämpas...",
+    "loadingCancel": "Föreslagna ändringar avbryts...",
+    "editPreviewReady": "En förhandsgranskning av ändringarna är klar. Granska de berörda posterna innan ändringarna tillämpas.",
+    "noMatchingRecords": "Inga matchande poster hittades i den aktuella datauppsättningen.",
+    "analysisCompleted": "Analysen är klar.",
+    "downloadStarted": "Nedladdningen av din Excel-fil har startat.",
+    "editRevision": "Datauppsättningen har uppdaterats (version {{revision}}). Ställ en ny fråga för att analysera de aktuella {{count}} raderna. Tidigare resultat baseras på äldre data.",
+    "editOnlyInstruction": "AI-assistenten ändrar endast data. Använd Datautforskaren för att visa eller filtrera poster.",
+    "editRefreshFailed": "Ändringen sparades, men förhandsgranskningen av datauppsättningen kunde inte uppdateras: {{error}}",
+    "editConfirmError": "{{error}} Om bekräftelsen redan lyckades ska du uppdatera datauppsättningen innan du försöker igen."
+  },
+  "validation": {
+    "selectFile": "Välj en CSV- eller XLSX-fil.",
+    "emptyFile": "Den här filen är tom.",
+    "fileTooLarge": "Maximal filstorlek är {{size}} MB.",
+    "unsupportedFile": "Endast CSV- och XLSX-filer stöds.",
+    "requiredQuestion": "Ange en fråga om datauppsättningen.",
+    "requiredInstruction": "Ange en redigeringsinstruktion.",
+    "backendUnavailable": "Det går inte att ansluta till DataPilot-servern.",
+    "requestTimeout": "Begäran tog för lång tid. Försök igen.",
+    "genericError": "Något gick fel. Försök igen."
+  },
+  "common": {
+    "cancel": "Avbryt",
+    "confirm": "Bekräfta",
+    "close": "Stäng",
+    "save": "Spara",
+    "delete": "Ta bort",
+    "loading": "Laddar...",
+    "success": "Klart",
+    "error": "Fel",
+    "warning": "Varning",
+    "refresh": "Uppdatera",
+    "search": "Sök",
+    "noResults": "Inga resultat hittades",
+    "yes": "Ja",
+    "no": "Nej"
+  }
+}

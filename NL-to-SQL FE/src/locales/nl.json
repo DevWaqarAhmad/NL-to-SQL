@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Intelligente gegevenswerkruimte",
+    "workspace": "DATAPILOT AI / WERKRUIMTE",
+    "skipToContent": "Ga naar de hoofdinhoud"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "dataset": "Gegevensset",
+    "explorer": "Gegevensverkenner",
+    "assistant": "AI-assistent",
+    "upload": "Uploaden",
+    "download": "Downloaden",
+    "connected": "Verbonden",
+    "offline": "Offline",
+    "removeFile": "Huidig bestand verwijderen"
+  },
+  "language": {
+    "select": "Taal selecteren",
+    "search": "Talen zoeken...",
+    "current": "Huidige taal",
+    "noResults": "Geen talen gevonden",
+    "cancel": "Annuleren",
+    "apply": "Taal toepassen"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Uw intelligente gegevenswerkruimte."
+    },
+    "dataset": {
+      "title": "Gegevensset",
+      "description": "Bekijk uw gegevens en controleer de structuur."
+    },
+    "explorer": {
+      "title": "Gegevensverkenner",
+      "description": "Verken gegevenssets met behulp van natuurlijke taal."
+    },
+    "assistant": {
+      "title": "AI-assistent",
+      "description": "Breng gecontroleerde wijzigingen aan in Excel- en CSV-gegevens."
+    }
+  },
+  "hero": {
+    "title": "Stel vragen over uw spreadsheets. Ontvang binnen enkele seconden antwoorden.",
+    "description": "Upload een CSV- of Excel-bestand, stel vragen in de taal van uw voorkeur en controleer elke wijziging voordat deze wordt toegepast.",
+    "drop": "Sleep uw bestand hierheen",
+    "dropActive": "Laat los om te uploaden",
+    "chooseFile": "Bestand kiezen",
+    "fileSupport": "CSV of XLSX, maximaal {{size}} MB",
+    "howItWorks": "Hoe het werkt",
+    "step1Title": "Upload uw bestand",
+    "step1Description": "Voeg een CSV- of Excel-bestand toe. Kolommen en gegevenstypen worden automatisch herkend.",
+    "step2Title": "Stel een vraag of beschrijf een wijziging",
+    "step2Description": "Voer een vraag in om gegevens te analyseren of een instructie om ze te bewerken.",
+    "step3Title": "Controleren en downloaden",
+    "step3Description": "Controleer de betrokken rijen, bevestig de wijzigingen en download het bijgewerkte Excel-bestand.",
+    "explorerFeature": "Krijg antwoorden uit uw gegevens met gegenereerde SQL-query's en resultaattabellen.",
+    "assistantFeature": "Voeg records toe, werk ze bij of verwijder ze. U keurt elke wijziging goed.",
+    "explorerExample": "Toon de 10 klanten met de hoogste omzet",
+    "assistantExample": "Verwijder rijen waarvan de status geannuleerd is",
+    "exampleExplorer": "Voorbeeld: Gegevensverkenner",
+    "exampleQuestion": "Welke regio had de hoogste omzet in het derde kwartaal?"
+  },
+  "metrics": {
+    "totalRecords": "Totaal aantal records",
+    "dataColumns": "Gegevenskolommen",
+    "revision": "Versie van de gegevensset",
+    "rows": "Rijen",
+    "columns": "Kolommen",
+    "rowsDescription": "Rijen in de geüploade gegevensset",
+    "columnsDescription": "Automatisch herkend",
+    "confirmedEdits": "Bevestigde wijzigingen"
+  },
+  "dataset": {
+    "overview": "Overzicht van de gegevensset",
+    "preview": "Gegevensvoorbeeld",
+    "schema": "Schema",
+    "downloadExcel": "Excel downloaden",
+    "noData": "Geen gegevens beschikbaar.",
+    "showing": "De eerste {{count}} van {{total}} rijen worden weergegeven",
+    "openDataset": "Gegevensset openen",
+    "openExplorer": "Gegevensverkenner openen",
+    "openAssistant": "AI-assistent openen",
+    "datasetFeature": "Bekijk uw rijen, controleer het schema en download het nieuwste Excel-bestand.",
+    "explorerFeature": "Analyseer geüploade gegevenssets met natuurlijke taal, SQL-query's en gestructureerde resultaten.",
+    "assistantFeature": "Voeg records toe, werk ze bij of verwijder ze via een controle- en bevestigingsproces."
+  },
+  "chat": {
+    "explorerTitle": "Gegevensverkenner",
+    "assistantTitle": "AI-assistent",
+    "explorerDescription": "Analyse van natuurlijke taal naar SQL",
+    "assistantDescription": "AI-gestuurde bewerking van Excel- en CSV-bestanden",
+    "explorerPlaceholder": "Stel een vraag over uw gegevensset...",
+    "assistantPlaceholder": "Beschrijf welke wijzigingen u wilt aanbrengen...",
+    "send": "Verzenden",
+    "tryAsking": "PROBEER DEZE VRAGEN",
+    "activeDataset": "ACTIEVE GEGEVENSSET",
+    "resultTable": "Resultaattabel bekijken ({{count}} rijen)",
+    "generatedSql": "Gegenereerde SQL bekijken",
+    "aiResponse": "AI-antwoord bekijken",
+    "copySql": "SQL kopiëren",
+    "copied": "Gekopieerd",
+    "askAboutData": "Stel vragen over uw gegevens",
+    "changeData": "Wat wilt u wijzigen?",
+    "explorerEmptyDescription": "Genereer SQL-query's, verken records en ontvang AI-ondersteunde antwoorden. Probeer een suggestie uit het rechterpaneel.",
+    "assistantEmptyDescription": "Beschrijf de gewenste wijzigingen. U kunt ze controleren voordat ze worden toegepast.",
+    "historicalResult": "Eerder resultaat · versie {{revision}} van de gegevensset. Voer de vraag opnieuw uit voor actuele gegevens.",
+    "explorerWarning": "Controleer door AI gegenereerde SQL-query's en antwoorden voordat u belangrijke beslissingen neemt.",
+    "assistantWarning": "Wijzigingen in spreadsheets vereisen uw bevestiging.",
+    "pendingWarning": "Controleer, bevestig of annuleer de openstaande wijziging.",
+    "askInExplorer": "Stel deze vraag in de gegevensverkenner",
+    "you": "U",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Hoeveel rijen bevat deze gegevensset?",
+      "firstRecords": "Toon de eerste 10 records",
+      "missingValues": "Welke kolommen bevatten ontbrekende waarden?",
+      "removeDuplicates": "Dubbele rijen verwijderen",
+      "addRecord": "Een nieuw record toevoegen met de bestaande kolomnamen",
+      "updateValue": "Een waarde bijwerken wanneer een kolom aan een voorwaarde voldoet"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Voorgestelde wijzigingen controleren",
+    "notApplied": "Er zijn nog geen wijzigingen toegepast.",
+    "confirmationRequired": "Bevestiging vereist",
+    "affectedRows": "Betrokken rijen",
+    "currentRows": "Huidige rijen",
+    "afterChanges": "Na wijzigingen",
+    "proposedAction": "Door AI voorgestelde actie bekijken",
+    "affectedPreview": "Voorbeeld van betrokken records",
+    "beforeAfter": "Vergelijking voor en na",
+    "cancel": "Wijzigingen annuleren",
+    "confirm": "Wijzigingen bevestigen",
+    "previewTruncated": "Dit voorbeeld is beperkt. Andere rijen die aan de voorwaarden voldoen, worden ook beïnvloed."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} is succesvol geüpload.",
+    "datasetUpdated": "De gegevensset is succesvol bijgewerkt.",
+    "fileRemoved": "Bestand verwijderd. Upload een nieuw bestand om verder te gaan.",
+    "editCancelled": "Bewerking geannuleerd. Uw gegevensset blijft ongewijzigd.",
+    "editApplied": "Wijzigingen succesvol toegepast. Uw gegevensset bevat nu {{count}} rijen.",
+    "serverOffline": "De server is momenteel niet bereikbaar. We blijven automatisch opnieuw proberen.",
+    "loadingUpload": "De gegevensset wordt geüpload en verwerkt. Grote bestanden kunnen enkele minuten duren...",
+    "loadingQuery": "SQL wordt gegenereerd en gegevens worden geanalyseerd...",
+    "loadingEdit": "De aangevraagde spreadsheetwijzigingen worden gecontroleerd...",
+    "loadingDownload": "Excel-bestand wordt voorbereid...",
+    "loadingConfirm": "Goedgekeurde wijzigingen worden toegepast...",
+    "loadingCancel": "Voorgestelde wijzigingen worden geannuleerd...",
+    "editPreviewReady": "Een voorbeeld van de wijzigingen is voorbereid. Controleer de betrokken records voordat u ze toepast.",
+    "noMatchingRecords": "Geen overeenkomende records gevonden in de huidige gegevensset.",
+    "analysisCompleted": "Analyse voltooid.",
+    "downloadStarted": "Het downloaden van uw Excel-bestand is gestart.",
+    "editRevision": "Gegevensset bijgewerkt (versie {{revision}}). Stel een nieuwe vraag om de huidige {{count}} rijen te analyseren. Eerdere resultaten zijn gebaseerd op oudere gegevens.",
+    "editOnlyInstruction": "De AI-assistent wijzigt uitsluitend gegevens. Gebruik de gegevensverkenner om records te bekijken of te filteren.",
+    "editRefreshFailed": "De wijziging is opgeslagen, maar het vernieuwen van het gegevensvoorbeeld is mislukt: {{error}}",
+    "editConfirmError": "{{error}} Als de bevestiging al is geslaagd, vernieuw dan de gegevensset voordat u het opnieuw probeert."
+  },
+  "validation": {
+    "selectFile": "Selecteer een CSV- of XLSX-bestand.",
+    "emptyFile": "Dit bestand is leeg.",
+    "fileTooLarge": "De maximale bestandsgrootte is {{size}} MB.",
+    "unsupportedFile": "Alleen CSV- en XLSX-bestanden worden ondersteund.",
+    "requiredQuestion": "Voer een vraag over de gegevensset in.",
+    "requiredInstruction": "Voer een bewerkingsinstructie in.",
+    "backendUnavailable": "Kan geen verbinding maken met de DataPilot-server.",
+    "requestTimeout": "Het verzoek duurde te lang. Probeer het opnieuw.",
+    "genericError": "Er is iets misgegaan. Probeer het opnieuw."
+  },
+  "common": {
+    "cancel": "Annuleren",
+    "confirm": "Bevestigen",
+    "close": "Sluiten",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "loading": "Laden...",
+    "success": "Geslaagd",
+    "error": "Fout",
+    "warning": "Waarschuwing",
+    "refresh": "Vernieuwen",
+    "search": "Zoeken",
+    "noResults": "Geen resultaten gevonden",
+    "yes": "Ja",
+    "no": "Nee"
+  }
+}

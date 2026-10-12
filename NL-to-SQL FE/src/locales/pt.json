@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Espaço de trabalho inteligente para dados",
+    "workspace": "DATAPILOT AI / ESPAÇO DE TRABALHO",
+    "skipToContent": "Ir para o conteúdo"
+  },
+  "nav": {
+    "dashboard": "Painel de controlo",
+    "dataset": "Conjunto de dados",
+    "explorer": "Explorador de dados",
+    "assistant": "Assistente de IA",
+    "upload": "Carregar",
+    "download": "Transferir",
+    "connected": "Ligado",
+    "offline": "Sem ligação",
+    "removeFile": "Remover ficheiro atual"
+  },
+  "language": {
+    "select": "Selecionar idioma",
+    "search": "Pesquisar idiomas...",
+    "current": "Idioma atual",
+    "noResults": "Nenhum idioma encontrado",
+    "cancel": "Cancelar",
+    "apply": "Aplicar idioma"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Painel de controlo",
+      "description": "O seu espaço de trabalho inteligente para dados."
+    },
+    "dataset": {
+      "title": "Conjunto de dados",
+      "description": "Explore os seus dados e verifique a sua estrutura."
+    },
+    "explorer": {
+      "title": "Explorador de dados",
+      "description": "Explore conjuntos de dados utilizando linguagem natural."
+    },
+    "assistant": {
+      "title": "Assistente de IA",
+      "description": "Efetue alterações controladas em dados Excel e CSV."
+    }
+  },
+  "hero": {
+    "title": "Faça perguntas sobre as suas folhas de cálculo. Obtenha respostas em segundos.",
+    "description": "Carregue um ficheiro CSV ou Excel, faça perguntas no idioma da sua preferência e reveja cada alteração antes de a aplicar.",
+    "drop": "Arraste o seu ficheiro para aqui",
+    "dropActive": "Largue para carregar",
+    "chooseFile": "Escolher ficheiro",
+    "fileSupport": "CSV ou XLSX, até {{size}} MB",
+    "howItWorks": "Como funciona",
+    "step1Title": "Carregue o seu ficheiro",
+    "step1Description": "Adicione um ficheiro CSV ou Excel. As colunas e os tipos de dados são detetados automaticamente.",
+    "step2Title": "Faça uma pergunta ou descreva uma alteração",
+    "step2Description": "Introduza uma pergunta para analisar os dados ou uma instrução para os editar.",
+    "step3Title": "Reveja e transfira",
+    "step3Description": "Verifique as linhas afetadas, confirme as alterações e transfira o ficheiro Excel atualizado.",
+    "explorerFeature": "Obtenha respostas a partir dos seus dados com consultas SQL geradas e tabelas de resultados.",
+    "assistantFeature": "Adicione, atualize ou elimine registos. Todas as alterações requerem a sua aprovação.",
+    "explorerExample": "Mostrar os 10 clientes com maior receita",
+    "assistantExample": "Eliminar linhas cujo estado seja cancelado",
+    "exampleExplorer": "Exemplo: Explorador de dados",
+    "exampleQuestion": "Que região registou as vendas mais elevadas no terceiro trimestre?"
+  },
+  "metrics": {
+    "totalRecords": "Total de registos",
+    "dataColumns": "Colunas de dados",
+    "revision": "Versão do conjunto de dados",
+    "rows": "Linhas",
+    "columns": "Colunas",
+    "rowsDescription": "Linhas no conjunto de dados carregado",
+    "columnsDescription": "Detetadas automaticamente",
+    "confirmedEdits": "Alterações confirmadas"
+  },
+  "dataset": {
+    "overview": "Visão geral do conjunto de dados",
+    "preview": "Pré-visualização dos dados",
+    "schema": "Esquema",
+    "downloadExcel": "Transferir Excel",
+    "noData": "Não existem dados disponíveis.",
+    "showing": "A mostrar as primeiras {{count}} de {{total}} linhas",
+    "openDataset": "Abrir conjunto de dados",
+    "openExplorer": "Abrir Explorador de dados",
+    "openAssistant": "Abrir Assistente de IA",
+    "datasetFeature": "Explore as linhas, verifique o esquema e transfira a versão mais recente do ficheiro Excel.",
+    "explorerFeature": "Analise conjuntos de dados carregados utilizando linguagem natural, consultas SQL e resultados estruturados.",
+    "assistantFeature": "Adicione, atualize ou elimine registos através de um processo de revisão e confirmação."
+  },
+  "chat": {
+    "explorerTitle": "Explorador de dados",
+    "assistantTitle": "Assistente de IA",
+    "explorerDescription": "Análise de linguagem natural para SQL",
+    "assistantDescription": "Edição de Excel e CSV com IA",
+    "explorerPlaceholder": "Faça uma pergunta sobre o seu conjunto de dados...",
+    "assistantPlaceholder": "Descreva as alterações que pretende efetuar...",
+    "send": "Enviar",
+    "tryAsking": "SUGESTÕES DE PERGUNTAS",
+    "activeDataset": "CONJUNTO DE DADOS ATIVO",
+    "resultTable": "Ver tabela de resultados ({{count}} linhas)",
+    "generatedSql": "Ver SQL gerado",
+    "aiResponse": "Ver resposta da IA",
+    "copySql": "Copiar SQL",
+    "copied": "Copiado",
+    "askAboutData": "Faça perguntas sobre os seus dados",
+    "changeData": "O que pretende alterar?",
+    "explorerEmptyDescription": "Gere consultas SQL, explore registos e obtenha respostas com IA. Experimente uma sugestão do painel à direita.",
+    "assistantEmptyDescription": "Descreva as alterações necessárias. Poderá revê-las antes de serem aplicadas.",
+    "historicalResult": "Resultado anterior · versão {{revision}} do conjunto de dados. Repita a pergunta para obter os dados atuais.",
+    "explorerWarning": "As consultas SQL e as respostas geradas por IA devem ser verificadas antes de decisões importantes.",
+    "assistantWarning": "As alterações às folhas de cálculo requerem a sua confirmação.",
+    "pendingWarning": "Reveja, confirme ou cancele a edição pendente.",
+    "askInExplorer": "Perguntar no Explorador de dados",
+    "you": "VOCÊ",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Quantas linhas existem neste conjunto de dados?",
+      "firstRecords": "Mostrar os primeiros 10 registos",
+      "missingValues": "Que colunas têm valores em falta?",
+      "removeDuplicates": "Remover linhas duplicadas",
+      "addRecord": "Adicionar um novo registo utilizando os nomes das colunas existentes",
+      "updateValue": "Atualizar um valor quando uma coluna corresponder a uma condição"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Rever alterações propostas",
+    "notApplied": "Ainda não foram aplicadas alterações.",
+    "confirmationRequired": "Confirmação necessária",
+    "affectedRows": "Linhas afetadas",
+    "currentRows": "Linhas atuais",
+    "afterChanges": "Após as alterações",
+    "proposedAction": "Ver ação proposta pela IA",
+    "affectedPreview": "Pré-visualização dos registos afetados",
+    "beforeAfter": "Comparação antes e depois",
+    "cancel": "Cancelar alterações",
+    "confirm": "Confirmar alterações",
+    "previewTruncated": "Esta pré-visualização é limitada. Outras linhas que correspondam aos critérios também serão afetadas."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} carregado com sucesso.",
+    "datasetUpdated": "Conjunto de dados atualizado com sucesso.",
+    "fileRemoved": "Ficheiro removido. Carregue um novo ficheiro para continuar.",
+    "editCancelled": "Edição cancelada. O seu conjunto de dados permanece inalterado.",
+    "editApplied": "Alterações aplicadas com sucesso. O conjunto de dados contém agora {{count}} linhas.",
+    "serverOffline": "O servidor não está acessível neste momento. Continuaremos a tentar automaticamente.",
+    "loadingUpload": "A carregar e processar o conjunto de dados. Os ficheiros grandes podem demorar alguns minutos...",
+    "loadingQuery": "A gerar SQL e a analisar dados...",
+    "loadingEdit": "A rever as alterações solicitadas à folha de cálculo...",
+    "loadingDownload": "A preparar o ficheiro Excel...",
+    "loadingConfirm": "A aplicar as alterações aprovadas...",
+    "loadingCancel": "A cancelar as alterações propostas...",
+    "editPreviewReady": "Foi preparada uma pré-visualização da edição. Reveja os registos afetados antes de aplicar as alterações.",
+    "noMatchingRecords": "Não foram encontrados registos correspondentes no conjunto de dados atual.",
+    "analysisCompleted": "Análise concluída.",
+    "downloadStarted": "A transferência do seu ficheiro Excel foi iniciada.",
+    "editRevision": "Conjunto de dados atualizado (versão {{revision}}). Faça uma nova pergunta para analisar as {{count}} linhas atuais. Os resultados anteriores são históricos.",
+    "editOnlyInstruction": "O Assistente de IA apenas altera dados. Para visualizar ou filtrar registos, utilize o Explorador de dados.",
+    "editRefreshFailed": "A edição foi guardada, mas não foi possível atualizar a pré-visualização do conjunto de dados: {{error}}",
+    "editConfirmError": "{{error}} Se a confirmação já tiver sido concluída, atualize o conjunto de dados antes de tentar novamente."
+  },
+  "validation": {
+    "selectFile": "Selecione um ficheiro CSV ou XLSX.",
+    "emptyFile": "Este ficheiro está vazio.",
+    "fileTooLarge": "O tamanho máximo do ficheiro é {{size}} MB.",
+    "unsupportedFile": "Apenas são suportados ficheiros CSV e XLSX.",
+    "requiredQuestion": "Introduza uma pergunta sobre o conjunto de dados.",
+    "requiredInstruction": "Introduza uma instrução de edição.",
+    "backendUnavailable": "Não é possível contactar o servidor DataPilot.",
+    "requestTimeout": "O pedido demorou demasiado tempo. Tente novamente.",
+    "genericError": "Ocorreu um erro. Tente novamente."
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "loading": "A carregar...",
+    "success": "Sucesso",
+    "error": "Erro",
+    "warning": "Aviso",
+    "refresh": "Atualizar",
+    "search": "Pesquisar",
+    "noResults": "Nenhum resultado encontrado",
+    "yes": "Sim",
+    "no": "Não"
+  }
+}

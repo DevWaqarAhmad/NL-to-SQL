@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Inteligentna przestrzeń pracy z danymi",
+    "workspace": "DATAPILOT AI / PRZESTRZEŃ ROBOCZA",
+    "skipToContent": "Przejdź do głównej treści"
+  },
+  "nav": {
+    "dashboard": "Panel główny",
+    "dataset": "Zbiór danych",
+    "explorer": "Eksplorator danych",
+    "assistant": "Asystent AI",
+    "upload": "Prześlij",
+    "download": "Pobierz",
+    "connected": "Połączono",
+    "offline": "Brak połączenia",
+    "removeFile": "Usuń bieżący plik"
+  },
+  "language": {
+    "select": "Wybierz język",
+    "search": "Szukaj języków...",
+    "current": "Aktualny język",
+    "noResults": "Nie znaleziono języków",
+    "cancel": "Anuluj",
+    "apply": "Zastosuj język"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Panel główny",
+      "description": "Twoja inteligentna przestrzeń pracy z danymi."
+    },
+    "dataset": {
+      "title": "Zbiór danych",
+      "description": "Przeglądaj swoje dane i sprawdzaj ich strukturę."
+    },
+    "explorer": {
+      "title": "Eksplorator danych",
+      "description": "Eksploruj zbiory danych za pomocą języka naturalnego."
+    },
+    "assistant": {
+      "title": "Asystent AI",
+      "description": "Wprowadzaj kontrolowane zmiany w danych Excel i CSV."
+    }
+  },
+  "hero": {
+    "title": "Zadawaj pytania dotyczące arkuszy kalkulacyjnych. Otrzymuj odpowiedzi w kilka sekund.",
+    "description": "Prześlij plik CSV lub Excel, zadawaj pytania w wybranym języku i sprawdzaj każdą zmianę przed jej zastosowaniem.",
+    "drop": "Upuść plik tutaj",
+    "dropActive": "Upuść, aby przesłać",
+    "chooseFile": "Wybierz plik",
+    "fileSupport": "CSV lub XLSX, maksymalnie {{size}} MB",
+    "howItWorks": "Jak to działa",
+    "step1Title": "Prześlij plik",
+    "step1Description": "Dodaj plik CSV lub Excel. Kolumny i typy danych zostaną automatycznie rozpoznane.",
+    "step2Title": "Zadaj pytanie lub opisz zmianę",
+    "step2Description": "Wpisz pytanie, aby przeanalizować dane, lub instrukcję, aby je edytować.",
+    "step3Title": "Sprawdź i pobierz",
+    "step3Description": "Sprawdź wiersze objęte zmianami, potwierdź zmiany i pobierz zaktualizowany plik Excel.",
+    "explorerFeature": "Uzyskuj odpowiedzi na podstawie swoich danych dzięki generowanym zapytaniom SQL i tabelom wyników.",
+    "assistantFeature": "Dodawaj, aktualizuj lub usuwaj rekordy. Każda zmiana wymaga Twojej zgody.",
+    "explorerExample": "Pokaż 10 klientów o najwyższych przychodach",
+    "assistantExample": "Usuń wiersze, których status to anulowano",
+    "exampleExplorer": "Przykład: Eksplorator danych",
+    "exampleQuestion": "Który region osiągnął najwyższą sprzedaż w trzecim kwartale?"
+  },
+  "metrics": {
+    "totalRecords": "Łączna liczba rekordów",
+    "dataColumns": "Kolumny danych",
+    "revision": "Wersja zbioru danych",
+    "rows": "Wiersze",
+    "columns": "Kolumny",
+    "rowsDescription": "Wiersze w przesłanym zbiorze danych",
+    "columnsDescription": "Rozpoznane automatycznie",
+    "confirmedEdits": "Potwierdzone zmiany"
+  },
+  "dataset": {
+    "overview": "Przegląd zbioru danych",
+    "preview": "Podgląd danych",
+    "schema": "Schemat",
+    "downloadExcel": "Pobierz Excel",
+    "noData": "Brak dostępnych danych.",
+    "showing": "Wyświetlanie pierwszych {{count}} z {{total}} wierszy",
+    "openDataset": "Otwórz zbiór danych",
+    "openExplorer": "Otwórz Eksplorator danych",
+    "openAssistant": "Otwórz Asystenta AI",
+    "datasetFeature": "Przeglądaj wiersze, sprawdzaj schemat i pobieraj najnowszy plik Excel.",
+    "explorerFeature": "Analizuj przesłane zbiory danych za pomocą języka naturalnego, zapytań SQL i uporządkowanych wyników.",
+    "assistantFeature": "Dodawaj, aktualizuj lub usuwaj rekordy w procesie obejmującym przegląd i potwierdzenie."
+  },
+  "chat": {
+    "explorerTitle": "Eksplorator danych",
+    "assistantTitle": "Asystent AI",
+    "explorerDescription": "Analiza danych: od języka naturalnego do SQL",
+    "assistantDescription": "Edycja plików Excel i CSV wspomagana przez AI",
+    "explorerPlaceholder": "Zadaj pytanie dotyczące swojego zbioru danych...",
+    "assistantPlaceholder": "Opisz zmiany, które chcesz wprowadzić...",
+    "send": "Wyślij",
+    "tryAsking": "SPRÓBUJ ZAPYTAĆ",
+    "activeDataset": "AKTYWNY ZBIÓR DANYCH",
+    "resultTable": "Pokaż tabelę wyników ({{count}} wierszy)",
+    "generatedSql": "Pokaż wygenerowany SQL",
+    "aiResponse": "Pokaż odpowiedź AI",
+    "copySql": "Kopiuj SQL",
+    "copied": "Skopiowano",
+    "askAboutData": "Zadawaj pytania dotyczące swoich danych",
+    "changeData": "Co chcesz zmienić?",
+    "explorerEmptyDescription": "Generuj zapytania SQL, przeglądaj rekordy i otrzymuj odpowiedzi wspomagane przez AI. Wypróbuj sugestię z panelu po prawej stronie.",
+    "assistantEmptyDescription": "Opisz potrzebne zmiany. Przed ich zastosowaniem możesz je sprawdzić.",
+    "historicalResult": "Poprzedni wynik · wersja zbioru danych {{revision}}. Uruchom pytanie ponownie, aby uzyskać aktualne dane.",
+    "explorerWarning": "Przed podjęciem ważnych decyzji należy zweryfikować zapytania SQL i odpowiedzi wygenerowane przez AI.",
+    "assistantWarning": "Zmiany w arkuszu kalkulacyjnym wymagają Twojego potwierdzenia.",
+    "pendingWarning": "Sprawdź, potwierdź lub anuluj oczekującą zmianę.",
+    "askInExplorer": "Zadaj to pytanie w Eksploratorze danych",
+    "you": "TY",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Ile wierszy znajduje się w tym zbiorze danych?",
+      "firstRecords": "Pokaż pierwsze 10 rekordów",
+      "missingValues": "Które kolumny zawierają brakujące wartości?",
+      "removeDuplicates": "Usuń zduplikowane wiersze",
+      "addRecord": "Dodaj nowy rekord, używając istniejących nazw kolumn",
+      "updateValue": "Zaktualizuj wartość, gdy kolumna spełnia określony warunek"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Sprawdź proponowane zmiany",
+    "notApplied": "Nie zastosowano jeszcze żadnych zmian.",
+    "confirmationRequired": "Wymagane potwierdzenie",
+    "affectedRows": "Wiersze objęte zmianami",
+    "currentRows": "Bieżące wiersze",
+    "afterChanges": "Po zmianach",
+    "proposedAction": "Pokaż działanie zaproponowane przez AI",
+    "affectedPreview": "Podgląd rekordów objętych zmianami",
+    "beforeAfter": "Porównanie przed i po",
+    "cancel": "Anuluj zmiany",
+    "confirm": "Potwierdź zmiany",
+    "previewTruncated": "Ten podgląd jest ograniczony. Pozostałe wiersze spełniające warunki również zostaną objęte zmianami."
+  },
+  "messages": {
+    "uploadSuccess": "Plik {{filename}} został pomyślnie przesłany.",
+    "datasetUpdated": "Zbiór danych został pomyślnie zaktualizowany.",
+    "fileRemoved": "Plik został usunięty. Prześlij nowy plik, aby kontynuować.",
+    "editCancelled": "Edycja została anulowana. Twój zbiór danych pozostał bez zmian.",
+    "editApplied": "Zmiany zostały pomyślnie zastosowane. Zbiór danych zawiera teraz {{count}} wierszy.",
+    "serverOffline": "Serwer jest obecnie niedostępny. Będziemy automatycznie ponawiać próby połączenia.",
+    "loadingUpload": "Trwa przesyłanie i przetwarzanie zbioru danych. Duże pliki mogą wymagać kilku minut...",
+    "loadingQuery": "Trwa generowanie SQL i analiza danych...",
+    "loadingEdit": "Trwa sprawdzanie żądanych zmian w arkuszu kalkulacyjnym...",
+    "loadingDownload": "Trwa przygotowywanie pliku Excel...",
+    "loadingConfirm": "Trwa stosowanie zatwierdzonych zmian...",
+    "loadingCancel": "Trwa anulowanie proponowanych zmian...",
+    "editPreviewReady": "Podgląd zmian jest gotowy. Sprawdź rekordy objęte zmianami przed ich zastosowaniem.",
+    "noMatchingRecords": "Nie znaleziono pasujących rekordów w bieżącym zbiorze danych.",
+    "analysisCompleted": "Analiza zakończona.",
+    "downloadStarted": "Rozpoczęto pobieranie pliku Excel.",
+    "editRevision": "Zbiór danych został zaktualizowany (wersja {{revision}}). Zadaj nowe pytanie, aby przeanalizować bieżące {{count}} wierszy. Poprzednie wyniki dotyczą starszych danych.",
+    "editOnlyInstruction": "Asystent AI służy wyłącznie do zmieniania danych. Aby przeglądać lub filtrować rekordy, użyj Eksploratora danych.",
+    "editRefreshFailed": "Zmiana została zapisana, ale nie udało się odświeżyć podglądu zbioru danych: {{error}}",
+    "editConfirmError": "{{error}} Jeśli potwierdzenie już się powiodło, odśwież zbiór danych przed ponowną próbą."
+  },
+  "validation": {
+    "selectFile": "Wybierz plik CSV lub XLSX.",
+    "emptyFile": "Ten plik jest pusty.",
+    "fileTooLarge": "Maksymalny rozmiar pliku to {{size}} MB.",
+    "unsupportedFile": "Obsługiwane są tylko pliki CSV i XLSX.",
+    "requiredQuestion": "Wpisz pytanie dotyczące zbioru danych.",
+    "requiredInstruction": "Wpisz instrukcję edycji.",
+    "backendUnavailable": "Nie można połączyć się z serwerem DataPilot.",
+    "requestTimeout": "Żądanie trwało zbyt długo. Spróbuj ponownie.",
+    "genericError": "Wystąpił błąd. Spróbuj ponownie."
+  },
+  "common": {
+    "cancel": "Anuluj",
+    "confirm": "Potwierdź",
+    "close": "Zamknij",
+    "save": "Zapisz",
+    "delete": "Usuń",
+    "loading": "Ładowanie...",
+    "success": "Sukces",
+    "error": "Błąd",
+    "warning": "Ostrzeżenie",
+    "refresh": "Odśwież",
+    "search": "Szukaj",
+    "noResults": "Nie znaleziono wyników",
+    "yes": "Tak",
+    "no": "Nie"
+  }
+}

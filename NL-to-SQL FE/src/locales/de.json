@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Intelligenter Datenarbeitsbereich",
+    "workspace": "DATAPILOT AI / ARBEITSBEREICH",
+    "skipToContent": "Zum Inhalt springen"
+  },
+  "nav": {
+    "dashboard": "Übersicht",
+    "dataset": "Datensatz",
+    "explorer": "Datenexplorer",
+    "assistant": "KI-Assistent",
+    "upload": "Hochladen",
+    "download": "Herunterladen",
+    "connected": "Verbunden",
+    "offline": "Offline",
+    "removeFile": "Aktuelle Datei entfernen"
+  },
+  "language": {
+    "select": "Sprache auswählen",
+    "search": "Sprachen suchen...",
+    "current": "Aktuelle Sprache",
+    "noResults": "Keine Sprachen gefunden",
+    "cancel": "Abbrechen",
+    "apply": "Sprache übernehmen"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Übersicht",
+      "description": "Ihr intelligenter Datenarbeitsbereich."
+    },
+    "dataset": {
+      "title": "Datensatz",
+      "description": "Durchsuchen Sie Ihre Daten und überprüfen Sie deren Struktur."
+    },
+    "explorer": {
+      "title": "Datenexplorer",
+      "description": "Analysieren Sie Datensätze mithilfe natürlicher Sprache."
+    },
+    "assistant": {
+      "title": "KI-Assistent",
+      "description": "Nehmen Sie kontrollierte Änderungen an Excel- und CSV-Daten vor."
+    }
+  },
+  "hero": {
+    "title": "Stellen Sie Fragen zu Ihren Tabellen. Erhalten Sie Antworten in Sekunden.",
+    "description": "Laden Sie eine CSV- oder Excel-Datei hoch, stellen Sie Fragen in Ihrer bevorzugten Sprache und überprüfen Sie jede Änderung vor der Anwendung.",
+    "drop": "Datei hier ablegen",
+    "dropActive": "Zum Hochladen ablegen",
+    "chooseFile": "Datei auswählen",
+    "fileSupport": "CSV oder XLSX, bis zu {{size}} MB",
+    "howItWorks": "So funktioniert es",
+    "step1Title": "Datei hochladen",
+    "step1Description": "Fügen Sie eine CSV- oder Excel-Datei hinzu. Spalten und Datentypen werden automatisch erkannt.",
+    "step2Title": "Fragen stellen oder Änderungen beschreiben",
+    "step2Description": "Geben Sie eine Frage zur Datenanalyse oder eine Anweisung zur Bearbeitung ein.",
+    "step3Title": "Überprüfen und herunterladen",
+    "step3Description": "Prüfen Sie die betroffenen Zeilen, bestätigen Sie die Änderungen und laden Sie die aktualisierte Excel-Datei herunter.",
+    "explorerFeature": "Erhalten Sie Antworten aus Ihren Daten mit generierten SQL-Abfragen und Ergebnistabellen.",
+    "assistantFeature": "Datensätze hinzufügen, aktualisieren oder löschen. Sie bestätigen jede Änderung.",
+    "explorerExample": "Die 10 Kunden mit dem höchsten Umsatz anzeigen",
+    "assistantExample": "Zeilen löschen, deren Status storniert ist",
+    "exampleExplorer": "Beispiel: Datenexplorer",
+    "exampleQuestion": "Welche Region hatte im dritten Quartal den höchsten Umsatz?"
+  },
+  "metrics": {
+    "totalRecords": "Datensätze insgesamt",
+    "dataColumns": "Datenspalten",
+    "revision": "Datensatzversion",
+    "rows": "Zeilen",
+    "columns": "Spalten",
+    "rowsDescription": "Zeilen im hochgeladenen Datensatz",
+    "columnsDescription": "Automatisch erkannt",
+    "confirmedEdits": "Bestätigte Änderungen"
+  },
+  "dataset": {
+    "overview": "Datensatzübersicht",
+    "preview": "Datenvorschau",
+    "schema": "Schema",
+    "downloadExcel": "Excel herunterladen",
+    "noData": "Keine Daten verfügbar.",
+    "showing": "Die ersten {{count}} von {{total}} Zeilen werden angezeigt",
+    "openDataset": "Datensatz öffnen",
+    "openExplorer": "Datenexplorer öffnen",
+    "openAssistant": "KI-Assistent öffnen",
+    "datasetFeature": "Durchsuchen Sie Ihre Zeilen, überprüfen Sie das Schema und laden Sie die neueste Excel-Datei herunter.",
+    "explorerFeature": "Analysieren Sie hochgeladene Datensätze mithilfe natürlicher Sprache, SQL-Abfragen und strukturierter Ergebnisse.",
+    "assistantFeature": "Fügen Sie Datensätze hinzu, aktualisieren oder löschen Sie diese mit einem Überprüfungs- und Bestätigungsprozess."
+  },
+  "chat": {
+    "explorerTitle": "Datenexplorer",
+    "assistantTitle": "KI-Assistent",
+    "explorerDescription": "Analyse mit natürlicher Sprache und SQL",
+    "assistantDescription": "KI-gestützte Bearbeitung von Excel- und CSV-Dateien",
+    "explorerPlaceholder": "Stellen Sie eine Frage zu Ihrem Datensatz...",
+    "assistantPlaceholder": "Beschreiben Sie die gewünschten Änderungen...",
+    "send": "Senden",
+    "tryAsking": "BEISPIELFRAGEN",
+    "activeDataset": "AKTIVER DATENSATZ",
+    "resultTable": "Ergebnistabelle anzeigen ({{count}} Zeilen)",
+    "generatedSql": "Generiertes SQL anzeigen",
+    "aiResponse": "KI-Antwort anzeigen",
+    "copySql": "SQL kopieren",
+    "copied": "Kopiert",
+    "askAboutData": "Stellen Sie Fragen zu Ihren Daten",
+    "changeData": "Was möchten Sie ändern?",
+    "explorerEmptyDescription": "Erstellen Sie SQL-Abfragen, erkunden Sie Datensätze und erhalten Sie KI-gestützte Antworten. Probieren Sie einen Vorschlag aus dem rechten Bereich aus.",
+    "assistantEmptyDescription": "Beschreiben Sie die gewünschten Änderungen. Sie können diese vor der Anwendung überprüfen.",
+    "historicalResult": "Früheres Ergebnis · Datensatzversion {{revision}}. Führen Sie die Frage für aktuelle Daten erneut aus.",
+    "explorerWarning": "KI-generierte SQL-Abfragen und Antworten sollten bei wichtigen Entscheidungen überprüft werden.",
+    "assistantWarning": "Änderungen an Tabellen erfordern Ihre Bestätigung.",
+    "pendingWarning": "Überprüfen, bestätigen oder verwerfen Sie die ausstehende Änderung.",
+    "askInExplorer": "Im Datenexplorer fragen",
+    "you": "SIE",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Wie viele Zeilen enthält dieser Datensatz?",
+      "firstRecords": "Die ersten 10 Datensätze anzeigen",
+      "missingValues": "Welche Spalten enthalten fehlende Werte?",
+      "removeDuplicates": "Doppelte Zeilen entfernen",
+      "addRecord": "Einen neuen Datensatz mit den vorhandenen Spaltennamen hinzufügen",
+      "updateValue": "Einen Wert aktualisieren, wenn eine Spalte eine Bedingung erfüllt"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Vorgeschlagene Änderungen überprüfen",
+    "notApplied": "Es wurden noch keine Änderungen angewendet.",
+    "confirmationRequired": "Bestätigung erforderlich",
+    "affectedRows": "Betroffene Zeilen",
+    "currentRows": "Aktuelle Zeilen",
+    "afterChanges": "Nach den Änderungen",
+    "proposedAction": "Vorgeschlagene KI-Aktion anzeigen",
+    "affectedPreview": "Vorschau der betroffenen Datensätze",
+    "beforeAfter": "Vorher-/Nachher-Vergleich",
+    "cancel": "Änderungen verwerfen",
+    "confirm": "Änderungen bestätigen",
+    "previewTruncated": "Diese Vorschau ist begrenzt. Weitere übereinstimmende Zeilen sind ebenfalls betroffen."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} wurde erfolgreich hochgeladen.",
+    "datasetUpdated": "Datensatz erfolgreich aktualisiert.",
+    "fileRemoved": "Datei entfernt. Laden Sie eine neue Datei hoch, um fortzufahren.",
+    "editCancelled": "Bearbeitung abgebrochen. Ihr Datensatz bleibt unverändert.",
+    "editApplied": "Änderungen erfolgreich angewendet. Ihr Datensatz enthält jetzt {{count}} Zeilen.",
+    "serverOffline": "Der Server ist derzeit nicht erreichbar. Wir versuchen automatisch, die Verbindung wiederherzustellen.",
+    "loadingUpload": "Datensatz wird hochgeladen und verarbeitet. Große Dateien können einige Minuten dauern...",
+    "loadingQuery": "SQL wird generiert und Daten werden analysiert...",
+    "loadingEdit": "Angeforderte Tabellenänderungen werden überprüft...",
+    "loadingDownload": "Excel-Datei wird vorbereitet...",
+    "loadingConfirm": "Bestätigte Änderungen werden angewendet...",
+    "loadingCancel": "Vorgeschlagene Änderungen werden verworfen...",
+    "editPreviewReady": "Eine Änderungsvorschau wurde erstellt. Bitte überprüfen Sie die betroffenen Datensätze vor der Anwendung.",
+    "noMatchingRecords": "Im aktuellen Datensatz wurden keine übereinstimmenden Datensätze gefunden.",
+    "analysisCompleted": "Analyse abgeschlossen.",
+    "downloadStarted": "Der Download Ihrer Excel-Datei wurde gestartet.",
+    "editRevision": "Datensatz aktualisiert (Version {{revision}}). Stellen Sie eine neue Frage, um die aktuellen {{count}} Zeilen zu analysieren. Frühere Ergebnisse sind historisch.",
+    "editOnlyInstruction": "Der KI-Assistent ändert ausschließlich Daten. Verwenden Sie den Datenexplorer, um Datensätze anzuzeigen oder zu filtern.",
+    "editRefreshFailed": "Die Änderung wurde gespeichert, aber die Aktualisierung der Datensatzvorschau ist fehlgeschlagen: {{error}}",
+    "editConfirmError": "{{error}} Falls die Bestätigung bereits erfolgreich war, aktualisieren Sie den Datensatz, bevor Sie es erneut versuchen."
+  },
+  "validation": {
+    "selectFile": "Bitte wählen Sie eine CSV- oder XLSX-Datei aus.",
+    "emptyFile": "Diese Datei ist leer.",
+    "fileTooLarge": "Die maximale Dateigröße beträgt {{size}} MB.",
+    "unsupportedFile": "Nur CSV- und XLSX-Dateien werden unterstützt.",
+    "requiredQuestion": "Bitte geben Sie eine Frage zum Datensatz ein.",
+    "requiredInstruction": "Bitte geben Sie eine Bearbeitungsanweisung ein.",
+    "backendUnavailable": "Der DataPilot-Server ist nicht erreichbar.",
+    "requestTimeout": "Die Anfrage hat zu lange gedauert. Bitte versuchen Sie es erneut.",
+    "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "common": {
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "loading": "Wird geladen...",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "warning": "Warnung",
+    "refresh": "Aktualisieren",
+    "search": "Suchen",
+    "noResults": "Keine Ergebnisse gefunden",
+    "yes": "Ja",
+    "no": "Nein"
+  }
+}

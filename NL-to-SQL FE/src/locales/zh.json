@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "智能数据工作空间",
+    "workspace": "DATAPILOT AI / 工作空间",
+    "skipToContent": "跳转到主要内容"
+  },
+  "nav": {
+    "dashboard": "仪表板",
+    "dataset": "数据集",
+    "explorer": "数据探索器",
+    "assistant": "AI 助手",
+    "upload": "上传",
+    "download": "下载",
+    "connected": "已连接",
+    "offline": "离线",
+    "removeFile": "移除当前文件"
+  },
+  "language": {
+    "select": "选择语言",
+    "search": "搜索语言...",
+    "current": "当前语言",
+    "noResults": "未找到语言",
+    "cancel": "取消",
+    "apply": "应用语言"
+  },
+  "page": {
+    "dashboard": {
+      "title": "仪表板",
+      "description": "您的智能数据工作空间。"
+    },
+    "dataset": {
+      "title": "数据集",
+      "description": "浏览您的数据并检查其结构。"
+    },
+    "explorer": {
+      "title": "数据探索器",
+      "description": "使用自然语言探索数据集。"
+    },
+    "assistant": {
+      "title": "AI 助手",
+      "description": "对 Excel 和 CSV 数据进行可控修改。"
+    }
+  },
+  "hero": {
+    "title": "向电子表格提问，几秒钟内获得答案。",
+    "description": "上传 CSV 或 Excel 文件，使用您偏好的语言提问，并在应用每项修改前进行审核。",
+    "drop": "将文件拖放到这里",
+    "dropActive": "松开鼠标以上传文件",
+    "chooseFile": "选择文件",
+    "fileSupport": "CSV 或 XLSX，最大 {{size}} MB",
+    "howItWorks": "使用方法",
+    "step1Title": "上传文件",
+    "step1Description": "添加 CSV 或 Excel 文件。系统会自动识别列和数据类型。",
+    "step2Title": "提问或描述修改",
+    "step2Description": "输入问题以分析数据，或输入指令以编辑数据。",
+    "step3Title": "审核并下载",
+    "step3Description": "检查受影响的行，确认修改，然后下载更新后的 Excel 文件。",
+    "explorerFeature": "通过自动生成的 SQL 查询和结果表，从数据中获取答案。",
+    "assistantFeature": "添加、更新或删除记录。每项修改都需要您的批准。",
+    "explorerExample": "显示收入最高的前 10 位客户",
+    "assistantExample": "删除状态为已取消的行",
+    "exampleExplorer": "示例：数据探索器",
+    "exampleQuestion": "第三季度哪个地区的销售额最高？"
+  },
+  "metrics": {
+    "totalRecords": "记录总数",
+    "dataColumns": "数据列数",
+    "revision": "数据集版本",
+    "rows": "行",
+    "columns": "列",
+    "rowsDescription": "已上传数据集中的行数",
+    "columnsDescription": "自动识别",
+    "confirmedEdits": "已确认的修改"
+  },
+  "dataset": {
+    "overview": "数据集概览",
+    "preview": "数据预览",
+    "schema": "数据结构",
+    "downloadExcel": "下载 Excel",
+    "noData": "暂无可用数据。",
+    "showing": "显示共 {{total}} 行中的前 {{count}} 行",
+    "openDataset": "打开数据集",
+    "openExplorer": "打开数据探索器",
+    "openAssistant": "打开 AI 助手",
+    "datasetFeature": "浏览数据行、检查数据结构并下载最新的 Excel 文件。",
+    "explorerFeature": "使用自然语言、SQL 查询和结构化结果分析已上传的数据集。",
+    "assistantFeature": "通过审核和确认流程添加、更新或删除记录。"
+  },
+  "chat": {
+    "explorerTitle": "数据探索器",
+    "assistantTitle": "AI 助手",
+    "explorerDescription": "自然语言转 SQL 数据分析",
+    "assistantDescription": "AI 驱动的 Excel 和 CSV 编辑",
+    "explorerPlaceholder": "输入有关数据集的问题...",
+    "assistantPlaceholder": "描述您想进行的修改...",
+    "send": "发送",
+    "tryAsking": "试试这些问题",
+    "activeDataset": "当前数据集",
+    "resultTable": "查看结果表（{{count}} 行）",
+    "generatedSql": "查看生成的 SQL",
+    "aiResponse": "查看 AI 回答",
+    "copySql": "复制 SQL",
+    "copied": "已复制",
+    "askAboutData": "询问有关数据的任何问题",
+    "changeData": "您想修改什么？",
+    "explorerEmptyDescription": "生成 SQL 查询、探索记录并获取 AI 分析结果。可以尝试右侧面板中的建议。",
+    "assistantEmptyDescription": "描述需要进行的修改。应用前您可以先审核。",
+    "historicalResult": "历史结果 · 数据集版本 {{revision}}。请重新运行问题以获取最新数据。",
+    "explorerWarning": "在做出重要决定前，请验证 AI 生成的 SQL 查询和回答。",
+    "assistantWarning": "修改电子表格需要您的确认。",
+    "pendingWarning": "请审核、确认或取消待处理的修改。",
+    "askInExplorer": "在数据探索器中提问",
+    "you": "您",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "这个数据集有多少行？",
+      "firstRecords": "显示前 10 条记录",
+      "missingValues": "哪些列存在缺失值？",
+      "removeDuplicates": "删除重复行",
+      "addRecord": "使用现有列名添加一条新记录",
+      "updateValue": "当某列符合指定条件时更新相应值"
+    }
+  },
+  "edit": {
+    "reviewTitle": "审核建议的修改",
+    "notApplied": "尚未应用任何修改。",
+    "confirmationRequired": "需要确认",
+    "affectedRows": "受影响的行",
+    "currentRows": "当前行数",
+    "afterChanges": "修改后",
+    "proposedAction": "查看 AI 建议的操作",
+    "affectedPreview": "受影响记录预览",
+    "beforeAfter": "修改前后对比",
+    "cancel": "取消修改",
+    "confirm": "确认修改",
+    "previewTruncated": "此预览仅显示部分数据。其他符合条件的行也将受到影响。"
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} 上传成功。",
+    "datasetUpdated": "数据集更新成功。",
+    "fileRemoved": "文件已移除。请上传新文件以继续。",
+    "editCancelled": "修改已取消。您的数据集保持不变。",
+    "editApplied": "修改已成功应用。数据集现在包含 {{count}} 行。",
+    "serverOffline": "目前无法连接服务器。系统将自动重试。",
+    "loadingUpload": "正在上传和处理数据集。较大的文件可能需要几分钟...",
+    "loadingQuery": "正在生成 SQL 并分析数据...",
+    "loadingEdit": "正在审核请求的电子表格修改...",
+    "loadingDownload": "正在准备 Excel 文件...",
+    "loadingConfirm": "正在应用已批准的修改...",
+    "loadingCancel": "正在取消建议的修改...",
+    "editPreviewReady": "修改预览已准备就绪。应用前请检查受影响的记录。",
+    "noMatchingRecords": "当前数据集中没有找到符合条件的记录。",
+    "analysisCompleted": "分析完成。",
+    "downloadStarted": "Excel 文件已开始下载。",
+    "editRevision": "数据集已更新（版本 {{revision}}）。请提出新问题以分析当前的 {{count}} 行。之前的结果属于历史数据。",
+    "editOnlyInstruction": "AI 助手仅用于修改数据。如需查看或筛选记录，请使用数据探索器。",
+    "editRefreshFailed": "修改已保存，但刷新数据集预览失败：{{error}}",
+    "editConfirmError": "{{error}} 如果确认操作已经成功，请先刷新数据集再重试。"
+  },
+  "validation": {
+    "selectFile": "请选择 CSV 或 XLSX 文件。",
+    "emptyFile": "此文件为空。",
+    "fileTooLarge": "文件最大允许大小为 {{size}} MB。",
+    "unsupportedFile": "仅支持 CSV 和 XLSX 文件。",
+    "requiredQuestion": "请输入有关数据集的问题。",
+    "requiredInstruction": "请输入编辑指令。",
+    "backendUnavailable": "无法连接到 DataPilot 服务器。",
+    "requestTimeout": "请求耗时过长，请重试。",
+    "genericError": "发生错误，请重试。"
+  },
+  "common": {
+    "cancel": "取消",
+    "confirm": "确认",
+    "close": "关闭",
+    "save": "保存",
+    "delete": "删除",
+    "loading": "加载中...",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告",
+    "refresh": "刷新",
+    "search": "搜索",
+    "noResults": "未找到结果",
+    "yes": "是",
+    "no": "否"
+  }
+}

@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "インテリジェントなデータワークスペース",
+    "workspace": "DATAPILOT AI / ワークスペース",
+    "skipToContent": "メインコンテンツへ移動"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "dataset": "データセット",
+    "explorer": "データエクスプローラー",
+    "assistant": "AIアシスタント",
+    "upload": "アップロード",
+    "download": "ダウンロード",
+    "connected": "接続済み",
+    "offline": "オフライン",
+    "removeFile": "現在のファイルを削除"
+  },
+  "language": {
+    "select": "言語を選択",
+    "search": "言語を検索...",
+    "current": "現在の言語",
+    "noResults": "言語が見つかりません",
+    "cancel": "キャンセル",
+    "apply": "言語を適用"
+  },
+  "page": {
+    "dashboard": {
+      "title": "ダッシュボード",
+      "description": "インテリジェントなデータワークスペースです。"
+    },
+    "dataset": {
+      "title": "データセット",
+      "description": "データを閲覧し、その構造を確認します。"
+    },
+    "explorer": {
+      "title": "データエクスプローラー",
+      "description": "自然言語を使ってデータセットを探索します。"
+    },
+    "assistant": {
+      "title": "AIアシスタント",
+      "description": "ExcelやCSVのデータを確認しながら安全に編集します。"
+    }
+  },
+  "hero": {
+    "title": "スプレッドシートについて質問すると、数秒で回答が得られます。",
+    "description": "CSVまたはExcelファイルをアップロードし、お好みの言語で質問できます。変更内容は適用前に確認できます。",
+    "drop": "ここにファイルをドロップ",
+    "dropActive": "ドロップしてアップロード",
+    "chooseFile": "ファイルを選択",
+    "fileSupport": "CSVまたはXLSX、最大{{size}} MB",
+    "howItWorks": "使い方",
+    "step1Title": "ファイルをアップロード",
+    "step1Description": "CSVまたはExcelファイルを追加します。列とデータ型が自動的に検出されます。",
+    "step2Title": "質問または変更内容を入力",
+    "step2Description": "データを分析する質問、または編集するための指示を入力します。",
+    "step3Title": "確認してダウンロード",
+    "step3Description": "影響を受ける行を確認し、変更を承認してから、更新されたExcelファイルをダウンロードします。",
+    "explorerFeature": "生成されたSQLクエリと結果テーブルを使って、データから回答を得られます。",
+    "assistantFeature": "レコードの追加、更新、削除ができます。すべての変更には承認が必要です。",
+    "explorerExample": "売上高が最も高い顧客10件を表示",
+    "assistantExample": "ステータスがキャンセル済みの行を削除",
+    "exampleExplorer": "例：データエクスプローラー",
+    "exampleQuestion": "第3四半期に売上高が最も高かった地域はどこですか？"
+  },
+  "metrics": {
+    "totalRecords": "総レコード数",
+    "dataColumns": "データ列数",
+    "revision": "データセットのバージョン",
+    "rows": "行",
+    "columns": "列",
+    "rowsDescription": "アップロードしたデータセットの行数",
+    "columnsDescription": "自動検出",
+    "confirmedEdits": "承認済みの変更"
+  },
+  "dataset": {
+    "overview": "データセットの概要",
+    "preview": "データプレビュー",
+    "schema": "スキーマ",
+    "downloadExcel": "Excelをダウンロード",
+    "noData": "利用可能なデータがありません。",
+    "showing": "全{{total}}行のうち、最初の{{count}}行を表示",
+    "openDataset": "データセットを開く",
+    "openExplorer": "データエクスプローラーを開く",
+    "openAssistant": "AIアシスタントを開く",
+    "datasetFeature": "行を閲覧し、スキーマを確認して、最新のExcelファイルをダウンロードできます。",
+    "explorerFeature": "自然言語、SQLクエリ、構造化された結果を使って、アップロードしたデータセットを分析します。",
+    "assistantFeature": "確認と承認の手順を経て、レコードを追加、更新、削除します。"
+  },
+  "chat": {
+    "explorerTitle": "データエクスプローラー",
+    "assistantTitle": "AIアシスタント",
+    "explorerDescription": "自然言語からSQLへのデータ分析",
+    "assistantDescription": "AIによるExcel・CSV編集",
+    "explorerPlaceholder": "データセットについて質問を入力してください...",
+    "assistantPlaceholder": "実行したい変更内容を入力してください...",
+    "send": "送信",
+    "tryAsking": "質問の例",
+    "activeDataset": "使用中のデータセット",
+    "resultTable": "結果テーブルを表示（{{count}}行）",
+    "generatedSql": "生成されたSQLを表示",
+    "aiResponse": "AIの回答を表示",
+    "copySql": "SQLをコピー",
+    "copied": "コピーしました",
+    "askAboutData": "データについて質問してください",
+    "changeData": "何を変更しますか？",
+    "explorerEmptyDescription": "SQLクエリを生成し、レコードを探索して、AIによる回答を取得できます。右側のパネルにある提案をお試しください。",
+    "assistantEmptyDescription": "必要な変更を入力してください。適用前に内容を確認できます。",
+    "historicalResult": "過去の結果・データセットバージョン{{revision}}。最新のデータを取得するには質問を再実行してください。",
+    "explorerWarning": "重要な意思決定には、AIが生成したSQLクエリと回答の検証が必要です。",
+    "assistantWarning": "スプレッドシートの変更には承認が必要です。",
+    "pendingWarning": "保留中の変更を確認し、承認またはキャンセルしてください。",
+    "askInExplorer": "データエクスプローラーで質問する",
+    "you": "あなた",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "このデータセットには何行ありますか？",
+      "firstRecords": "最初の10件のレコードを表示",
+      "missingValues": "欠損値がある列はどれですか？",
+      "removeDuplicates": "重複する行を削除",
+      "addRecord": "既存の列名を使って新しいレコードを追加",
+      "updateValue": "列が条件に一致する場合に値を更新"
+    }
+  },
+  "edit": {
+    "reviewTitle": "変更案を確認",
+    "notApplied": "変更はまだ適用されていません。",
+    "confirmationRequired": "確認が必要です",
+    "affectedRows": "影響を受ける行",
+    "currentRows": "現在の行数",
+    "afterChanges": "変更後",
+    "proposedAction": "AIが提案した操作を表示",
+    "affectedPreview": "影響を受けるレコードのプレビュー",
+    "beforeAfter": "変更前と変更後の比較",
+    "cancel": "変更をキャンセル",
+    "confirm": "変更を承認",
+    "previewTruncated": "このプレビューには表示件数の制限があります。条件に一致する他の行も変更対象になります。"
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}}を正常にアップロードしました。",
+    "datasetUpdated": "データセットを正常に更新しました。",
+    "fileRemoved": "ファイルを削除しました。続行するには新しいファイルをアップロードしてください。",
+    "editCancelled": "編集をキャンセルしました。データセットは変更されていません。",
+    "editApplied": "変更を正常に適用しました。データセットは現在{{count}}行です。",
+    "serverOffline": "現在サーバーに接続できません。自動的に再接続を試みます。",
+    "loadingUpload": "データセットをアップロードして処理しています。大きなファイルの場合、数分かかることがあります...",
+    "loadingQuery": "SQLを生成し、データを分析しています...",
+    "loadingEdit": "指定されたスプレッドシートの変更を確認しています...",
+    "loadingDownload": "Excelファイルを準備しています...",
+    "loadingConfirm": "承認された変更を適用しています...",
+    "loadingCancel": "提案された変更をキャンセルしています...",
+    "editPreviewReady": "編集プレビューを準備しました。変更を適用する前に、影響を受けるレコードを確認してください。",
+    "noMatchingRecords": "現在のデータセットに一致するレコードは見つかりませんでした。",
+    "analysisCompleted": "分析が完了しました。",
+    "downloadStarted": "Excelファイルのダウンロードを開始しました。",
+    "editRevision": "データセットを更新しました（バージョン{{revision}}）。現在の{{count}}行を分析するには、新しい質問を入力してください。以前の結果は過去のデータに基づいています。",
+    "editOnlyInstruction": "AIアシスタントはデータの変更専用です。レコードの表示や絞り込みにはデータエクスプローラーを使用してください。",
+    "editRefreshFailed": "編集は保存されましたが、データセットのプレビューを更新できませんでした：{{error}}",
+    "editConfirmError": "{{error}} 確認処理がすでに成功している場合は、再試行する前にデータセットを更新してください。"
+  },
+  "validation": {
+    "selectFile": "CSVまたはXLSXファイルを選択してください。",
+    "emptyFile": "このファイルは空です。",
+    "fileTooLarge": "ファイルの最大サイズは{{size}} MBです。",
+    "unsupportedFile": "CSVとXLSXファイルのみ対応しています。",
+    "requiredQuestion": "データセットについての質問を入力してください。",
+    "requiredInstruction": "編集指示を入力してください。",
+    "backendUnavailable": "DataPilotサーバーに接続できません。",
+    "requestTimeout": "リクエストがタイムアウトしました。もう一度お試しください。",
+    "genericError": "エラーが発生しました。もう一度お試しください。"
+  },
+  "common": {
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "close": "閉じる",
+    "save": "保存",
+    "delete": "削除",
+    "loading": "読み込み中...",
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告",
+    "refresh": "更新",
+    "search": "検索",
+    "noResults": "結果が見つかりません",
+    "yes": "はい",
+    "no": "いいえ"
+  }
+}

@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Spazio di lavoro intelligente per i dati",
+    "workspace": "DATAPILOT AI / AREA DI LAVORO",
+    "skipToContent": "Vai al contenuto"
+  },
+  "nav": {
+    "dashboard": "Panoramica",
+    "dataset": "Set di dati",
+    "explorer": "Esplora dati",
+    "assistant": "Assistente IA",
+    "upload": "Carica",
+    "download": "Scarica",
+    "connected": "Connesso",
+    "offline": "Non in linea",
+    "removeFile": "Rimuovi il file corrente"
+  },
+  "language": {
+    "select": "Seleziona lingua",
+    "search": "Cerca lingue...",
+    "current": "Lingua attuale",
+    "noResults": "Nessuna lingua trovata",
+    "cancel": "Annulla",
+    "apply": "Applica lingua"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Panoramica",
+      "description": "Il tuo spazio di lavoro intelligente per i dati."
+    },
+    "dataset": {
+      "title": "Set di dati",
+      "description": "Esplora i tuoi dati e verificane la struttura."
+    },
+    "explorer": {
+      "title": "Esplora dati",
+      "description": "Esplora i set di dati utilizzando il linguaggio naturale."
+    },
+    "assistant": {
+      "title": "Assistente IA",
+      "description": "Apporta modifiche controllate ai dati Excel e CSV."
+    }
+  },
+  "hero": {
+    "title": "Fai domande sui tuoi fogli di calcolo. Ottieni risposte in pochi secondi.",
+    "description": "Carica un file CSV o Excel, fai domande nella lingua che preferisci e verifica ogni modifica prima di applicarla.",
+    "drop": "Trascina qui il tuo file",
+    "dropActive": "Rilascia per caricare",
+    "chooseFile": "Scegli file",
+    "fileSupport": "CSV o XLSX, fino a {{size}} MB",
+    "howItWorks": "Come funziona",
+    "step1Title": "Carica il tuo file",
+    "step1Description": "Aggiungi un file CSV o Excel. Le colonne e i tipi di dati vengono rilevati automaticamente.",
+    "step2Title": "Fai una domanda o descrivi una modifica",
+    "step2Description": "Inserisci una domanda per analizzare i dati o un'istruzione per modificarli.",
+    "step3Title": "Verifica e scarica",
+    "step3Description": "Controlla le righe interessate, conferma le modifiche e scarica il file Excel aggiornato.",
+    "explorerFeature": "Ottieni risposte dai tuoi dati attraverso query SQL generate e tabelle dei risultati.",
+    "assistantFeature": "Aggiungi, aggiorna o elimina record. Ogni modifica richiede la tua approvazione.",
+    "explorerExample": "Mostra i 10 clienti con il fatturato più alto",
+    "assistantExample": "Elimina le righe con stato annullato",
+    "exampleExplorer": "Esempio: Esplora dati",
+    "exampleQuestion": "Quale regione ha registrato le vendite più alte nel terzo trimestre?"
+  },
+  "metrics": {
+    "totalRecords": "Record totali",
+    "dataColumns": "Colonne di dati",
+    "revision": "Versione del set di dati",
+    "rows": "Righe",
+    "columns": "Colonne",
+    "rowsDescription": "Righe nel set di dati caricato",
+    "columnsDescription": "Rilevate automaticamente",
+    "confirmedEdits": "Modifiche confermate"
+  },
+  "dataset": {
+    "overview": "Panoramica del set di dati",
+    "preview": "Anteprima dei dati",
+    "schema": "Schema",
+    "downloadExcel": "Scarica Excel",
+    "noData": "Nessun dato disponibile.",
+    "showing": "Visualizzazione delle prime {{count}} righe su {{total}}",
+    "openDataset": "Apri set di dati",
+    "openExplorer": "Apri Esplora dati",
+    "openAssistant": "Apri Assistente IA",
+    "datasetFeature": "Sfoglia le righe, controlla lo schema e scarica l'ultima versione del file Excel.",
+    "explorerFeature": "Analizza i set di dati caricati utilizzando il linguaggio naturale, query SQL e risultati strutturati.",
+    "assistantFeature": "Aggiungi, aggiorna o elimina record con un processo di revisione e conferma."
+  },
+  "chat": {
+    "explorerTitle": "Esplora dati",
+    "assistantTitle": "Assistente IA",
+    "explorerDescription": "Analisi dal linguaggio naturale a SQL",
+    "assistantDescription": "Modifica di Excel e CSV tramite IA",
+    "explorerPlaceholder": "Fai una domanda sul tuo set di dati...",
+    "assistantPlaceholder": "Descrivi le modifiche che desideri apportare...",
+    "send": "Invia",
+    "tryAsking": "PROVA A CHIEDERE",
+    "activeDataset": "SET DI DATI ATTIVO",
+    "resultTable": "Visualizza tabella dei risultati ({{count}} righe)",
+    "generatedSql": "Visualizza SQL generato",
+    "aiResponse": "Visualizza risposta IA",
+    "copySql": "Copia SQL",
+    "copied": "Copiato",
+    "askAboutData": "Fai domande sui tuoi dati",
+    "changeData": "Che cosa desideri modificare?",
+    "explorerEmptyDescription": "Genera query SQL, esplora i record e ottieni risposte basate sull'IA. Prova un suggerimento dal pannello a destra.",
+    "assistantEmptyDescription": "Descrivi le modifiche necessarie. Potrai verificarle prima che vengano applicate.",
+    "historicalResult": "Risultato precedente · versione del set di dati {{revision}}. Ripeti la domanda per ottenere i dati aggiornati.",
+    "explorerWarning": "Le query SQL e le risposte generate dall'IA devono essere verificate prima di prendere decisioni importanti.",
+    "assistantWarning": "Le modifiche ai fogli di calcolo richiedono la tua conferma.",
+    "pendingWarning": "Verifica, conferma o annulla la modifica in sospeso.",
+    "askInExplorer": "Fai questa domanda in Esplora dati",
+    "you": "TU",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Quante righe contiene questo set di dati?",
+      "firstRecords": "Mostra i primi 10 record",
+      "missingValues": "Quali colonne contengono valori mancanti?",
+      "removeDuplicates": "Rimuovi le righe duplicate",
+      "addRecord": "Aggiungi un nuovo record utilizzando i nomi delle colonne esistenti",
+      "updateValue": "Aggiorna un valore quando una colonna soddisfa una condizione"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Verifica le modifiche proposte",
+    "notApplied": "Non è stata ancora applicata alcuna modifica.",
+    "confirmationRequired": "Conferma richiesta",
+    "affectedRows": "Righe interessate",
+    "currentRows": "Righe attuali",
+    "afterChanges": "Dopo le modifiche",
+    "proposedAction": "Visualizza l'azione proposta dall'IA",
+    "affectedPreview": "Anteprima dei record interessati",
+    "beforeAfter": "Confronto prima e dopo",
+    "cancel": "Annulla modifiche",
+    "confirm": "Conferma modifiche",
+    "previewTruncated": "Questa anteprima è limitata. Saranno interessate anche altre righe che soddisfano i criteri."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} caricato correttamente.",
+    "datasetUpdated": "Set di dati aggiornato correttamente.",
+    "fileRemoved": "File rimosso. Carica un nuovo file per continuare.",
+    "editCancelled": "Modifica annullata. Il set di dati rimane invariato.",
+    "editApplied": "Modifiche applicate correttamente. Il set di dati ora contiene {{count}} righe.",
+    "serverOffline": "Il server non è raggiungibile al momento. Continueremo a riprovare automaticamente.",
+    "loadingUpload": "Caricamento ed elaborazione del set di dati in corso. I file di grandi dimensioni potrebbero richiedere alcuni minuti...",
+    "loadingQuery": "Generazione SQL e analisi dei dati in corso...",
+    "loadingEdit": "Verifica delle modifiche richieste al foglio di calcolo...",
+    "loadingDownload": "Preparazione del file Excel...",
+    "loadingConfirm": "Applicazione delle modifiche approvate...",
+    "loadingCancel": "Annullamento delle modifiche proposte...",
+    "editPreviewReady": "È stata preparata un'anteprima delle modifiche. Verifica i record interessati prima di applicarle.",
+    "noMatchingRecords": "Nessun record corrispondente trovato nel set di dati corrente.",
+    "analysisCompleted": "Analisi completata.",
+    "downloadStarted": "Il download del file Excel è iniziato.",
+    "editRevision": "Set di dati aggiornato (versione {{revision}}). Fai una nuova domanda per analizzare le {{count}} righe attuali. I risultati precedenti sono storici.",
+    "editOnlyInstruction": "L'Assistente IA modifica soltanto i dati. Per visualizzare o filtrare i record, utilizza Esplora dati.",
+    "editRefreshFailed": "La modifica è stata salvata, ma l'aggiornamento dell'anteprima del set di dati non è riuscito: {{error}}",
+    "editConfirmError": "{{error}} Se la conferma è già riuscita, aggiorna il set di dati prima di riprovare."
+  },
+  "validation": {
+    "selectFile": "Seleziona un file CSV o XLSX.",
+    "emptyFile": "Questo file è vuoto.",
+    "fileTooLarge": "La dimensione massima del file è di {{size}} MB.",
+    "unsupportedFile": "Sono supportati soltanto file CSV e XLSX.",
+    "requiredQuestion": "Inserisci una domanda sul set di dati.",
+    "requiredInstruction": "Inserisci un'istruzione di modifica.",
+    "backendUnavailable": "Impossibile raggiungere il server DataPilot.",
+    "requestTimeout": "La richiesta ha impiegato troppo tempo. Riprova.",
+    "genericError": "Si è verificato un errore. Riprova."
+  },
+  "common": {
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "close": "Chiudi",
+    "save": "Salva",
+    "delete": "Elimina",
+    "loading": "Caricamento...",
+    "success": "Operazione riuscita",
+    "error": "Errore",
+    "warning": "Avviso",
+    "refresh": "Aggiorna",
+    "search": "Cerca",
+    "noResults": "Nessun risultato trovato",
+    "yes": "Sì",
+    "no": "No"
+  }
+}

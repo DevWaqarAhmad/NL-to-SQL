@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Intelligent Data Workspace",
+    "workspace": "DATAPILOT AI / WORKSPACE",
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "dataset": "Dataset",
+    "explorer": "Data Explorer",
+    "assistant": "AI Assistant",
+    "upload": "Upload",
+    "download": "Download",
+    "connected": "Connected",
+    "offline": "Offline",
+    "removeFile": "Remove current file"
+  },
+  "language": {
+    "select": "Select Language",
+    "search": "Search languages...",
+    "current": "Current language",
+    "noResults": "No languages found",
+    "cancel": "Cancel",
+    "apply": "Apply Language"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Your intelligent data workspace."
+    },
+    "dataset": {
+      "title": "Dataset",
+      "description": "Browse your data and check its structure."
+    },
+    "explorer": {
+      "title": "Data Explorer",
+      "description": "Explore datasets through natural language."
+    },
+    "assistant": {
+      "title": "AI Assistant",
+      "description": "Make controlled changes to Excel and CSV data."
+    }
+  },
+  "hero": {
+    "title": "Ask your spreadsheet questions. Get answers in seconds.",
+    "description": "Upload a CSV or Excel file, ask questions in your preferred language, and review every change before it is applied.",
+    "drop": "Drop your file here",
+    "dropActive": "Drop to upload",
+    "chooseFile": "Choose file",
+    "fileSupport": "CSV or XLSX, up to {{size}} MB",
+    "howItWorks": "How it works",
+    "step1Title": "Upload your file",
+    "step1Description": "Add a CSV or Excel file. Columns and types are detected for you.",
+    "step2Title": "Ask or describe a change",
+    "step2Description": "Type a question to analyze data, or an instruction to edit it.",
+    "step3Title": "Review and download",
+    "step3Description": "Check the affected rows, confirm, then download the updated Excel file.",
+    "explorerFeature": "Get answers from your data with generated SQL and result tables.",
+    "assistantFeature": "Add, update or delete records. You approve every change.",
+    "explorerExample": "Show the top 10 customers by revenue",
+    "assistantExample": "Delete rows where status is cancelled",
+    "exampleExplorer": "Example: Data Explorer",
+    "exampleQuestion": "Which region had the highest sales in Q3?"
+  },
+  "metrics": {
+    "totalRecords": "Total Records",
+    "dataColumns": "Data Columns",
+    "revision": "Dataset Revision",
+    "rows": "Rows",
+    "columns": "Columns",
+    "rowsDescription": "Rows in uploaded dataset",
+    "columnsDescription": "Automatically detected",
+    "confirmedEdits": "Confirmed edits"
+  },
+  "dataset": {
+    "overview": "Dataset Overview",
+    "preview": "Data Preview",
+    "schema": "Schema",
+    "downloadExcel": "Download Excel",
+    "noData": "No data available.",
+    "showing": "Showing first {{count}} of {{total}} rows",
+    "openDataset": "Open Dataset",
+    "openExplorer": "Open Data Explorer",
+    "openAssistant": "Open AI Assistant",
+    "datasetFeature": "Browse your rows, check the schema and download the latest Excel file.",
+    "explorerFeature": "Analyze uploaded datasets using natural language, SQL queries and structured results.",
+    "assistantFeature": "Add, update or delete spreadsheet records with a review and confirmation workflow."
+  },
+  "chat": {
+    "explorerTitle": "Data Explorer",
+    "assistantTitle": "AI Assistant",
+    "explorerDescription": "Natural Language to SQL Analysis",
+    "assistantDescription": "AI-Powered Excel & CSV Editing",
+    "explorerPlaceholder": "Ask a question about your dataset...",
+    "assistantPlaceholder": "Describe the changes you want to make...",
+    "send": "Send",
+    "tryAsking": "TRY ASKING",
+    "activeDataset": "ACTIVE DATASET",
+    "resultTable": "View Result Table ({{count}} rows)",
+    "generatedSql": "View Generated SQL",
+    "aiResponse": "View AI Response",
+    "copySql": "Copy SQL",
+    "copied": "Copied",
+    "askAboutData": "Ask anything about your data",
+    "changeData": "What would you like to change?",
+    "explorerEmptyDescription": "Generate SQL queries, explore records and get AI-powered answers. Try a suggestion from the right panel.",
+    "assistantEmptyDescription": "Describe the changes you need. You'll review them before they're applied.",
+    "historicalResult": "Earlier result · dataset revision {{revision}}. Run the question again for current data.",
+    "explorerWarning": "AI-generated SQL and answers should be verified for important decisions.",
+    "assistantWarning": "Spreadsheet changes require your confirmation.",
+    "pendingWarning": "Review, confirm or cancel your pending edit.",
+    "askInExplorer": "Ask this in Data Explorer",
+    "you": "YOU",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "How many rows are in this dataset?",
+      "firstRecords": "Show the first 10 records",
+      "missingValues": "Which columns have missing values?",
+      "removeDuplicates": "Remove duplicate rows",
+      "addRecord": "Add a new record using the existing column names",
+      "updateValue": "Update a value where a column matches a condition"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Review Proposed Changes",
+    "notApplied": "No changes have been applied yet.",
+    "confirmationRequired": "Confirmation Required",
+    "affectedRows": "Affected Rows",
+    "currentRows": "Current Rows",
+    "afterChanges": "After Changes",
+    "proposedAction": "View AI Proposed Action",
+    "affectedPreview": "Affected Records Preview",
+    "beforeAfter": "Before / After Comparison",
+    "cancel": "Cancel Changes",
+    "confirm": "Confirm Changes",
+    "previewTruncated": "This preview is limited. Additional matching rows will also be affected."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} uploaded successfully.",
+    "datasetUpdated": "Dataset updated successfully.",
+    "fileRemoved": "File removed. Upload a new file to continue.",
+    "editCancelled": "Edit cancelled. Your dataset remains unchanged.",
+    "editApplied": "Changes applied successfully. Your dataset now contains {{count}} rows.",
+    "serverOffline": "The server is not reachable right now. We'll keep retrying automatically.",
+    "loadingUpload": "Uploading and processing your dataset. Large files may take a few minutes...",
+    "loadingQuery": "Generating SQL and analyzing data...",
+    "loadingEdit": "Reviewing requested spreadsheet changes...",
+    "loadingDownload": "Preparing Excel file...",
+    "loadingConfirm": "Applying approved changes...",
+    "loadingCancel": "Cancelling proposed changes...",
+    "editPreviewReady": "I've prepared an edit preview. Please review the affected records before applying changes.",
+    "noMatchingRecords": "No matching records found in the current dataset.",
+    "analysisCompleted": "Analysis completed.",
+    "downloadStarted": "Your Excel download has started.",
+    "editRevision": "Dataset updated (revision {{revision}}). Ask a new question to analyze the latest {{count}} rows. Previous results are historical.",
+    "editOnlyInstruction": "The AI Assistant only changes data. To view or filter records, use the Data Explorer.",
+    "editRefreshFailed": "Edit was saved, but dataset preview refresh failed: {{error}}",
+    "editConfirmError": "{{error}} If confirmation already succeeded, refresh the dataset before retrying."
+  },
+  "validation": {
+    "selectFile": "Please select a CSV or XLSX file.",
+    "emptyFile": "This file is empty.",
+    "fileTooLarge": "Maximum file size is {{size}} MB.",
+    "unsupportedFile": "Only CSV and XLSX files are supported.",
+    "requiredQuestion": "Please enter a dataset question.",
+    "requiredInstruction": "Please enter an editing instruction.",
+    "backendUnavailable": "Cannot reach the DataPilot server.",
+    "requestTimeout": "The request took too long. Please try again.",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "refresh": "Refresh",
+    "search": "Search",
+    "noResults": "No results found",
+    "yes": "Yes",
+    "no": "No"
+  }
+}

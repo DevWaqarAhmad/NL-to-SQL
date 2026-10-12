@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Espace de travail intelligent pour les données",
+    "workspace": "DATAPILOT AI / ESPACE DE TRAVAIL",
+    "skipToContent": "Aller au contenu"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "dataset": "Jeu de données",
+    "explorer": "Explorateur de données",
+    "assistant": "Assistant IA",
+    "upload": "Importer",
+    "download": "Télécharger",
+    "connected": "Connecté",
+    "offline": "Hors ligne",
+    "removeFile": "Supprimer le fichier actuel"
+  },
+  "language": {
+    "select": "Choisir une langue",
+    "search": "Rechercher une langue...",
+    "current": "Langue actuelle",
+    "noResults": "Aucune langue trouvée",
+    "cancel": "Annuler",
+    "apply": "Appliquer la langue"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Tableau de bord",
+      "description": "Votre espace de travail intelligent pour les données."
+    },
+    "dataset": {
+      "title": "Jeu de données",
+      "description": "Parcourez vos données et vérifiez leur structure."
+    },
+    "explorer": {
+      "title": "Explorateur de données",
+      "description": "Explorez vos jeux de données en langage naturel."
+    },
+    "assistant": {
+      "title": "Assistant IA",
+      "description": "Apportez des modifications contrôlées aux données Excel et CSV."
+    }
+  },
+  "hero": {
+    "title": "Posez des questions sur vos feuilles de calcul. Obtenez des réponses en quelques secondes.",
+    "description": "Importez un fichier CSV ou Excel, posez des questions dans la langue de votre choix et vérifiez chaque modification avant son application.",
+    "drop": "Déposez votre fichier ici",
+    "dropActive": "Déposez le fichier pour l'importer",
+    "chooseFile": "Choisir un fichier",
+    "fileSupport": "CSV ou XLSX, jusqu'à {{size}} Mo",
+    "howItWorks": "Comment ça marche",
+    "step1Title": "Importez votre fichier",
+    "step1Description": "Ajoutez un fichier CSV ou Excel. Les colonnes et les types de données sont détectés automatiquement.",
+    "step2Title": "Posez une question ou décrivez une modification",
+    "step2Description": "Saisissez une question pour analyser les données ou une instruction pour les modifier.",
+    "step3Title": "Vérifiez et téléchargez",
+    "step3Description": "Examinez les lignes concernées, confirmez les modifications, puis téléchargez le fichier Excel mis à jour.",
+    "explorerFeature": "Obtenez des réponses à partir de vos données grâce aux requêtes SQL générées et aux tableaux de résultats.",
+    "assistantFeature": "Ajoutez, mettez à jour ou supprimez des enregistrements. Vous validez chaque modification.",
+    "explorerExample": "Afficher les 10 clients ayant généré le plus de chiffre d'affaires",
+    "assistantExample": "Supprimer les lignes dont le statut est annulé",
+    "exampleExplorer": "Exemple : Explorateur de données",
+    "exampleQuestion": "Quelle région a réalisé le chiffre d'affaires le plus élevé au troisième trimestre ?"
+  },
+  "metrics": {
+    "totalRecords": "Nombre total d'enregistrements",
+    "dataColumns": "Colonnes de données",
+    "revision": "Version du jeu de données",
+    "rows": "Lignes",
+    "columns": "Colonnes",
+    "rowsDescription": "Lignes du jeu de données importé",
+    "columnsDescription": "Détectées automatiquement",
+    "confirmedEdits": "Modifications confirmées"
+  },
+  "dataset": {
+    "overview": "Vue d'ensemble du jeu de données",
+    "preview": "Aperçu des données",
+    "schema": "Schéma",
+    "downloadExcel": "Télécharger le fichier Excel",
+    "noData": "Aucune donnée disponible.",
+    "showing": "Affichage des {{count}} premières lignes sur {{total}}",
+    "openDataset": "Ouvrir le jeu de données",
+    "openExplorer": "Ouvrir l'explorateur de données",
+    "openAssistant": "Ouvrir l'assistant IA",
+    "datasetFeature": "Parcourez vos lignes, vérifiez le schéma et téléchargez la dernière version du fichier Excel.",
+    "explorerFeature": "Analysez les jeux de données importés à l'aide du langage naturel, de requêtes SQL et de résultats structurés.",
+    "assistantFeature": "Ajoutez, modifiez ou supprimez des enregistrements avec un processus de vérification et de confirmation."
+  },
+  "chat": {
+    "explorerTitle": "Explorateur de données",
+    "assistantTitle": "Assistant IA",
+    "explorerDescription": "Analyse en langage naturel avec SQL",
+    "assistantDescription": "Modification de fichiers Excel et CSV assistée par IA",
+    "explorerPlaceholder": "Posez une question sur votre jeu de données...",
+    "assistantPlaceholder": "Décrivez les modifications que vous souhaitez apporter...",
+    "send": "Envoyer",
+    "tryAsking": "EXEMPLES DE QUESTIONS",
+    "activeDataset": "JEU DE DONNÉES ACTIF",
+    "resultTable": "Afficher le tableau des résultats ({{count}} lignes)",
+    "generatedSql": "Afficher le SQL généré",
+    "aiResponse": "Afficher la réponse de l'IA",
+    "copySql": "Copier le SQL",
+    "copied": "Copié",
+    "askAboutData": "Posez des questions sur vos données",
+    "changeData": "Que souhaitez-vous modifier ?",
+    "explorerEmptyDescription": "Générez des requêtes SQL, explorez les enregistrements et obtenez des réponses assistées par IA. Essayez une suggestion dans le panneau de droite.",
+    "assistantEmptyDescription": "Décrivez les modifications nécessaires. Vous pourrez les vérifier avant leur application.",
+    "historicalResult": "Résultat précédent · version {{revision}} du jeu de données. Relancez la question pour obtenir les données actuelles.",
+    "explorerWarning": "Les requêtes SQL et les réponses générées par l'IA doivent être vérifiées avant toute décision importante.",
+    "assistantWarning": "Les modifications des feuilles de calcul nécessitent votre confirmation.",
+    "pendingWarning": "Vérifiez, confirmez ou annulez la modification en attente.",
+    "askInExplorer": "Poser cette question dans l'explorateur de données",
+    "you": "VOUS",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Combien de lignes contient ce jeu de données ?",
+      "firstRecords": "Afficher les 10 premiers enregistrements",
+      "missingValues": "Quelles colonnes contiennent des valeurs manquantes ?",
+      "removeDuplicates": "Supprimer les lignes en double",
+      "addRecord": "Ajouter un enregistrement en utilisant les noms de colonnes existants",
+      "updateValue": "Mettre à jour une valeur lorsqu'une colonne correspond à une condition"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Vérifier les modifications proposées",
+    "notApplied": "Aucune modification n'a encore été appliquée.",
+    "confirmationRequired": "Confirmation requise",
+    "affectedRows": "Lignes concernées",
+    "currentRows": "Lignes actuelles",
+    "afterChanges": "Après modification",
+    "proposedAction": "Afficher l'action proposée par l'IA",
+    "affectedPreview": "Aperçu des enregistrements concernés",
+    "beforeAfter": "Comparaison avant / après",
+    "cancel": "Annuler les modifications",
+    "confirm": "Confirmer les modifications",
+    "previewTruncated": "Cet aperçu est limité. D'autres lignes correspondant aux critères seront également concernées."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} a été importé avec succès.",
+    "datasetUpdated": "Le jeu de données a été mis à jour avec succès.",
+    "fileRemoved": "Fichier supprimé. Importez un nouveau fichier pour continuer.",
+    "editCancelled": "Modification annulée. Votre jeu de données reste inchangé.",
+    "editApplied": "Modifications appliquées avec succès. Votre jeu de données contient maintenant {{count}} lignes.",
+    "serverOffline": "Le serveur est actuellement inaccessible. Nous réessaierons automatiquement.",
+    "loadingUpload": "Importation et traitement du jeu de données en cours. Les fichiers volumineux peuvent prendre quelques minutes...",
+    "loadingQuery": "Génération du SQL et analyse des données en cours...",
+    "loadingEdit": "Vérification des modifications demandées...",
+    "loadingDownload": "Préparation du fichier Excel...",
+    "loadingConfirm": "Application des modifications approuvées...",
+    "loadingCancel": "Annulation des modifications proposées...",
+    "editPreviewReady": "Un aperçu des modifications a été préparé. Veuillez vérifier les enregistrements concernés avant de les appliquer.",
+    "noMatchingRecords": "Aucun enregistrement correspondant n'a été trouvé dans le jeu de données actuel.",
+    "analysisCompleted": "Analyse terminée.",
+    "downloadStarted": "Le téléchargement de votre fichier Excel a commencé.",
+    "editRevision": "Jeu de données mis à jour (version {{revision}}). Posez une nouvelle question pour analyser les {{count}} lignes actuelles. Les résultats précédents sont historiques.",
+    "editOnlyInstruction": "L'assistant IA modifie uniquement les données. Pour afficher ou filtrer des enregistrements, utilisez l'explorateur de données.",
+    "editRefreshFailed": "La modification a été enregistrée, mais l'actualisation de l'aperçu du jeu de données a échoué : {{error}}",
+    "editConfirmError": "{{error}} Si la confirmation a déjà réussi, actualisez le jeu de données avant de réessayer."
+  },
+  "validation": {
+    "selectFile": "Veuillez sélectionner un fichier CSV ou XLSX.",
+    "emptyFile": "Ce fichier est vide.",
+    "fileTooLarge": "La taille maximale du fichier est de {{size}} Mo.",
+    "unsupportedFile": "Seuls les fichiers CSV et XLSX sont pris en charge.",
+    "requiredQuestion": "Veuillez saisir une question concernant le jeu de données.",
+    "requiredInstruction": "Veuillez saisir une instruction de modification.",
+    "backendUnavailable": "Impossible de contacter le serveur DataPilot.",
+    "requestTimeout": "La demande a pris trop de temps. Veuillez réessayer.",
+    "genericError": "Une erreur s'est produite. Veuillez réessayer."
+  },
+  "common": {
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "loading": "Chargement...",
+    "success": "Succès",
+    "error": "Erreur",
+    "warning": "Avertissement",
+    "refresh": "Actualiser",
+    "search": "Rechercher",
+    "noResults": "Aucun résultat trouvé",
+    "yes": "Oui",
+    "no": "Non"
+  }
+}

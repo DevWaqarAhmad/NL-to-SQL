@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Akıllı Veri Çalışma Alanı",
+    "workspace": "DATAPILOT AI / ÇALIŞMA ALANI",
+    "skipToContent": "Ana içeriğe geç"
+  },
+  "nav": {
+    "dashboard": "Kontrol Paneli",
+    "dataset": "Veri Kümesi",
+    "explorer": "Veri Gezgini",
+    "assistant": "Yapay Zekâ Asistanı",
+    "upload": "Yükle",
+    "download": "İndir",
+    "connected": "Bağlı",
+    "offline": "Çevrimdışı",
+    "removeFile": "Mevcut dosyayı kaldır"
+  },
+  "language": {
+    "select": "Dil Seç",
+    "search": "Dil ara...",
+    "current": "Geçerli dil",
+    "noResults": "Dil bulunamadı",
+    "cancel": "İptal",
+    "apply": "Dili Uygula"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Kontrol Paneli",
+      "description": "Akıllı veri çalışma alanınız."
+    },
+    "dataset": {
+      "title": "Veri Kümesi",
+      "description": "Verilerinize göz atın ve yapısını kontrol edin."
+    },
+    "explorer": {
+      "title": "Veri Gezgini",
+      "description": "Veri kümelerini doğal dil kullanarak keşfedin."
+    },
+    "assistant": {
+      "title": "Yapay Zekâ Asistanı",
+      "description": "Excel ve CSV verilerinde kontrollü değişiklikler yapın."
+    }
+  },
+  "hero": {
+    "title": "Elektronik tablolarınız hakkında sorular sorun. Saniyeler içinde yanıt alın.",
+    "description": "CSV veya Excel dosyası yükleyin, tercih ettiğiniz dilde sorular sorun ve her değişikliği uygulamadan önce inceleyin.",
+    "drop": "Dosyanızı buraya bırakın",
+    "dropActive": "Yüklemek için dosyayı bırakın",
+    "chooseFile": "Dosya seç",
+    "fileSupport": "CSV veya XLSX, en fazla {{size}} MB",
+    "howItWorks": "Nasıl çalışır?",
+    "step1Title": "Dosyanızı yükleyin",
+    "step1Description": "CSV veya Excel dosyası ekleyin. Sütunlar ve veri türleri otomatik olarak algılanır.",
+    "step2Title": "Soru sorun veya değişikliği açıklayın",
+    "step2Description": "Verileri analiz etmek için bir soru veya düzenlemek için bir talimat yazın.",
+    "step3Title": "İnceleyin ve indirin",
+    "step3Description": "Etkilenen satırları kontrol edin, değişiklikleri onaylayın ve güncellenmiş Excel dosyasını indirin.",
+    "explorerFeature": "Oluşturulan SQL sorguları ve sonuç tablolarıyla verilerinizden yanıtlar alın.",
+    "assistantFeature": "Kayıt ekleyin, güncelleyin veya silin. Her değişikliği siz onaylarsınız.",
+    "explorerExample": "Gelire göre en yüksek 10 müşteriyi göster",
+    "assistantExample": "Durumu iptal edildi olan satırları sil",
+    "exampleExplorer": "Örnek: Veri Gezgini",
+    "exampleQuestion": "Üçüncü çeyrekte en yüksek satış hangi bölgede gerçekleşti?"
+  },
+  "metrics": {
+    "totalRecords": "Toplam Kayıt",
+    "dataColumns": "Veri Sütunları",
+    "revision": "Veri Kümesi Sürümü",
+    "rows": "Satırlar",
+    "columns": "Sütunlar",
+    "rowsDescription": "Yüklenen veri kümesindeki satırlar",
+    "columnsDescription": "Otomatik olarak algılandı",
+    "confirmedEdits": "Onaylanan değişiklikler"
+  },
+  "dataset": {
+    "overview": "Veri Kümesine Genel Bakış",
+    "preview": "Veri Önizlemesi",
+    "schema": "Şema",
+    "downloadExcel": "Excel İndir",
+    "noData": "Kullanılabilir veri yok.",
+    "showing": "Toplam {{total}} satırın ilk {{count}} satırı gösteriliyor",
+    "openDataset": "Veri Kümesini Aç",
+    "openExplorer": "Veri Gezginini Aç",
+    "openAssistant": "Yapay Zekâ Asistanını Aç",
+    "datasetFeature": "Satırları inceleyin, şemayı kontrol edin ve en güncel Excel dosyasını indirin.",
+    "explorerFeature": "Yüklenen veri kümelerini doğal dil, SQL sorguları ve yapılandırılmış sonuçlarla analiz edin.",
+    "assistantFeature": "İnceleme ve onay süreciyle kayıt ekleyin, güncelleyin veya silin."
+  },
+  "chat": {
+    "explorerTitle": "Veri Gezgini",
+    "assistantTitle": "Yapay Zekâ Asistanı",
+    "explorerDescription": "Doğal Dilden SQL'e Veri Analizi",
+    "assistantDescription": "Yapay Zekâ Destekli Excel ve CSV Düzenleme",
+    "explorerPlaceholder": "Veri kümeniz hakkında bir soru sorun...",
+    "assistantPlaceholder": "Yapmak istediğiniz değişiklikleri açıklayın...",
+    "send": "Gönder",
+    "tryAsking": "BUNLARI SORABİLİRSİNİZ",
+    "activeDataset": "AKTİF VERİ KÜMESİ",
+    "resultTable": "Sonuç Tablosunu Görüntüle ({{count}} satır)",
+    "generatedSql": "Oluşturulan SQL'i Görüntüle",
+    "aiResponse": "Yapay Zekâ Yanıtını Görüntüle",
+    "copySql": "SQL'i Kopyala",
+    "copied": "Kopyalandı",
+    "askAboutData": "Verileriniz hakkında istediğiniz soruyu sorun",
+    "changeData": "Neyi değiştirmek istersiniz?",
+    "explorerEmptyDescription": "SQL sorguları oluşturun, kayıtları keşfedin ve yapay zekâ destekli yanıtlar alın. Sağ paneldeki önerilerden birini deneyin.",
+    "assistantEmptyDescription": "İhtiyacınız olan değişiklikleri açıklayın. Uygulanmadan önce bunları inceleyebilirsiniz.",
+    "historicalResult": "Önceki sonuç · veri kümesi sürümü {{revision}}. Güncel veriler için soruyu yeniden çalıştırın.",
+    "explorerWarning": "Önemli kararlar vermeden önce yapay zekâ tarafından oluşturulan SQL sorguları ve yanıtlar doğrulanmalıdır.",
+    "assistantWarning": "Elektronik tablo değişiklikleri onayınızı gerektirir.",
+    "pendingWarning": "Bekleyen düzenlemeyi inceleyin, onaylayın veya iptal edin.",
+    "askInExplorer": "Bu soruyu Veri Gezgininde sor",
+    "you": "SİZ",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Bu veri kümesinde kaç satır var?",
+      "firstRecords": "İlk 10 kaydı göster",
+      "missingValues": "Hangi sütunlarda eksik değerler var?",
+      "removeDuplicates": "Yinelenen satırları kaldır",
+      "addRecord": "Mevcut sütun adlarını kullanarak yeni bir kayıt ekle",
+      "updateValue": "Bir sütun belirli bir koşulla eşleştiğinde değeri güncelle"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Önerilen Değişiklikleri İncele",
+    "notApplied": "Henüz hiçbir değişiklik uygulanmadı.",
+    "confirmationRequired": "Onay Gerekli",
+    "affectedRows": "Etkilenen Satırlar",
+    "currentRows": "Mevcut Satırlar",
+    "afterChanges": "Değişikliklerden Sonra",
+    "proposedAction": "Yapay Zekânın Önerdiği İşlemi Görüntüle",
+    "affectedPreview": "Etkilenen Kayıtların Önizlemesi",
+    "beforeAfter": "Öncesi / Sonrası Karşılaştırması",
+    "cancel": "Değişiklikleri İptal Et",
+    "confirm": "Değişiklikleri Onayla",
+    "previewTruncated": "Bu önizleme sınırlıdır. Koşullarla eşleşen diğer satırlar da etkilenecektir."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} başarıyla yüklendi.",
+    "datasetUpdated": "Veri kümesi başarıyla güncellendi.",
+    "fileRemoved": "Dosya kaldırıldı. Devam etmek için yeni bir dosya yükleyin.",
+    "editCancelled": "Düzenleme iptal edildi. Veri kümeniz değişmedi.",
+    "editApplied": "Değişiklikler başarıyla uygulandı. Veri kümeniz artık {{count}} satır içeriyor.",
+    "serverOffline": "Sunucuya şu anda ulaşılamıyor. Otomatik olarak yeniden bağlanmayı deneyeceğiz.",
+    "loadingUpload": "Veri kümesi yükleniyor ve işleniyor. Büyük dosyalar birkaç dakika sürebilir...",
+    "loadingQuery": "SQL oluşturuluyor ve veriler analiz ediliyor...",
+    "loadingEdit": "İstenen elektronik tablo değişiklikleri inceleniyor...",
+    "loadingDownload": "Excel dosyası hazırlanıyor...",
+    "loadingConfirm": "Onaylanan değişiklikler uygulanıyor...",
+    "loadingCancel": "Önerilen değişiklikler iptal ediliyor...",
+    "editPreviewReady": "Düzenleme önizlemesi hazırlandı. Değişiklikleri uygulamadan önce etkilenen kayıtları inceleyin.",
+    "noMatchingRecords": "Mevcut veri kümesinde eşleşen kayıt bulunamadı.",
+    "analysisCompleted": "Analiz tamamlandı.",
+    "downloadStarted": "Excel dosyanızın indirilmesi başladı.",
+    "editRevision": "Veri kümesi güncellendi (sürüm {{revision}}). Güncel {{count}} satırı analiz etmek için yeni bir soru sorun. Önceki sonuçlar eski verilere aittir.",
+    "editOnlyInstruction": "Yapay Zekâ Asistanı yalnızca verileri değiştirir. Kayıtları görüntülemek veya filtrelemek için Veri Gezginini kullanın.",
+    "editRefreshFailed": "Düzenleme kaydedildi ancak veri kümesi önizlemesi yenilenemedi: {{error}}",
+    "editConfirmError": "{{error}} Onay işlemi zaten başarılı olduysa yeniden denemeden önce veri kümesini yenileyin."
+  },
+  "validation": {
+    "selectFile": "Lütfen bir CSV veya XLSX dosyası seçin.",
+    "emptyFile": "Bu dosya boş.",
+    "fileTooLarge": "Maksimum dosya boyutu {{size}} MB'dir.",
+    "unsupportedFile": "Yalnızca CSV ve XLSX dosyaları desteklenir.",
+    "requiredQuestion": "Lütfen veri kümesiyle ilgili bir soru girin.",
+    "requiredInstruction": "Lütfen bir düzenleme talimatı girin.",
+    "backendUnavailable": "DataPilot sunucusuna bağlanılamıyor.",
+    "requestTimeout": "İstek çok uzun sürdü. Lütfen tekrar deneyin.",
+    "genericError": "Bir hata oluştu. Lütfen tekrar deneyin."
+  },
+  "common": {
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "close": "Kapat",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "loading": "Yükleniyor...",
+    "success": "Başarılı",
+    "error": "Hata",
+    "warning": "Uyarı",
+    "refresh": "Yenile",
+    "search": "Ara",
+    "noResults": "Sonuç bulunamadı",
+    "yes": "Evet",
+    "no": "Hayır"
+  }
+}

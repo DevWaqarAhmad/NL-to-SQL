@@ -1,0 +1,189 @@
+
+{
+  "app": {
+    "name": "DataPilot AI",
+    "tagline": "Smart Data Workspace",
+    "workspace": "DATAPILOT AI / WORKSPACE",
+    "skipToContent": "Main content par jao"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "dataset": "Dataset",
+    "explorer": "Data Explorer",
+    "assistant": "AI Assistant",
+    "upload": "Upload karo",
+    "download": "Download karo",
+    "connected": "Connected",
+    "offline": "Offline",
+    "removeFile": "Mojooda file hatao"
+  },
+  "language": {
+    "select": "Zaban select karo",
+    "search": "Zaban search karo...",
+    "current": "Mojooda zaban",
+    "noResults": "Koi zaban nahi mili",
+    "cancel": "Cancel karo",
+    "apply": "Zaban apply karo"
+  },
+  "page": {
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Aap ka smart data workspace."
+    },
+    "dataset": {
+      "title": "Dataset",
+      "description": "Apna data dekho aur uski structure check karo."
+    },
+    "explorer": {
+      "title": "Data Explorer",
+      "description": "Apni zaban mein instructions de kar dataset analyze karo."
+    },
+    "assistant": {
+      "title": "AI Assistant",
+      "description": "Excel aur CSV data mein controlled changes karo."
+    }
+  },
+  "hero": {
+    "title": "Apni spreadsheet ke bare mein sawal karo. Seconds mein jawab hasil karo.",
+    "description": "CSV ya Excel file upload karo, apni pasand ki zaban mein sawal karo aur har change apply hone se pehle review karo.",
+    "drop": "Apni file yahan drop karo",
+    "dropActive": "Upload karne ke liye file drop karo",
+    "chooseFile": "File select karo",
+    "fileSupport": "CSV ya XLSX, maximum {{size}} MB",
+    "howItWorks": "Ye kaise kaam karta hai",
+    "step1Title": "Apni file upload karo",
+    "step1Description": "CSV ya Excel file add karo. Columns aur data types automatically detect ho jayenge.",
+    "step2Title": "Sawal karo ya change batao",
+    "step2Description": "Data analyze karne ke liye sawal likho, ya edit karne ke liye instruction do.",
+    "step3Title": "Review karo aur download karo",
+    "step3Description": "Affected rows check karo, changes confirm karo aur updated Excel file download karo.",
+    "explorerFeature": "Generated SQL queries aur result tables ki madad se apne data se jawab hasil karo.",
+    "assistantFeature": "Records add, update ya delete karo. Har change aap ki approval ke baad hoga.",
+    "explorerExample": "Revenue ke hisaab se top 10 customers dikhao",
+    "assistantExample": "Jin rows ka status cancelled hai unko delete karo",
+    "exampleExplorer": "Example: Data Explorer",
+    "exampleQuestion": "Third quarter mein kis region ki sales sab se zyada thi?"
+  },
+  "metrics": {
+    "totalRecords": "Total records",
+    "dataColumns": "Data columns",
+    "revision": "Dataset version",
+    "rows": "Rows",
+    "columns": "Columns",
+    "rowsDescription": "Uploaded dataset ki rows",
+    "columnsDescription": "Automatically detect kiye gaye",
+    "confirmedEdits": "Confirmed changes"
+  },
+  "dataset": {
+    "overview": "Dataset ka overview",
+    "preview": "Data preview",
+    "schema": "Schema",
+    "downloadExcel": "Excel download karo",
+    "noData": "Koi data available nahi hai.",
+    "showing": "Total {{total}} mein se pehli {{count}} rows dikhai ja rahi hain",
+    "openDataset": "Dataset kholo",
+    "openExplorer": "Data Explorer kholo",
+    "openAssistant": "AI Assistant kholo",
+    "datasetFeature": "Apni rows dekho, schema check karo aur latest Excel file download karo.",
+    "explorerFeature": "Natural language, SQL queries aur structured results ki madad se uploaded dataset analyze karo.",
+    "assistantFeature": "Review aur confirmation system ke saath records add, update ya delete karo."
+  },
+  "chat": {
+    "explorerTitle": "Data Explorer",
+    "assistantTitle": "AI Assistant",
+    "explorerDescription": "Natural language se SQL analysis",
+    "assistantDescription": "AI ki madad se Excel aur CSV editing",
+    "explorerPlaceholder": "Apne dataset ke bare mein sawal likho...",
+    "assistantPlaceholder": "Jo changes karne hain woh batao...",
+    "send": "Bhejo",
+    "tryAsking": "Ye sawal try karo",
+    "activeDataset": "Active dataset",
+    "resultTable": "Result table dekho ({{count}} rows)",
+    "generatedSql": "Generated SQL dekho",
+    "aiResponse": "AI ka jawab dekho",
+    "copySql": "SQL copy karo",
+    "copied": "Copy ho gaya",
+    "askAboutData": "Apne data ke bare mein sawal karo",
+    "changeData": "Aap kya change karna chahte ho?",
+    "explorerEmptyDescription": "SQL queries generate karo, records explore karo aur AI se answers hasil karo. Right panel ki suggestions try karo.",
+    "assistantEmptyDescription": "Jo changes chahiye woh batao. Apply hone se pehle aap unko review kar sakte ho.",
+    "historicalResult": "Purana result · dataset version {{revision}}. Current data ke liye sawal dobara run karo.",
+    "explorerWarning": "Important decisions se pehle AI-generated SQL aur answers verify karo.",
+    "assistantWarning": "Spreadsheet changes ke liye aap ki confirmation zaroori hai.",
+    "pendingWarning": "Pending edit review karo, confirm karo ya cancel karo.",
+    "askInExplorer": "Ye sawal Data Explorer mein poochho",
+    "you": "AAP",
+    "ai": "DATAPILOT AI",
+    "suggestions": {
+      "countRows": "Is dataset mein kitni rows hain?",
+      "firstRecords": "Pehle 10 records dikhao",
+      "missingValues": "Kin columns mein values missing hain?",
+      "removeDuplicates": "Duplicate rows hata do",
+      "addRecord": "Existing column names use karke naya record add karo",
+      "updateValue": "Condition match hone par column ki value update karo"
+    }
+  },
+  "edit": {
+    "reviewTitle": "Proposed changes review karo",
+    "notApplied": "Abhi koi change apply nahi hua.",
+    "confirmationRequired": "Confirmation zaroori hai",
+    "affectedRows": "Affected rows",
+    "currentRows": "Current rows",
+    "afterChanges": "Changes ke baad",
+    "proposedAction": "AI ka proposed action dekho",
+    "affectedPreview": "Affected records ka preview",
+    "beforeAfter": "Change se pehle aur baad ka comparison",
+    "cancel": "Changes cancel karo",
+    "confirm": "Changes confirm karo",
+    "previewTruncated": "Ye preview limited hai. Condition match karne wali doosri rows bhi affect hongi."
+  },
+  "messages": {
+    "uploadSuccess": "{{filename}} successfully upload ho gayi.",
+    "datasetUpdated": "Dataset successfully update ho gaya.",
+    "fileRemoved": "File hata di gayi hai. Continue karne ke liye nayi file upload karo.",
+    "editCancelled": "Edit cancel ho gayi. Aap ka dataset pehle jaisa hai.",
+    "editApplied": "Changes successfully apply ho gaye. Ab dataset mein {{count}} rows hain.",
+    "serverOffline": "Server abhi available nahi hai. Hum automatically dobara connect karne ki koshish karenge.",
+    "loadingUpload": "Dataset upload aur process ho raha hai. Bari files mein kuch minutes lag sakte hain...",
+    "loadingQuery": "SQL generate ho rahi hai aur data analyze ho raha hai...",
+    "loadingEdit": "Spreadsheet mein requested changes review ho rahe hain...",
+    "loadingDownload": "Excel file prepare ho rahi hai...",
+    "loadingConfirm": "Approved changes apply ho rahe hain...",
+    "loadingCancel": "Proposed changes cancel ho rahe hain...",
+    "editPreviewReady": "Edit preview ready hai. Changes apply karne se pehle affected records review karo.",
+    "noMatchingRecords": "Current dataset mein koi matching record nahi mila.",
+    "analysisCompleted": "Analysis complete ho gaya.",
+    "downloadStarted": "Aap ki Excel file ka download start ho gaya hai.",
+    "editRevision": "Dataset update ho gaya (version {{revision}}). Current {{count}} rows analyze karne ke liye naya sawal karo. Previous results purane data se related hain.",
+    "editOnlyInstruction": "AI Assistant sirf data mein changes karta hai. Records dekhne ya filter karne ke liye Data Explorer use karo.",
+    "editRefreshFailed": "Edit save ho gayi, lekin dataset preview refresh nahi ho saka: {{error}}",
+    "editConfirmError": "{{error}} Agar confirmation pehle hi successful ho chuki hai to dobara try karne se pehle dataset refresh karo."
+  },
+  "validation": {
+    "selectFile": "CSV ya XLSX file select karo.",
+    "emptyFile": "Ye file empty hai.",
+    "fileTooLarge": "File ka maximum size {{size}} MB hai.",
+    "unsupportedFile": "Sirf CSV aur XLSX files supported hain.",
+    "requiredQuestion": "Dataset ke bare mein sawal likho.",
+    "requiredInstruction": "Editing instruction likho.",
+    "backendUnavailable": "DataPilot server se connection nahi ho raha.",
+    "requestTimeout": "Request mein bohat zyada time lag gaya. Dobara try karo.",
+    "genericError": "Kuch error aa gaya hai. Dobara try karo."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Band karo",
+    "save": "Save karo",
+    "delete": "Delete karo",
+    "loading": "Loading...",
+    "success": "Kamiyab",
+    "error": "Error",
+    "warning": "Warning",
+    "refresh": "Refresh karo",
+    "search": "Search karo",
+    "noResults": "Koi result nahi mila",
+    "yes": "Haan",
+    "no": "Nahi"
+  }
+}

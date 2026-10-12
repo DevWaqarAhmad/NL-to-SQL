@@ -13,16 +13,36 @@ const RAW_BASE =
 
 export const API_BASE_URL = RAW_BASE.replace(/\/+$/, "");
 
+// Request timeouts
 const DEFAULT_TIMEOUT_MS = 30_000;
-
-// Large files may take longer to upload and process.
+const LONG_TIMEOUT_MS = 120_000;
 const UPLOAD_TIMEOUT_MS = 600_000;
 
-// AI analysis and editing operations.
-const LONG_TIMEOUT_MS = 120_000;
-
-// Maximum upload size: 200 MB.
+// Maximum upload size: 200 MB
 export const MAX_FILE_SIZE_MB = 200;
+
+// Supported instruction languages
+export const SUPPORTED_LANGUAGES = [
+  "en",
+  "roman_ur",
+  "ur",
+];
+
+export const DEFAULT_LANGUAGE = "en";
+
+/* =========================================
+   Language Validation
+   ========================================= */
+
+function normalizeLanguage(language = DEFAULT_LANGUAGE) {
+  return SUPPORTED_LANGUAGES.includes(language)
+    ? language
+    : DEFAULT_LANGUAGE;
+}
+
+/* =========================================
+   Common HTTP Request Handler
+   ========================================= */
 
 async function request(
   endpoint,
@@ -31,10 +51,9 @@ async function request(
 ) {
   const controller = new AbortController();
 
-  const timer = setTimeout(
-    () => controller.abort(),
-    timeout
-  );
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, timeout);
 
   let response;
 
@@ -70,7 +89,7 @@ async function request(
         message = body.detail;
       } else if (Array.isArray(body.detail)) {
         message = body.detail
-          .map((detail) => detail.msg)
+          .map((detail) => detail.msg || "Validation failed")
           .join(", ");
       } else if (body.detail) {
         message = JSON.stringify(body.detail);
@@ -92,6 +111,10 @@ async function request(
 
   return response;
 }
+
+/* =========================================
+   JSON Request Helpers
+   ========================================= */
 
 async function json(endpoint, options, timeout) {
   const response = await request(
@@ -167,7 +190,6 @@ export function uploadFile(file) {
   validateFile(file);
 
   const formData = new FormData();
-
   formData.append("file", file);
 
   return json(
@@ -191,30 +213,40 @@ export function getDataset(datasetId) {
 }
 
 /* =========================================
-   Data Explorer
+   Data Explorer — Multilingual Queries
    ========================================= */
 
-export function queryData(datasetId, question) {
+export function queryData(
+  datasetId,
+  question,
+  language = DEFAULT_LANGUAGE
+) {
   return jsonPost(
     "/query",
     {
       dataset_id: datasetId,
       question: question.trim(),
+      language: normalizeLanguage(language),
     },
     LONG_TIMEOUT_MS
   );
 }
 
 /* =========================================
-   AI Assistant — Preview Edit
+   AI Assistant — Multilingual Edit Preview
    ========================================= */
 
-export function previewEdit(datasetId, instruction) {
+export function previewEdit(
+  datasetId,
+  instruction,
+  language = DEFAULT_LANGUAGE
+) {
   return jsonPost(
     "/edit/preview",
     {
       dataset_id: datasetId,
       instruction: instruction.trim(),
+      language: normalizeLanguage(language),
     },
     LONG_TIMEOUT_MS
   );
@@ -274,28 +306,29 @@ export async function downloadDataset(
 
   if (match) {
     try {
-      filename = decodeURIComponent(match[1]);
+      filename = decodeURIComponent(
+        match[1].trim()
+      );
     } catch {
-      filename = match[1];
+      filename = match[1].trim();
     }
   }
 
   const blob = await response.blob();
-
   const url = URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
+  try {
+    const link = document.createElement("a");
 
-  link.href = url;
-  link.download = filename;
+    link.href = url;
+    link.download = filename;
 
-  document.body.appendChild(link);
-
-  link.click();
-
-  link.remove();
-
-  setTimeout(() => {
-    URL.revokeObjectURL(url);
-  }, 1000);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } finally {
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
 }
