@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pandas as pd
 from data_engine import DataEngine
 from ai_engine import AIEngine
 from visualizer import Visualizer
@@ -7,161 +7,136 @@ from sql_validator import execute_safe_query
 from excel_editor import ExcelEditor
 from intent_router import IntentRouter
 from file_agent import FileAgent
-
-
-
 # --------------------------------
 # PAGE CONFIG
 # --------------------------------
-
 st.set_page_config(
     page_title="AI Data Assistant",
     page_icon="🤖",
     layout="wide"
 )
-
-
 st.title("🤖 AI Data Assistant")
-
 st.caption(
     "Analyze and edit your uploaded Excel/CSV files using natural language."
 )
-
-
-
 # --------------------------------
 # SESSION STATE
 # --------------------------------
-
 if "data_engine" not in st.session_state:
-
     st.session_state.data_engine = DataEngine()
-
-
-
 if "ai_engine" not in st.session_state:
-
     try:
-
         st.session_state.ai_engine = AIEngine()
-
     except Exception as error:
-
         st.error(
             f"AI Engine Error: {error}"
         )
-
         st.stop()
-
-
-
 if "visualizer" not in st.session_state:
-
     st.session_state.visualizer = Visualizer()
-
-
-
 if "editor" not in st.session_state:
-
     st.session_state.editor = ExcelEditor()
-
-
-
 if "intent_router" not in st.session_state:
-
     try:
-
         st.session_state.intent_router = IntentRouter()
-
     except Exception as error:
-
         st.error(
             f"Intent Router Error: {error}"
         )
-
         st.stop()
-
-
-
 if "file_agent" not in st.session_state:
-
     try:
-
         st.session_state.file_agent = FileAgent()
-
     except Exception as error:
-
         st.error(
             f"File Agent Error: {error}"
         )
-
         st.stop()
-
-
-
 if "uploaded_df" not in st.session_state:
-
     st.session_state.uploaded_df = None
-
-
-
 if "schema" not in st.session_state:
-
     st.session_state.schema = None
-
-
-
 if "messages" not in st.session_state:
-
     st.session_state.messages = []
-
-
-
 if "current_file" not in st.session_state:
-
     st.session_state.current_file = None
+# --------------------------------
+# NEW PROJECT SESSION STATE
+# --------------------------------
+if "project_mode" not in st.session_state:
+    st.session_state.project_mode = None
+if "project_name" not in st.session_state:
+    st.session_state.project_name = ""
+if "project_step" not in st.session_state:
+    st.session_state.project_step = 1
+if "project_columns" not in st.session_state:
+    st.session_state.project_columns = []
+if "project_started" not in st.session_state:
+    st.session_state.project_started = False
+# --------------------------------
+# START NEW PROJECT (STEP 1)
+# --------------------------------
+# The blank DataFrame is kept separate until columns have been defined.
+# This avoids passing a zero-column table into DuckDB/SQL generation.
+if "project_df" not in st.session_state:
+    st.session_state.project_df = None
 
+if "uploader_version" not in st.session_state:
+    st.session_state.uploader_version = 0
 
+st.subheader("📁 Start New Project")
 
+if st.session_state.project_mode == "new" and st.session_state.project_started:
+    st.success(f"Active Project: {st.session_state.project_name}")
+    st.info("Next Step: Define Data Structure (not implemented yet).")
+else:
+    new_project_name = st.text_input(
+        "Project Name",
+        placeholder="Enter new project name",
+        key="new_project_name_input",
+    )
 
+    if st.button("➕ Start New Project", key="start_new_project_button"):
+        if not new_project_name.strip():
+            st.warning("Please enter a project name.")
+        else:
+            st.session_state.project_name = new_project_name.strip()
+            st.session_state.project_mode = "new"
+            st.session_state.project_started = True
+            st.session_state.project_step = 2
+            st.session_state.project_columns = []
+            st.session_state.project_df = pd.DataFrame()
+
+            # Reset previous uploaded-file state and chat.
+            st.session_state.uploaded_df = None
+            st.session_state.schema = None
+            st.session_state.current_file = None
+            st.session_state.messages = []
+
+            # Give the uploader a fresh key so an old uploaded file
+            # cannot silently overwrite the newly created project.
+            st.session_state.uploader_version += 1
+            st.rerun()
 
 # --------------------------------
 # SIDEBAR
 # --------------------------------
-
 with st.sidebar:
-
-
     st.header("⚙️ Upload Data")
-
-
     uploaded_file = st.file_uploader(
         "Upload CSV / Excel",
-        type=["csv", "xlsx"]
+        type=["csv", "xlsx"],
+        key=f"upload_data_{st.session_state.uploader_version}",
     )
-
-
-
     if st.button("🗑 Clear Chat"):
-
         st.session_state.messages = []
-
         st.rerun()
-
-
-
     if uploaded_file:
-
-
         if (
             st.session_state.current_file
             != uploaded_file.name
         ):
-
-
             try:
-
-
                 df = (
                     st.session_state
                     .data_engine
@@ -169,77 +144,52 @@ with st.sidebar:
                         uploaded_file
                     )
                 )
-
-
                 st.session_state.uploaded_df = (
                     df.copy()
                 )
-
-
                 st.session_state.schema = (
                     st.session_state
                     .data_engine
                     .get_schema()
                 )
-
-
                 st.session_state.current_file = (
                     uploaded_file.name
                 )
-
-
                 st.session_state.messages = []
-
+                # An uploaded file becomes the active project source.
+                st.session_state.project_mode = "upload"
+                st.session_state.project_started = False
+                st.session_state.project_name = ""
+                st.session_state.project_step = 1
+                st.session_state.project_columns = []
+                st.session_state.project_df = None
 
                 st.success(
                     "File loaded successfully!"
                 )
-
-
             except Exception as error:
-
-
                 st.error(
                     str(error)
                 )
-
-
-
     if st.session_state.schema:
-
-
         with st.expander(
             "🗄 Schema"
         ):
-
             st.code(
                 st.session_state.schema
             )
-
-
-
-
-
 # --------------------------------
 # DATA PREVIEW + DOWNLOAD
 # --------------------------------
-
 if st.session_state.uploaded_df is not None:
-
-
     with st.expander(
         "📊 Current Data Preview",
         expanded=False
     ):
-
-
         st.dataframe(
             st.session_state.uploaded_df.head(10),
             use_container_width=True
         )
-
-
-
     excel_file = (
         st.session_state
         .editor
@@ -247,108 +197,58 @@ if st.session_state.uploaded_df is not None:
             st.session_state.uploaded_df
         )
     )
-
-
-
     st.download_button(
-
         label="⬇ Download Updated Excel",
-
         data=excel_file,
-
         file_name="updated_data.xlsx",
-
         mime=(
             "application/vnd."
             "openxmlformats-officedocument."
             "spreadsheetml.sheet"
         )
     )
-
-
 else:
-
-
-    st.info(
-        "Upload CSV or Excel file."
-    )
-
-
-
-
-
+    if st.session_state.project_mode == "new":
+        st.info("Blank project created. Define its columns in the next step before querying or editing.")
+    else:
+        st.info("Upload CSV or Excel file, or start a new project above.")
 # --------------------------------
 # CHAT HISTORY
 # --------------------------------
-
 for message in st.session_state.messages:
-
-
     with st.chat_message(
         message["role"]
     ):
-
         st.markdown(
             message["content"]
         )
-
-
-
-
-
 # --------------------------------
 # USER INPUT
 # --------------------------------
-
 question = st.chat_input(
     "Ask or edit your data..."
 )
-
-
-
-
-
 if question:
-
-
     st.session_state.messages.append(
         {
             "role":"user",
             "content":question
         }
     )
-
-
     with st.chat_message("user"):
-
         st.write(question)
-
-
-
-
     with st.chat_message("assistant"):
-
-
         with st.spinner(
             "Understanding request..."
         ):
-
-
             try:
-
-
                 if st.session_state.uploaded_df is None:
-
                     raise Exception(
-                        "Please upload file first."
+                        "Define your new project's columns first, or upload a CSV/Excel file."
                     )
-
-
-
                 # -------------------------
                 # Intent Detection
                 # -------------------------
-
                 intent = (
                     st.session_state
                     .intent_router
@@ -356,21 +256,13 @@ if question:
                         question
                     )
                 )
-
-
-
                 # =========================
                 # EDIT MODE
                 # =========================
-
                 if intent.get("type") == "edit":
-
-
                     st.subheader(
                         "✏️ Editing File"
                     )
-
-
                     action = (
                         st.session_state
                         .file_agent
@@ -383,14 +275,9 @@ if question:
                             )
                         )
                     )
-
-
                     st.json(
                         action
                     )
-
-
-
                     updated_df = (
                         st.session_state
                         .editor
@@ -400,43 +287,25 @@ if question:
                             action
                         )
                     )
-
-
-
                     st.session_state.uploaded_df = (
                         updated_df
                     )
-
-
-
                     # Update DuckDB
-
                     st.session_state.data_engine.reload_database(
                         updated_df
                     )
-
-
-
                     st.session_state.schema = (
                         st.session_state
                         .data_engine
                         .get_schema()
                     )
-
-
-
                     st.success(
                         "File updated successfully!"
                     )
-
-
                     st.dataframe(
                         updated_df,
                         use_container_width=True
                     )
-
-
-
                     st.session_state.messages.append(
                         {
                             "role":"assistant",
@@ -444,16 +313,10 @@ if question:
                             "✏️ File updated successfully."
                         }
                     )
-
-
-
                 # =========================
                 # QUERY MODE
                 # =========================
-
                 else:
-
-
                     sql = (
                         st.session_state
                         .ai_engine
@@ -462,44 +325,26 @@ if question:
                             st.session_state.schema
                         )
                     )
-
-
-
                     st.subheader(
                         "🧠 Generated SQL"
                     )
-
-
                     st.code(
                         sql,
                         language="sql"
                     )
-
-
-
                     result = execute_safe_query(
-
                         st.session_state
                         .data_engine
                         .connection,
-
                         sql
                     )
-
-
-
                     st.subheader(
                         "📊 Query Result"
                     )
-
-
                     st.dataframe(
                         result,
                         use_container_width=True
                     )
-
-
-
                     answer = (
                         st.session_state
                         .ai_engine
@@ -508,19 +353,12 @@ if question:
                             result.to_string()
                         )
                     )
-
-
-
                     with st.expander(
                         "💬 AI Explanation"
                     ):
-
                         st.write(
                             answer
                         )
-
-
-
                     chart = (
                         st.session_state
                         .visualizer
@@ -528,62 +366,38 @@ if question:
                             result
                         )
                     )
-
-
-
                     with st.expander(
                         "📈 Visualization"
                     ):
-
-
                         if chart:
-
                             st.plotly_chart(
                                 chart,
                                 use_container_width=True
                             )
-
                         else:
-
                             st.info(
                                 "No visualization available."
                             )
-
-
-
                     st.session_state.messages.append(
                         {
                             "role":"assistant",
                             "content":
                             f"""
 ### 🧠 SQL Query
-
 {sql}
-
-
 ### 💬 AI Explanation
-
 {answer}
 """
                         }
                     )
-
-
-
             except Exception as error:
-
-
                 error_text = (
                     "❌ Error: "
                     + str(error)
                 )
-
-
                 st.error(
                     error_text
                 )
-
-
                 st.session_state.messages.append(
                     {
                         "role":"assistant",
