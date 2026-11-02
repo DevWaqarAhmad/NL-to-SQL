@@ -3838,3 +3838,787 @@
 }
 
 
+
+/* ==========================================
+   DATAPILOT AI — LANGUAGE SELECTOR FIX
+   Desktop + Tablet + Mobile
+   ========================================== */
+
+/* Navbar normal layout */
+.dp-app .dp-nav {
+  position: sticky !important;
+  top: 0;
+  z-index: 40;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Main navbar structure */
+.dp-app .dp-nav-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px 18px !important;
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+/* Navigation buttons */
+.dp-app .dp-navigation {
+  position: static !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center;
+  gap: 4px;
+  margin: 0 auto !important;
+  min-width: 0;
+}
+
+/* Right side controls */
+.dp-app .dp-nav-actions {
+  position: static !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto !important;
+  transform: none !important;
+  min-width: 0;
+}
+
+/* LANGUAGE BUTTON — RESET FLOATING RULES */
+.dp-app .dp-nav-actions > button[aria-haspopup="dialog"],
+.dp-app .dp-nav-actions > .dp-btn-outline:first-child,
+.dp-app .dp-nav-actions > button.dp-floating-language:first-child {
+
+  position: static !important;
+
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  transform: none !important;
+  z-index: auto !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 240px !important;
+  min-height: 42px !important;
+
+  margin: 0 !important;
+  padding: 10px 14px !important;
+
+  background: #ffffff !important;
+  color: #0719c8 !important;
+
+  border: 1px solid #dbe3f3 !important;
+  border-radius: 11px !important;
+
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+
+  box-shadow: none !important;
+}
+
+/* Remove additional floating decorations */
+.dp-app .dp-nav-actions > button[aria-haspopup="dialog"]::before,
+.dp-app .dp-nav-actions > button[aria-haspopup="dialog"]::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hover effect */
+.dp-app .dp-nav-actions > button[aria-haspopup="dialog"]:hover:not(:disabled) {
+  background: #eef0ff !important;
+  border-color: #000fda !important;
+}
+
+/* Language popup remains centered */
+.dp-app .dp-language-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+/* Tablet / smaller desktop */
+@media (max-width: 1500px) {
+  .dp-app .dp-nav-inner {
+    flex-wrap: wrap !important;
+  }
+
+  .dp-app .dp-navigation {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  .dp-app .dp-nav-actions {
+    margin-left: auto !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .dp-app .dp-nav-inner {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .dp-app .dp-nav-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .dp-app .dp-nav-actions > button[aria-haspopup="dialog"] {
+    max-width: 100% !important;
+    min-height: 40px !important;
+    padding: 8px 11px !important;
+    font-size: 12px !important;
+  }
+
+  .dp-app .dp-navigation {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
+
+/* RTL language support */
+[dir="rtl"] .dp-app .dp-nav-actions {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+
+
+/* ==============================================
+   DATAPILOT AI — MOBILE RESPONSIVE FIX
+   Keep existing desktop design unchanged
+   ============================================== */
+
+/* Prevent unwanted horizontal page scrolling */
+.dp-app {
+  width: 100%;
+  min-width: 0;
+}
+
+.dp-app,
+.dp-main,
+.dp-hero,
+.dp-hero-top,
+.dp-chat-page,
+.dp-panel {
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+
+  /* ===== HEADER ===== */
+
+  .dp-app .dp-nav {
+    position: sticky !important;
+    top: 0;
+    z-index: 40;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .dp-app .dp-nav-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
+  }
+
+  /* ===== BRAND ===== */
+
+  .dp-app .dp-brand {
+    order: 1 !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dp-app .dp-brand-mark {
+    height: 42px;
+    min-width: 0;
+    max-width: 125px;
+    flex-shrink: 1;
+  }
+
+  .dp-app .dp-logo-img {
+    width: auto;
+    height: 42px;
+    max-width: 125px;
+    object-fit: contain;
+  }
+
+  .dp-app .dp-brand strong {
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    white-space: normal;
+  }
+
+  .dp-app .dp-brand small {
+    display: block;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  /* ===== ACTION BUTTONS ===== */
+
+  .dp-app .dp-nav-actions {
+    order: 2 !important;
+    position: static !important;
+    transform: none !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    gap: 10px !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Language selector stays inside navbar */
+  .dp-app .dp-nav-actions > button[aria-haspopup="dialog"] {
+    grid-column: 1 / -1;
+
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    transform: none !important;
+    z-index: auto !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    min-height: 43px !important;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+
+    background: #ffffff !important;
+    color: #0719c8 !important;
+    border: 1px solid #dbe3f3 !important;
+    border-radius: 11px !important;
+    box-shadow: none !important;
+
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    text-align: center;
+  }
+
+  /* Remove floating language decorations */
+  .dp-app .dp-nav-actions > button[aria-haspopup="dialog"]::before,
+  .dp-app .dp-nav-actions > button[aria-haspopup="dialog"]::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Connection status */
+  .dp-app .dp-nav-actions > .dp-status-pill {
+    display: inline-flex !important;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: fit-content;
+    padding: 6px 12px;
+  }
+
+  /* New project and Upload side by side */
+  .dp-app .dp-nav-actions > .dp-btn-new-project,
+  .dp-app .dp-nav-actions > .dp-btn-primary:not(.dp-btn-new-project) {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 45px !important;
+
+    padding: 10px 8px !important;
+    margin: 0 !important;
+
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    text-align: center;
+    white-space: normal !important;
+    border-radius: 11px !important;
+  }
+
+  /* Keep new project green */
+  .dp-app .dp-btn-new-project {
+    background: #10B981 !important;
+    border-color: #10B981 !important;
+    color: #ffffff !important;
+  }
+
+  /* Other navbar controls */
+  .dp-app .dp-nav-actions > .dp-active-file,
+  .dp-app .dp-nav-actions > .dp-btn-outline:not([aria-haspopup="dialog"]) {
+    min-width: 0;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .dp-app .dp-active-file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ===== NAVIGATION TABS ===== */
+
+  .dp-app .dp-navigation {
+    order: 3 !important;
+
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 5px !important;
+    gap: 3px !important;
+
+    border-radius: 12px;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  .dp-app .dp-nav-item {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 55px;
+
+    padding: 7px 3px !important;
+    gap: 4px;
+
+    font-size: 10px !important;
+    line-height: 1.2;
+    white-space: normal !important;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .dp-app .dp-nav-icon {
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+
+  .dp-app .dp-main {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 16px 24px !important;
+    margin: 0 auto;
+  }
+
+  .dp-app .dp-alert {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 13px 15px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* ===== HERO ===== */
+
+  .dp-app .dp-hero {
+    gap: 22px;
+  }
+
+  .dp-app .dp-hero-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+
+    width: 100%;
+    gap: 28px;
+    padding: 26px 20px !important;
+    border-radius: 20px;
+  }
+
+  .dp-app .dp-hero-copy {
+    min-width: 0;
+  }
+
+  .dp-app .dp-hero-copy h2 {
+    font-size: clamp(27px, 7vw, 37px) !important;
+    line-height: 1.13 !important;
+    letter-spacing: -1.2px !important;
+
+    margin: 0 0 18px;
+    overflow-wrap: break-word;
+  }
+
+  .dp-app .dp-hero-copy > p {
+    max-width: 100%;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    margin-bottom: 24px;
+  }
+
+  /* ===== UPLOAD DROPZONE ===== */
+
+  .dp-app .dp-dropzone {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .dp-app .dp-dropzone-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 21px;
+    border-radius: 11px;
+  }
+
+  .dp-app .dp-dropzone-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dp-app .dp-dropzone-text strong {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .dp-app .dp-dropzone-text span {
+    font-size: 11px;
+  }
+
+  .dp-app .dp-dropzone > .dp-btn {
+    width: 100% !important;
+    min-height: 43px;
+  }
+
+  /* Avoid duplicate New Project button in hero */
+  .dp-app .dp-dropzone > .dp-btn-new-project {
+    display: none !important;
+  }
+
+  /* ===== HERO PREVIEW ===== */
+
+  .dp-app .dp-hero-preview {
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 24px;
+  }
+
+  .dp-app .dp-pv-main {
+    padding: 12px;
+    border-radius: 13px;
+  }
+
+  .dp-app .dp-pv-bar span {
+    font-size: 10px;
+  }
+
+  .dp-app .dp-pv-question {
+    font-size: 10px;
+    max-width: 95%;
+    padding: 9px 10px;
+  }
+
+  .dp-app .dp-pv-sql {
+    font-size: 10px;
+    line-height: 1.6;
+    padding: 11px;
+    overflow-x: auto;
+  }
+
+  .dp-app .dp-pv-table {
+    font-size: 11px;
+  }
+
+  .dp-app .dp-pv-table th,
+  .dp-app .dp-pv-table td {
+    padding: 8px 7px;
+  }
+
+  .dp-app .dp-pv-edit {
+    position: relative !important;
+    inset: auto !important;
+    right: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    margin-top: 12px;
+    padding: 14px;
+    box-shadow: none;
+  }
+
+  /* ===== HOW IT WORKS ===== */
+
+  .dp-app .dp-hero-section-title {
+    font-size: 20px;
+  }
+
+  .dp-app .dp-steps,
+  .dp-app .dp-hero-features {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px;
+  }
+
+  .dp-app .dp-steps li,
+  .dp-app .dp-hero-features > div {
+    padding: 19px;
+    border-radius: 14px;
+  }
+
+  /* ===== DATASET & DASHBOARD ===== */
+
+  .dp-app .dp-metrics,
+  .dp-app .dp-dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px;
+  }
+
+  .dp-app .dp-metric,
+  .dp-app .dp-feature-card {
+    padding: 19px;
+  }
+
+  .dp-app .dp-feature-card {
+    min-height: 0;
+  }
+
+  .dp-app .dp-panel {
+    padding: 16px;
+  }
+
+  .dp-app .dp-panel-head {
+    flex-wrap: wrap;
+  }
+
+  .dp-app .dp-tabs {
+    gap: 18px;
+    overflow-x: auto;
+  }
+
+  /* Dataset table scrolling */
+  .dp-app .dp-table-wrap,
+  .dp-app .dp-virtual-scroll {
+    max-width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dp-app .dp-virtual-dataset {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* ===== CHAT / AI ASSISTANT ===== */
+
+  .dp-app .dp-chat-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px;
+  }
+
+  .dp-app .dp-chat-panel {
+    height: min(680px, 78dvh);
+    min-height: 460px;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .dp-app .dp-chat-head,
+  .dp-app .dp-chat-messages,
+  .dp-app .dp-chat-form {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .dp-app .dp-chat-messages {
+    min-width: 0;
+    overflow-x: auto;
+  }
+
+  .dp-app .dp-chat-input {
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .dp-app .dp-chat-input textarea {
+    min-height: 64px;
+    font-size: 16px;
+  }
+
+  .dp-app .dp-chat-input .dp-btn {
+    width: 100%;
+    min-height: 43px;
+  }
+
+  .dp-app .dp-message-body {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .dp-app .dp-message-user .dp-message-body {
+    max-width: 95%;
+  }
+
+  .dp-app .dp-query-output details {
+    padding: 10px;
+  }
+
+  .dp-app .dp-query-result-details > summary {
+    padding-right: 0 !important;
+  }
+
+  .dp-app .dp-query-export-actions {
+    position: static !important;
+    justify-content: flex-start !important;
+    margin: 10px 0 !important;
+    gap: 7px !important;
+  }
+
+  .dp-app .dp-query-export-actions .dp-btn {
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+    min-height: 38px;
+  }
+
+  .dp-app .dp-side {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ===== EDIT CONFIRMATION ===== */
+
+  .dp-app .dp-review-header {
+    flex-wrap: wrap;
+  }
+
+  .dp-app .dp-review-badge {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .dp-app .dp-review-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dp-app .dp-review-actions {
+    flex-direction: column-reverse;
+  }
+
+  .dp-app .dp-review-actions .dp-btn {
+    width: 100%;
+  }
+
+  /* ===== FOOTER ===== */
+
+  .dp-app .dp-footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 7px;
+    padding: 18px 16px;
+  }
+
+  /* ===== LANGUAGE DIALOG ===== */
+
+  .dp-app .dp-language-overlay {
+    padding: 12px !important;
+    z-index: 10000 !important;
+  }
+
+  .dp-app .dp-language-overlay [role="dialog"] {
+    width: 100% !important;
+    max-width: 520px;
+    max-height: 88dvh !important;
+  }
+}
+
+/* ===== EXTRA SMALL MOBILES ===== */
+
+@media (max-width: 380px) {
+
+  .dp-app .dp-nav-inner {
+    padding: 10px 12px !important;
+  }
+
+  .dp-app .dp-brand strong {
+    font-size: 15px;
+  }
+
+  .dp-app .dp-nav-item {
+    font-size: 9px !important;
+  }
+
+  .dp-app .dp-nav-icon {
+    font-size: 15px;
+  }
+
+  .dp-app .dp-hero-top {
+    padding: 22px 16px !important;
+  }
+
+  .dp-app .dp-hero-copy h2 {
+    font-size: 26px !important;
+    letter-spacing: -1px !important;
+  }
+
+  .dp-app .dp-main {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
